@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
-import { View, Text, Button } from "react-native";
+import { View, Text, TouchableHighlight } from "react-native";
 import styleVars from "../../assets/styles/vars";
 import Author from "../Author";
 import Flex from "../Flex";
@@ -20,7 +20,6 @@ const CommentContainer = styled.View`
 `;
 
 const CommentText = styled.Text`margin-bottom: ${standardPadding * 0.5}px;`;
-const SmallTextButton = styled.Button`font-size: 9px;`;
 
 export default function Comment({ content, author, num_likes_this }) {
 	return (
@@ -33,8 +32,14 @@ export default function Comment({ content, author, num_likes_this }) {
 				<Text>
 					{num_likes_this} Likes
 				</Text>
-				<SmallTextButton title="Reply" />
-				<SmallTextButton title="Like" />
+				<TouchableHighlight
+					onPress={() => console.log("clicked Reply")}
+				>
+					<Text>Reply</Text>
+				</TouchableHighlight>
+				<TouchableHighlight onPress={() => console.log("clicked Like")}>
+					<Text>Like</Text>
+				</TouchableHighlight>
 			</Flex>
 		</CommentContainer>
 	);
