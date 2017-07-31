@@ -1,0 +1,28 @@
+export default (colourVars = {
+	SIBlue: "#4495d8",
+	SIDarkBlue: "#285796",
+	SIDesertRed: "#e06839",
+	SIGreen: "#82CB34",
+	SILightBlue: "#f8fbfd",
+	SILightGreen: "#aeef88",
+	SIMainGreen: "#2ecd72",
+	SIMainRed: "#ff333a",
+	SIOrange: "#ffcc00",
+	SIPastelBlue: "#a0c0da",
+	SISalmon: "#ff9797",
+	SISkyBlue: "#63b5ff",
+	SISkyBlueLight: "#c9e5ff",
+	SIYellowMid: "#ffd633",
+	SIYellowOrange: "#fcac53",
+	SIPurple: "#9ea5cc",
+
+	SIBlack: "#161B1E",
+	SIGray1: "#424649",
+	SIGray2: "#8A8E91",
+	SIGray3: "#A1A7AB",
+	SIGray4: "#BABFC2",
+	SIGray5: "#DADEE1",
+	SIGray6: "#EBEDEE",
+	SIGray7: "#F5F5F5",
+	SIGray8: "#FAFAFA"
+});
