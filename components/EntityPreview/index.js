@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, Alert, TouchableHighlight } from "react-native";
 import Card from "../Card";
 import Flex from "../Flex";
 
@@ -16,7 +16,19 @@ export default function EntityPreview({ entity, type }) {
 			return <PraisePreview {...entity} />;
 	}
 }
-
+const showAlert = () =>
+	Alert.alert(
+		"Open in Small Improvements?",
+		"You'll be redirected to the Small Improvements app your browser",
+		[
+			{ text: "Open", onPress: () => console.log("Open Pressed") },
+			{
+				text: "Cancel",
+				onPress: () => console.log("Cancel Pressed"),
+				style: "cancel"
+			}
+		]
+	);
 function ObjectivePreview({ title, author, cycleName }) {
 	return (
 		<Card>
@@ -25,9 +37,11 @@ function ObjectivePreview({ title, author, cycleName }) {
 					source={require("../../assets/images/objective_icon.png")}
 				/>
 				<View>
-					<Text>
-						{title}
-					</Text>
+					<TouchableHighlight onPress={showAlert}>
+						<Text>
+							{title}
+						</Text>
+					</TouchableHighlight>
 					<Text style={{ color: "#777" }}>
 						{cycleName}
 					</Text>
