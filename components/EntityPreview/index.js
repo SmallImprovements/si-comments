@@ -31,23 +31,24 @@ const showAlert = () =>
 	);
 function ObjectivePreview({ title, author, cycleName }) {
 	return (
-		<Card>
-			<Flex>
-				<ObjectiveIcon
-					source={require("../../assets/images/objective_icon.png")}
-				/>
-				<View>
-					<TouchableHighlight onPress={showAlert}>
-						<Text>
+		<TouchableHighlight onPress={showAlert}>
+			<Card>
+				<Flex>
+					<ObjectiveIcon
+						source={require("../../assets/images/objective_icon.png")}
+					/>
+					<View>
+						<Text style={{ fontWeight: "bold" }}>
 							{title}
 						</Text>
-					</TouchableHighlight>
-					<Text style={{ color: "#777" }}>
-						{cycleName}
-					</Text>
-				</View>
-			</Flex>
-		</Card>
+
+						<Text style={{ color: "#777" }}>
+							{cycleName}
+						</Text>
+					</View>
+				</Flex>
+			</Card>
+		</TouchableHighlight>
 	);
 }
 
