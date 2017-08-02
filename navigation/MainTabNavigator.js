@@ -5,15 +5,11 @@ import { TabNavigator, TabBarBottom } from "react-navigation";
 
 import Colors from "../constants/Colors";
 
-import HomeScreen from "../screens/HomeScreen";
 import NotificationsScreen from "../screens/NotificationsScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 
 export default TabNavigator(
   {
-    Home: {
-      screen: HomeScreen
-    },
     Notifications: {
       screen: NotificationsScreen
     },
@@ -27,12 +23,6 @@ export default TabNavigator(
         const { routeName } = navigation.state;
         let iconName;
         switch (routeName) {
-          case "Home":
-            iconName =
-              Platform.OS === "ios"
-                ? `ios-information-circle${focused ? "" : "-outline"}`
-                : "md-information-circle";
-            break;
           case "Notifications":
             iconName =
               Platform.OS === "ios"
