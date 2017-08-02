@@ -3,7 +3,7 @@ import styled from "styled-components/native";
 import { View, Text, TouchableHighlight, Button } from "react-native";
 import ModalExample from "./Modal";
 import Avatar from "./Avatar";
-import CommentScreen from "../screens/CommentScreen";
+
 const StyledView = styled.View`
 	flex: 1;
 	flex-direction: row;
@@ -14,22 +14,15 @@ const StyledView = styled.View`
 `;
 
 export class NotificationItem extends React.Component {
-	constructor() {
-		super();
-		this.toggleModalOpen = this.toggleModalOpen.bind(this);
+	constructor(props) {
+		super(props);
 	}
-	state = {
-		isModalOpen: false
-	};
 
-	toggleModalOpen() {
-		this.setState({ isModalOpen: !this.state.isModalOpen });
-	}
 	render() {
-		const { text } = this.props;
+		const { text, onSelect } = this.props;
 		return (
 			<View>
-				<TouchableHighlight onPress={this.toggleModalOpen}>
+				<TouchableHighlight onPress={onSelect}>
 					<StyledView>
 						<Avatar
 							source={{
@@ -47,22 +40,7 @@ export class NotificationItem extends React.Component {
 						</View>
 					</StyledView>
 				</TouchableHighlight>
-				<ModalContent
-					modalVisible={this.state.isModalOpen}
-					closeAction={this.toggleModalOpen}
-				/>
 			</View>
 		);
 	}
-}
-
-function ModalContent({ modalVisible, closeAction }) {
-	const navigationProps = {
-		onClose: closeAction
-	};
-	return (
-		<ModalExample modalVisible={modalVisible}>
-			<CommentScreen screenProps={navigationProps} />
-		</ModalExample>
-	);
 }
