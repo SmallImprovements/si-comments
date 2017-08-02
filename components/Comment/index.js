@@ -19,28 +19,36 @@ const CommentContainer = styled.View`
 	width: 100%;
 `;
 
+const CommentContentContainer = styled.View`
+	padding-left: ${standardPadding * 2}px;
+`;
+
 const CommentText = styled.Text`margin-bottom: ${standardPadding * 0.5}px;`;
 
 export default function Comment({ content, author, num_likes_this }) {
 	return (
 		<CommentContainer>
 			<Author {...author} />
-			<CommentText>
-				{content}
-			</CommentText>
-			<Flex style={{ alignItems: "center" }}>
-				<Text>
-					{num_likes_this} Likes
-				</Text>
-				<TouchableHighlight
-					onPress={() => console.log("clicked Reply")}
-				>
-					<Text>Reply</Text>
-				</TouchableHighlight>
-				<TouchableHighlight onPress={() => console.log("clicked Like")}>
-					<Text>Like</Text>
-				</TouchableHighlight>
-			</Flex>
+			<CommentContentContainer>
+				<CommentText>
+					{content}
+				</CommentText>
+				<Flex style={{ alignItems: "center" }}>
+					<Text>
+						{num_likes_this} Likes
+					</Text>
+					<TouchableHighlight
+						onPress={() => console.log("clicked Reply")}
+					>
+						<Text>Reply</Text>
+					</TouchableHighlight>
+					<TouchableHighlight
+						onPress={() => console.log("clicked Like")}
+					>
+						<Text>Like</Text>
+					</TouchableHighlight>
+				</Flex>
+			</CommentContentContainer>
 		</CommentContainer>
 	);
 }
