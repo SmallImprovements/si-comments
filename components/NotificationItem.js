@@ -21,26 +21,24 @@ export class NotificationItem extends React.Component {
 	render() {
 		const { text, onSelect } = this.props;
 		return (
-			<View>
-				<TouchableHighlight onPress={onSelect}>
-					<StyledView>
-						<Avatar
-							source={{
-								uri:
-									"http://cdn.business2community.com/wp-content/uploads/2016/03/Vd3MJo.jpg"
-							}}
-						/>
-						<View>
-							<Text>
-								{text}
-							</Text>
-							<Text>
-								{text}
-							</Text>
-						</View>
-					</StyledView>
-				</TouchableHighlight>
-			</View>
+			<TouchableHighlight onPress={onSelect}>
+				<StyledView>
+					<Avatar
+						source={{
+							uri:
+								"http://cdn.business2community.com/wp-content/uploads/2016/03/Vd3MJo.jpg"
+						}}
+					/>
+					<View>
+						<Text>
+							{text}
+						</Text>
+						<Text>
+							{text}
+						</Text>
+					</View>
+				</StyledView>
+			</TouchableHighlight>
 		);
 	}
 }
