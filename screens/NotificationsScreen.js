@@ -1,11 +1,17 @@
 import React from "react";
-import { Button, ScrollView, Text } from "react-native";
+import { View, Button, ScrollView, Text, TextInput } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { StackNavigator } from "react-navigation";
 import Comment from "../components/Comment";
 import EntityPreview from "../components/EntityPreview";
 import { mockComments, mockObjective } from "../api/mockData";
 import { NotificationItem } from "../components/NotificationItem";
 import { notificationsLog } from "../api/mockData.js";
+import styled from "styled-components/native";
+import styleVars from "../assets/styles/vars";
+import CommentInput from "../components/CommentInput";
+
+const { standardPadding } = styleVars;
 
 const NotificationsList = ({ navigation }) =>
   <ScrollView navigation={navigation} style={{ backgroundColor: "#fff" }}>
@@ -28,14 +34,27 @@ NotificationsList.navigationOptions = ({ navigation, screenProps }) => {
   };
 };
 
+const PostCommentContainer = styled.View`flex-grow: 0;`;
+
 const CommentOverview = ({ navigation }) =>
-  <ScrollView banner="Home Screen" navigation={navigation}>
-    <EntityPreview type="OBJECTIVE" entity={mockObjective} />
-    <Text>
-      {navigation.state.params.notification_id}
-    </Text>
-    {mockComments.map(comment => <Comment {...comment} key={comment.id} />)}
-  </ScrollView>;
+  <KeyboardAwareScrollView
+    navigation={navigation}
+    contentContainerStyle={{
+      flex: 1,
+      flexDirection: "column"
+    }}
+  >
+    <ScrollView style={{ flex: 1 }}>
+      <EntityPreview type="OBJECTIVE" entity={mockObjective} />
+      <Text>
+        {navigation.state.params.notification_id}
+      </Text>
+      {mockComments.map(comment => <Comment {...comment} key={comment.id} />)}
+    </ScrollView>
+    <PostCommentContainer>
+      <CommentInput />
+    </PostCommentContainer>
+  </KeyboardAwareScrollView>;
 
 CommentOverview.navigationOptions = ({ navigation, screenProps }) => {
   return {
