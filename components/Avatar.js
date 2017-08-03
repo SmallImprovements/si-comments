@@ -8,5 +8,4 @@ export default (Avatar = styled.Image`
 	border-radius: ${AVATAR_SIZE / 2}px;
 	width: ${AVATAR_SIZE}px;
 	height: ${AVATAR_SIZE}px;
-	margin-right: 10px;
 `);
