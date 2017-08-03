@@ -9,7 +9,7 @@ const AuthorContainer = styled.View`
 	flex: 1;
 	flex-direction: row;
 	align-items: center;
-	padding: ${standardPadding * 0.5}px 0;
+	padding: ${standardPadding * 0.25}px 0;
 `;
 export default function Author({ authorName, imageSource, avatarUrl }) {
 	return (
