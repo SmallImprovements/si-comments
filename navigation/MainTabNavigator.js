@@ -2,14 +2,19 @@ import React from "react";
 import { Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { TabNavigator, TabBarBottom } from "react-navigation";
+import http from "../services/auth";
 
 import Colors from "../constants/Colors";
 
 import NotificationsScreen from "../screens/NotificationsScreen";
 import SettingsScreen from "../screens/SettingsScreen";
+import LoginScreen from "../screens/LoginScreen";
 
 export default TabNavigator(
   {
+    Login: {
+      screen: LoginScreen
+    },
     Notifications: {
       screen: NotificationsScreen
     },
@@ -49,6 +54,6 @@ export default TabNavigator(
     tabBarPosition: "bottom",
     animationEnabled: false,
     swipeEnabled: true,
-    initialRouteName: "Notifications"
+    initialRouteName: http.isLoggedIn() ? "Notifications" : "Login"
   }
 );
