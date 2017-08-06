@@ -10,11 +10,12 @@ const { standardPadding, commentBorder, commentBackgroundColour } = styleVars;
 const CommentContainer = styled.View`
 	border-radius: 3px;
 	margin-right: 10px;
-
 	flex-direction: row;
 	padding: ${standardPadding * 0.5}px 0;
 	border: ${commentBorder};
+	margin-top: -1px;
 	background-color: ${commentBackgroundColour};
+	width: 100%;
 `;
 
 const CommentContentContainer = styled.View`
