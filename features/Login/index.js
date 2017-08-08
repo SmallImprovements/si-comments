@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, Button, TextInput } from "react-native";
+import StyledInput from "../../components/StyledInput";
 
 import auth from "../../services/auth";
 
@@ -27,7 +28,7 @@ export default class Login extends Component {
 				<View>
 					<Text>Email Address</Text>
 					<View>
-						<TextInput
+						<StyledInput
 							onChange={onChange}
 							value={email}
 							placeholder="Your email"
