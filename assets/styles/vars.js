@@ -9,5 +9,12 @@ export default (styleVars = {
 	cardMargin: 10,
 	cardBackgroundColor: "white",
 	cardBorderRadius: 3,
-	cardBorderWidth: 1
+	cardBorderWidth: 1,
+
+	fontSizeS: 13,
+	fontSize: 15,
+	fontSizeL: 18,
+	fontSizeXL: 22,
+	fontSizeXXL: 26,
+	fontSizeJumbo: 60
 });
