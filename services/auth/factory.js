@@ -1,15 +1,5 @@
 import { forEach } from "lodash/fp";
 
-/*
-    Note to self:
-    gernot basically explained that we use this 'state' internally,
-    and we expose methods like getUser() that you can import and do http.getUser();
-
-    So we want to keep using this state object inside it.
-
-    Secondarily, we want to wrap our component with withCurrentUser(see GmailConversationSideBar). So that it's a hoc that provides the current user
-    that will listen for changes
-*/
 const BASE_URL = "http://localhost:8080";
 export default function auth(http) {
     const state = {
@@ -30,14 +20,11 @@ export default function auth(http) {
     const authChangeListeners = [];
 
     function getUser() {
-        // return global.user;
         return state.user;
     }
 
     function setUser(user) {
         state.user = user;
-        // global.user = user;
-        // console.log(global.user);
         return user;
     }
 
@@ -59,15 +46,16 @@ export default function auth(http) {
         return http.get("/api/v2/users/me").then(
             res => {
                 const user = res.data;
-                console.log(user);
                 setUser(user);
-                return api.replacements
-                    .getGmailReplacements()
-                    .then(replacements => {
-                        setReplacements(replacements);
-                        notifyAuthChangeListeners();
-                        return { user, status: "OK" };
-                    });
+                notifyAuthChangeListeners();
+                return { user, status: "OK" };
+                // return api.replacements
+                //     .getGmailReplacements()
+                //     .then(replacements => {
+                //         setReplacements(replacements);
+                //         notifyAuthChangeListeners();
+                //         return { user, status: "OK" };
+                //     });
             },
             err => ({ err, status: "ERROR" })
         );
@@ -89,6 +77,7 @@ export default function auth(http) {
         if (!tokenProvider || !tokenProvider.requestToken) {
             throw new Error("No valid tokenProvider specified");
         }
+        // @todo this shouldn't be set here
         http.defaults.baseURL = BASE_URL;
 
         return requestToken(USER_EMAIL)
@@ -103,7 +92,10 @@ export default function auth(http) {
             .get("/api/external-services/token-dev", {
                 params: { loginName: USER_EMAIL }
             })
-            .then(res => res.data.access_token);
+            .then(
+                res => res.data.access_token,
+                err => (err, (status: "ERROR"))
+            );
     }
 
     function logout() {
@@ -121,8 +113,7 @@ export default function auth(http) {
     }
 
     function isLoggedIn() {
-        return !!global.user;
-        // return !!state.user;
+        return !!state.user;
     }
 
     function onAuthChange(cb) {
@@ -136,6 +127,7 @@ export default function auth(http) {
     }
 
     function notifyAuthChangeListeners() {
+        console.log("notifying change liseners");
         forEach(
             listener => listener(getUser(), getReplacements()),
             authChangeListeners
