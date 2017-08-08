@@ -83,8 +83,6 @@ export default function auth(http) {
         return requestToken(USER_EMAIL)
             .then(loginWithToken)
             .catch(err => ({ err, status: "ERROR" }));
-
-        return loginWithToken;
     }
 
     function requestToken(USER_EMAIL) {
