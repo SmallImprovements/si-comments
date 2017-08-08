@@ -2,11 +2,10 @@ import React, { Component } from "react";
 import { StackNavigator } from "react-navigation";
 import MainTabNavigator from "../MainTabNavigator";
 import LoginScreen from "../../screens/LoginScreen";
-// import withCurrentUser from "../services/hoc/withCurrentUser";
 
-const RootStackNavigator = ({ initialRouteName, screenProps }) => {
+function RootStackNavigator({ initialRouteName, screenProps, currentUser }) {
   const stackNavigatorConfigs = {
-    initialRouteName,
+    initialRouteName: currentUser ? "Main" : "Login",
     navigationOptions: () => ({
       headerTitleStyle: {
         fontWeight: "normal"
@@ -24,15 +23,10 @@ const RootStackNavigator = ({ initialRouteName, screenProps }) => {
   };
   const CustomNavigator = StackNavigator(routeConfigs, stackNavigatorConfigs);
   return <CustomNavigator screenProps={screenProps} />;
-};
+}
 
 export default function RootNavigator({ currentUser, screenProps }) {
-  console.log(currentUser);
-  const initialRouteName = currentUser ? "Main" : "Login";
   return (
-    <RootStackNavigator
-      screenProps={screenProps}
-      initialRouteName={initialRouteName}
-    />
+    <RootStackNavigator screenProps={screenProps} currentUser={currentUser} />
   );
 }
