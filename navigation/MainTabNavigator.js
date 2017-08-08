@@ -8,13 +8,9 @@ import Colors from "../constants/Colors";
 
 import NotificationsScreen from "../screens/NotificationsScreen";
 import SettingsScreen from "../screens/SettingsScreen";
-import LoginScreen from "../screens/LoginScreen";
 
 export default TabNavigator(
   {
-    Login: {
-      screen: LoginScreen
-    },
     Notifications: {
       screen: NotificationsScreen
     },
@@ -54,6 +50,6 @@ export default TabNavigator(
     tabBarPosition: "bottom",
     animationEnabled: false,
     swipeEnabled: true,
-    initialRouteName: http.isLoggedIn() ? "Notifications" : "Login"
+    initialRouteName: "Notifications"
   }
 );
