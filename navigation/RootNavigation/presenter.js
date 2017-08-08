@@ -10,7 +10,8 @@ function RootStackNavigator({ initialRouteName, screenProps, currentUser }) {
       headerTitleStyle: {
         fontWeight: "normal"
       }
-    })
+    }),
+    headerMode: currentUser ? "screen" : "none"
   };
 
   const routeConfigs = {
