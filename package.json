@@ -22,6 +22,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-19.0.0.tar.gz",
     "react-native-keyboard-aware-scroll-view": "^0.2.9",
     "react-navigation": "^1.0.0-beta.12",
+    "recompose": "^0.24.0",
     "styled-components": "^2.1.1"
   },
   "devDependencies": {
