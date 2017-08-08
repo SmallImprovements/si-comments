@@ -1,6 +1,6 @@
-import { Component, createElement } from "react";
-import { hoistStatics } from "recompose";
-import auth from "../auth";
+import { Component, createElement } from 'react';
+import { hoistStatics } from 'recompose';
+import auth from '../auth';
 
 export default function withCurrentUser(component) {
     const factory = comp => {
@@ -9,17 +9,15 @@ export default function withCurrentUser(component) {
                 super(props);
                 this.state = {
                     currentUser: auth.getUser(),
-                    replacements: auth.getReplacements()
+                    replacements: auth.getReplacements(),
                 };
                 this.listener = null;
             }
 
             componentWillMount() {
-                this.listener = auth.onAuthChange(
-                    (currentUser, replacements) => {
-                        this.setState({ currentUser, replacements });
-                    }
-                );
+                this.listener = auth.onAuthChange((currentUser, replacements) => {
+                    this.setState({ currentUser, replacements });
+                });
             }
 
             componentWillUnmount() {
@@ -34,7 +32,7 @@ export default function withCurrentUser(component) {
                 return createElement(comp, {
                     ...this.props,
                     currentUser,
-                    replacements
+                    replacements,
                 });
             }
         }

@@ -1,7 +1,7 @@
-import React from "react";
-import { TextInput } from "react-native";
-import styled from "styled-components/native";
-import styleVars from "../assets/styles/vars";
+import React from 'react';
+import { TextInput } from 'react-native';
+import styled from 'styled-components/native';
+import styleVars from '../assets/styles/vars';
 
 const { standardPadding } = styleVars;
 

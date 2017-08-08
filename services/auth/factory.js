@@ -1,9 +1,7 @@
-import { forEach } from "lodash/fp";
+import { forEach } from 'lodash/fp';
 
 const IS_REMOTE_TESTING = true;
-const BASE_URL = IS_REMOTE_TESTING
-    ? "http://192.168.1.25:8080"
-    : "http://localhost:8080";
+const BASE_URL = IS_REMOTE_TESTING ? 'http://192.168.1.25:8080' : 'http://localhost:8080';
 
 export default function auth(http) {
     const state = {
@@ -11,14 +9,14 @@ export default function auth(http) {
         tokenProvider: {
             requestToken: () =>
                 http
-                    .get("/api/external-services/token-dev", {
-                        params: { loginName: "demo@example.com" }
+                    .get('/api/external-services/token-dev', {
+                        params: { loginName: 'demo@example.com' },
                     })
                     .then(res => res.data.access_token),
             getStoredToken: () => Promise.resolve(null),
-            removeToken: () => Promise.resolve()
+            removeToken: () => Promise.resolve(),
         },
-        replacements: {}
+        replacements: {},
     };
 
     const authChangeListeners = [];
@@ -47,12 +45,12 @@ export default function auth(http) {
 
     function loginWithToken(token) {
         setAuthorizationHeader(token);
-        return http.get("/api/v2/users/me").then(
+        return http.get('/api/v2/users/me').then(
             res => {
                 const user = res.data;
                 setUser(user);
                 notifyAuthChangeListeners();
-                return { user, status: "OK" };
+                return { user, status: 'OK' };
                 // return api.replacements
                 //     .getGmailReplacements()
                 //     .then(replacements => {
@@ -61,43 +59,38 @@ export default function auth(http) {
                 //         return { user, status: "OK" };
                 //     });
             },
-            err => ({ err, status: "ERROR" })
+            err => ({ err, status: 'ERROR' })
         );
     }
 
     function tryLoginFromCache(email) {
         const { tokenProvider } = state;
         if (!tokenProvider || !tokenProvider.getStoredToken) {
-            throw new Error("No valid tokenProvider specified");
+            throw new Error('No valid tokenProvider specified');
         }
 
         return tokenProvider.getStoredToken(email).then(token => {
-            return token ? loginWithToken(token) : { user: null, status: "OK" };
+            return token ? loginWithToken(token) : { user: null, status: 'OK' };
         });
     }
 
     function login(USER_EMAIL) {
         const { tokenProvider } = state;
         if (!tokenProvider || !tokenProvider.requestToken) {
-            throw new Error("No valid tokenProvider specified");
+            throw new Error('No valid tokenProvider specified');
         }
         // @todo this shouldn't be set here
         http.defaults.baseURL = BASE_URL;
 
-        return requestToken(USER_EMAIL)
-            .then(loginWithToken)
-            .catch(err => ({ err, status: "ERROR" }));
+        return requestToken(USER_EMAIL).then(loginWithToken).catch(err => ({ err, status: 'ERROR' }));
     }
 
     function requestToken(USER_EMAIL) {
         return http
-            .get("/api/external-services/token-dev", {
-                params: { loginName: USER_EMAIL }
+            .get('/api/external-services/token-dev', {
+                params: { loginName: USER_EMAIL },
             })
-            .then(
-                res => res.data.access_token,
-                err => (err, (status: "ERROR"))
-            );
+            .then(res => res.data.access_token, err => (err, (status: 'ERROR')));
     }
 
     function logout() {
@@ -109,7 +102,7 @@ export default function auth(http) {
         notifyAuthChangeListeners();
 
         if (!tokenProvider || !tokenProvider.removeToken) {
-            throw new Error("No valid tokenProvider specified");
+            throw new Error('No valid tokenProvider specified');
         }
         return tokenProvider.removeToken(user.email);
     }
@@ -129,11 +122,8 @@ export default function auth(http) {
     }
 
     function notifyAuthChangeListeners() {
-        console.log("notifying change liseners");
-        forEach(
-            listener => listener(getUser(), getReplacements()),
-            authChangeListeners
-        );
+        console.log('notifying change liseners');
+        forEach(listener => listener(getUser(), getReplacements()), authChangeListeners);
     }
 
     function setAuthorizationHeader(token) {
@@ -150,6 +140,6 @@ export default function auth(http) {
         getReplacements,
         setUser,
         onAuthChange,
-        useTokenProvider
+        useTokenProvider,
     };
 }
