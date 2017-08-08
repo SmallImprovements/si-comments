@@ -14,7 +14,16 @@ const BASE_URL = "http://localhost:8080";
 export default function auth(http) {
     const state = {
         user: null,
-        tokenProvider: null,
+        tokenProvider: {
+            requestToken: () =>
+                http
+                    .get("/api/external-services/token-dev", {
+                        params: { loginName: "demo@example.com" }
+                    })
+                    .then(res => res.data.access_token),
+            getStoredToken: () => Promise.resolve(null),
+            removeToken: () => Promise.resolve()
+        },
         replacements: {}
     };
 
