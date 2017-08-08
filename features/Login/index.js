@@ -2,15 +2,15 @@ import React, { Component } from "react";
 import { View, Text, Button, TextInput } from "react-native";
 
 import auth from "../../services/auth";
-import http from "../../services/http";
 
 const BASE_URL = "http://localhost:8080";
 const USER_EMAIL = "demo@example.com";
+
 export default class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			email: "demo@example.com"
+			email: USER_EMAIL
 		};
 	}
 	render() {
@@ -27,7 +27,11 @@ export default class Login extends Component {
 				<View>
 					<Text>Email Address</Text>
 					<View>
-						<TextInput onChange={onChange} value={email} />
+						<TextInput
+							onChange={onChange}
+							value={email}
+							placeholder="Your email"
+						/>
 					</View>
 				</View>
 
