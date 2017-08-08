@@ -1,6 +1,10 @@
 import { forEach } from "lodash/fp";
 
-const BASE_URL = "http://localhost:8080";
+const IS_REMOTE_TESTING = true;
+const BASE_URL = IS_REMOTE_TESTING
+    ? "http://192.168.1.25:8080"
+    : "http://localhost:8080";
+
 export default function auth(http) {
     const state = {
         user: null,
