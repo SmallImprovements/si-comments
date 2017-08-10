@@ -17,7 +17,9 @@ export default class Login extends Component {
     }
     logUserIn() {
         this.setState({ isLoggingIn: true });
-        auth.login(this.state.email).then(err => this.setState({ isLoggingIn: false }));
+        auth.login(this.state.email).then(err => {
+            this.setState({ isLoggingIn: false });
+        });
     }
     render() {
         const { currentUser } = this.props;
