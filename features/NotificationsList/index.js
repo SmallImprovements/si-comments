@@ -6,7 +6,7 @@ import { ActivityIndicator } from 'react-native';
 
 export default withData({
   resolve: {
-    notifications: () => getNotifications(),
+    notifications: getNotifications,
   },
   pendingComponent: () => <ActivityIndicator />,
 })(NotificationsList);
