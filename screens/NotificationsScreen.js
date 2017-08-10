@@ -1,20 +1,20 @@
-import React from "react";
-import { StackNavigator } from "react-navigation";
+import React from 'react';
+import { StackNavigator } from 'react-navigation';
 
-import CommentsList from "../features/CommentsList";
-import NotificationsList from "../features/NotificationsList";
+import CommentsList from '../features/CommentsList';
+import NotificationsList from '../features/NotificationsList';
 
 const NotificationsScreen = StackNavigator({
-  NotificationsList: {
-    screen: NotificationsList
-  },
-  CommentsList: {
-    screen: CommentsList
-  }
+    NotificationsList: {
+        screen: NotificationsList,
+    },
+    CommentsList: {
+        screen: CommentsList,
+    },
 });
 
 NotificationsScreen.navigationOptions = {
-  header: null
+    header: null,
 };
 
 export default NotificationsScreen;

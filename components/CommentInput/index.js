@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components/native";
-import { View, TextInput, Button } from "react-native";
-import styleVars from "../../assets/styles/vars";
+import React from 'react';
+import styled from 'styled-components/native';
+import { View, TextInput, Button } from 'react-native';
+import styleVars from '../../assets/styles/vars';
 
 const { standardPadding } = styleVars;
 
@@ -15,15 +15,15 @@ const CommentInputContainer = styled.View`
   align-items: center;
 `;
 const CommentInputField = styled.TextInput`
-	padding: ${standardPadding * 0.75}px;
-	flex-grow: 1;
+    padding: ${standardPadding * 0.75}px;
+    flex-grow: 1;
 `;
 
 export default function CommentInput() {
-	return (
-		<CommentInputContainer>
-			<CommentInputField placeholder="Write a comment..." />
-			<Button title="Post" onPress={() => console.log("pressed")} />
-		</CommentInputContainer>
-	);
+    return (
+        <CommentInputContainer>
+            <CommentInputField placeholder="Write a comment..." />
+            <Button title="Post" onPress={() => console.log('pressed')} />
+        </CommentInputContainer>
+    );
 }
