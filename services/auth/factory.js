@@ -45,22 +45,24 @@ export default function auth(http) {
 
     function loginWithToken(token) {
         setAuthorizationHeader(token);
-        return http.get('/api/v2/users/me').then(
-            res => {
-                const user = res.data;
-                setUser(user);
-                notifyAuthChangeListeners();
-                return { user, status: 'OK' };
-                // return api.replacements
-                //     .getGmailReplacements()
-                //     .then(replacements => {
-                //         setReplacements(replacements);
-                //         notifyAuthChangeListeners();
-                //         return { user, status: "OK" };
-                //     });
-            },
-            err => ({ err, status: 'ERROR' })
-        );
+        return http.get('/api/v2/users/me').then(res => {
+            const user = res.data;
+            if (!user) {
+                throw new Error('Failed at LoginWithtoken');
+            }
+
+            setUser(user);
+            notifyAuthChangeListeners();
+            // console.log('loginWithToken', res);
+            return { user, status: 'OK' };
+            // return api.replacements
+            //     .getGmailReplacements()
+            //     .then(replacements => {
+            //         setReplacements(replacements);
+            //         notifyAuthChangeListeners();
+            //         return { user, status: "OK" };
+            //     });
+        });
     }
 
     function tryLoginFromCache(email) {
@@ -81,8 +83,7 @@ export default function auth(http) {
         }
         // @todo this shouldn't be set here
         http.defaults.baseURL = BASE_URL;
-
-        return requestToken(USER_EMAIL).then(loginWithToken).catch(err => ({ err, status: 'ERROR' }));
+        return requestToken(USER_EMAIL).then(loginWithToken);
     }
 
     function requestToken(USER_EMAIL) {
@@ -90,7 +91,9 @@ export default function auth(http) {
             .get('/api/external-services/token-dev', {
                 params: { loginName: USER_EMAIL },
             })
-            .then(res => res.data.access_token, err => (err, (status: 'ERROR')));
+            .then(res => {
+                return res.data.access_token;
+            });
     }
 
     function logout() {
@@ -122,7 +125,6 @@ export default function auth(http) {
     }
 
     function notifyAuthChangeListeners() {
-        console.log('notifying change liseners');
         forEach(listener => listener(getUser(), getReplacements()), authChangeListeners);
     }
 
