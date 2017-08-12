@@ -4,28 +4,30 @@ import { View, Text, TouchableHighlight } from 'react-native';
 import styleVars from '../../assets/styles/vars';
 import Avatar from '../Avatar';
 import Flex from '../Flex';
-
+import HTMLView from 'react-native-htmlview';
 const { standardPadding, commentBorder, commentBackgroundColour } = styleVars;
 
 const CommentContainer = styled.View`
     border-radius: 3px;
     margin-right: 10px;
     flex-direction: row;
-    padding: ${standardPadding * 0.5}px 0;
+    padding: ${standardPadding * 0.5}px;
     border: ${commentBorder};
     margin-top: -1px;
     background-color: ${commentBackgroundColour};
     width: 100%;
 `;
 
-const CommentContentContainer = styled.View`
+const CommentContent = styled.View`
     flex-shrink: 1;
-    padding: 0 ${standardPadding * 0.5}px;
+    margin-left: ${standardPadding * 0.5}px;
 `;
+
+// const CommentContentContainer = styled.View`padding: 0 ${standardPadding * 0.5}px;`;
 
 const LightGrayText = styled.Text`color: gray;`;
 
-const CommentText = styled.Text`margin-bottom: ${standardPadding * 0.5}px;`;
+const CommentText = styled.View`margin-bottom: ${standardPadding * 0.5}px;`;
 
 export default function Comment(props) {
     const { moduleType } = props;
@@ -41,17 +43,18 @@ export default function Comment(props) {
     return (
         <CommentContainer>
             <Avatar logoUrl={logo} />
-            <CommentContentContainer>
+            <CommentContent>
                 <CommentText>
                     <Text style={{ fontWeight: 'bold' }}>
                         {name}
                     </Text>
-                    {body}
+                    <HTMLView value={body ? body : 'Empty comment'} />
                 </CommentText>
+
                 <TouchableHighlight onPress={() => console.log('clicked Reply')}>
                     <LightGrayText>Reply</LightGrayText>
                 </TouchableHighlight>
-            </CommentContentContainer>
+            </CommentContent>
         </CommentContainer>
     );
 }
