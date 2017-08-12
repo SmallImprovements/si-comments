@@ -6,6 +6,7 @@ import Comment from '../../components/Comment';
 import EntityPreview from '../../components/EntityPreview';
 import { mockComments, mockObjective } from '../../api/mockData';
 import styled from 'styled-components/native';
+import CommentsList from '../CommentsList';
 
 export default function EntityCommentView(props) {
     const { navigation } = props;
@@ -21,7 +22,7 @@ export default function EntityCommentView(props) {
         >
             <ScrollView style={{ flex: 1 }}>
                 <EntityPreview type={moduleType} entityId={entityId} />
-                {mockComments.map(comment => <Comment {...comment} key={comment.id} />)}
+                <CommentsList entityId={entityId} moduleType={moduleType} />
             </ScrollView>
             <PostCommentContainer>
                 <CommentInput />
