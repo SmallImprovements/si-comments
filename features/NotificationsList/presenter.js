@@ -16,7 +16,7 @@ export default class NotificationsList extends Component {
     }
 
     onSelect(navigation, rowData) {
-        navigation.navigate('CommentsList', {
+        navigation.navigate('EntityCommentView', {
             moduleType: rowData.module,
             entityId: rowData.entityId,
         });

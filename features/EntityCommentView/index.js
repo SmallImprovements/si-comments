@@ -7,7 +7,7 @@ import EntityPreview from '../../components/EntityPreview';
 import { mockComments, mockObjective } from '../../api/mockData';
 import styled from 'styled-components/native';
 
-export default function CommentsList(props) {
+export default function EntityCommentView(props) {
     const { navigation } = props;
     const PostCommentContainer = styled.View`flex-grow: 0;`;
     const { moduleType, entityId } = navigation.state.params;
@@ -30,8 +30,8 @@ export default function CommentsList(props) {
     );
 }
 
-CommentsList.navigationOptions = ({ navigation, screenProps }) => {
+EntityCommentView.navigationOptions = ({ navigation, screenProps }) => {
     return {
-        title: 'Comment',
+        title: 'Comments',
     };
 };
