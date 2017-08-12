@@ -12,6 +12,14 @@ export default class NotificationsList extends Component {
         this.state = {
             dataSource: ds.cloneWithRows(filteredNotifications),
         };
+        this.onSelect = this.onSelect.bind(this);
+    }
+
+    onSelect(navigation, rowData) {
+        navigation.navigate('CommentsList', {
+            moduleType: rowData.module,
+            entityId: rowData.entityId,
+        });
     }
     render() {
         const { navigation } = this.props;
@@ -20,18 +28,15 @@ export default class NotificationsList extends Component {
                 navigation={navigation}
                 dataSource={this.state.dataSource}
                 style={{ backgroundColor: '#fff' }}
-                renderRow={rowData =>
-                    <NotificationItem
-                        key={rowData.id}
-                        text={rowData.type}
-                        onSelect={() => {
-                            navigation.navigate('CommentsList', {
-                                navigation_id: rowData.entityId,
-                                module: rowData.module,
-                                entityId: rowData.entityId,
-                            });
-                        }}
-                    />}
+                renderRow={rowData => {
+                    return (
+                        <NotificationItem
+                            key={rowData.id}
+                            text={rowData.type}
+                            onSelect={() => this.onSelect(navigation, rowData)}
+                        />
+                    );
+                }}
             />
         );
     }
