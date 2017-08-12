@@ -26,7 +26,9 @@ export default class NotificationsList extends Component {
                         text={rowData.type}
                         onSelect={() => {
                             navigation.navigate('CommentsList', {
-                                notification_id: rowData.entityId,
+                                navigation_id: rowData.entityId,
+                                module: rowData.module,
+                                entityId: rowData.entityId,
                             });
                         }}
                     />}
