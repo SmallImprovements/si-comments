@@ -7,8 +7,10 @@ import EntityPreview from '../../components/EntityPreview';
 import { mockComments, mockObjective } from '../../api/mockData';
 import styled from 'styled-components/native';
 
-export default function CommentsList({ navigation }) {
+export default function CommentsList(props) {
+    const { navigation } = props;
     const PostCommentContainer = styled.View`flex-grow: 0;`;
+    const { notification_id, module, entityId } = navigation.state.params;
     return (
         <KeyboardAwareScrollView
             navigation={navigation}
@@ -18,10 +20,7 @@ export default function CommentsList({ navigation }) {
             }}
         >
             <ScrollView style={{ flex: 1 }}>
-                <EntityPreview type="OBJECTIVE" entity={mockObjective} />
-                <Text>
-                    {navigation.state.params.notification_id}
-                </Text>
+                <EntityPreview type={module} entityId={entityId} />
                 {mockComments.map(comment => <Comment {...comment} key={comment.id} />)}
             </ScrollView>
             <PostCommentContainer>
