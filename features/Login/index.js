@@ -3,6 +3,7 @@ import { View, Text, Button, TextInput, ActivityIndicator, Alert } from 'react-n
 import StyledInput from '../../components/StyledInput';
 import { HeaderOne } from '../../components/Text';
 import auth from '../../services/auth';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const USER_EMAIL = 'demo@example.com';
 
@@ -57,7 +58,13 @@ export default class Login extends Component {
               <ActivityIndicator />
               <Text style={{ textAlign: 'center', marginTop: 20 }}>Logging In...</Text>
             </View>
-          : <View>
+          : <KeyboardAwareScrollView
+              contentContainerStyle={{
+                flex: 1,
+                justifyContent: 'center',
+                height: '100%',
+              }}
+            >
               <HeaderOne style={{ textAlign: 'center', marginBottom: 20 }}>Please Log In</HeaderOne>
               <View>
                 <View>
@@ -73,7 +80,7 @@ export default class Login extends Component {
               <View>
                 <Button onPress={logUserIn} title="Login" />
               </View>
-            </View>}
+            </KeyboardAwareScrollView>}
       </View>
     );
   }
