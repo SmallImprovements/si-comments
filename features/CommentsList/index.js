@@ -10,7 +10,7 @@ import styled from 'styled-components/native';
 export default function CommentsList(props) {
     const { navigation } = props;
     const PostCommentContainer = styled.View`flex-grow: 0;`;
-    const { notification_id, module, entityId } = navigation.state.params;
+    const { moduleType, entityId } = navigation.state.params;
     return (
         <KeyboardAwareScrollView
             navigation={navigation}
@@ -20,7 +20,7 @@ export default function CommentsList(props) {
             }}
         >
             <ScrollView style={{ flex: 1 }}>
-                <EntityPreview type={module} entityId={entityId} />
+                <EntityPreview type={moduleType} entityId={entityId} />
                 {mockComments.map(comment => <Comment {...comment} key={comment.id} />)}
             </ScrollView>
             <PostCommentContainer>
