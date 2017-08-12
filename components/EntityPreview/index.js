@@ -8,9 +8,9 @@ export default function EntityPreview({ type, entityId }) {
     switch (type) {
         case 'OBJECTIVE':
             return <ObjectivePreviewWithData entityId={entityId} />;
-        case 'PRAISE':
+        case 'MESSAGE':
             return <PraisePreviewWithData entityId={entityId} />;
         default:
-            return <PraisePreviewWithData entityId={entityId} />;
+            throw new Error('No ModuleType provided to EntityPreview');
     }
 }

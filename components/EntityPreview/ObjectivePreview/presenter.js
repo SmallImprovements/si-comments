@@ -14,7 +14,7 @@ export default function ObjectivePreview({ objective }) {
 	const { title, icon, cycleName } = objective;
 	return (
 		<TouchableHighlight onPress={showAlert}>
-			<Card>
+			<Card style={{ height: 80 }}>
 				<Flex>
 					<ObjectiveIcon source={require('../../../assets/images/objective_icon.png')} />
 					<View>
