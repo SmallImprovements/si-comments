@@ -15,7 +15,9 @@ export default class Login extends Component {
       isLoggingIn: false,
     };
     this.logUserIn = this.logUserIn.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.focusTextField = this.focusTextField.bind(this);
+    this.inputRefs = {};
   }
   logUserIn() {
     const { email } = this.state;
@@ -29,7 +31,11 @@ export default class Login extends Component {
     });
   }
 
-  handleInputChange(value) {
+  focusTextField(id) {
+    this.inputRefs[id].focus();
+  }
+
+  handleEmailChange(value) {
     this.setState({ email: value });
   }
 
@@ -45,6 +51,32 @@ export default class Login extends Component {
     const { currentUser } = this.props;
     const { email, isLoggingIn, loginError } = this.state;
     const { logUserIn, handleInputChange } = this;
+
+    const emailFieldProps = {
+      onChangeText: this.handleEmailChange,
+      value: email,
+      placeholder: 'Your Email',
+      style: { marginBottom: 20 },
+      autoCapitalize: 'none',
+      autoCorrect: false,
+      keyboardType: 'email-address',
+      returnKeyType: 'next',
+      blurOnSubmit: false,
+      onSubmitEditing: () => {
+        this.focusTextField('passwordField');
+      },
+    };
+
+    const passwordFieldProps = {
+      placeholder: 'Your password',
+      style: { marginBottom: 20 },
+      onSubmitEditing: logUserIn,
+      secureTextEntry: true,
+      blurOnSubmit: true,
+      keyboardType: 'default',
+      returnKeyType: 'go',
+      innerRef: input => (this.inputRefs['passwordField'] = input),
+    };
     return (
       <View
         style={{
@@ -68,12 +100,8 @@ export default class Login extends Component {
               <HeaderOne style={{ textAlign: 'center', marginBottom: 20 }}>Please Log In</HeaderOne>
               <View>
                 <View>
-                  <StyledInput
-                    onChangeText={this.handleInputChange}
-                    value={email}
-                    placeholder="Your email"
-                    style={{ marginBottom: 20 }}
-                  />
+                  <StyledInput {...emailFieldProps} />
+                  <StyledInput {...passwordFieldProps} />
                 </View>
               </View>
 
