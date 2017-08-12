@@ -27,17 +27,26 @@ const LightGrayText = styled.Text`color: gray;`;
 
 const CommentText = styled.Text`margin-bottom: ${standardPadding * 0.5}px;`;
 
-export default function Comment({ content, author, num_likes_this }) {
-    const { imageSource, authorName } = author;
+export default function Comment(props) {
+    const { moduleType } = props;
+    let commentData = props;
+
+    if (moduleType === 'MESSAGE') {
+        commentData = transformPraiseCommentModel(commentData);
+    }
+
+    const { body } = commentData;
+    const { logo, name } = commentData.author;
+
     return (
         <CommentContainer>
-            <Avatar source={imageSource} />
+            <Avatar logoUrl={logo} />
             <CommentContentContainer>
                 <CommentText>
                     <Text style={{ fontWeight: 'bold' }}>
-                        {authorName}
+                        {name}
                     </Text>
-                    {content}
+                    {body}
                 </CommentText>
                 <TouchableHighlight onPress={() => console.log('clicked Reply')}>
                     <LightGrayText>Reply</LightGrayText>
@@ -45,4 +54,12 @@ export default function Comment({ content, author, num_likes_this }) {
             </CommentContentContainer>
         </CommentContainer>
     );
+}
+
+function transformPraiseCommentModel(data) {
+    const { message } = data;
+    return {
+        body: message,
+        ...data,
+    };
 }
