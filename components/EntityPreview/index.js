@@ -4,8 +4,8 @@ import Card from '../Card';
 import ObjectivePreviewWithData from './ObjectivePreview';
 import PraisePreviewWithData from './PraisePreview';
 
-export default function EntityPreview({ type, entityId }) {
-    switch (type) {
+export default function EntityPreview({ moduleType, entityId }) {
+    switch (moduleType) {
         case 'OBJECTIVE':
             return <ObjectivePreviewWithData entityId={entityId} />;
         case 'MESSAGE':
