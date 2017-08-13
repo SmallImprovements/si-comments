@@ -65,6 +65,7 @@ export default class Login extends Component {
       onSubmitEditing: () => {
         this.focusTextField('passwordField');
       },
+      clearButtonMode: 'while-editing',
     };
 
     const passwordFieldProps = {
@@ -96,6 +97,7 @@ export default class Login extends Component {
                 justifyContent: 'center',
                 height: '100%',
               }}
+              keyboardShouldPersistTaps="always"
             >
               <HeaderOne style={{ textAlign: 'center', marginBottom: 20 }}>Please Log In</HeaderOne>
               <View>
