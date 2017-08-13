@@ -10,7 +10,6 @@ import CommentsList from '../CommentsList';
 export default function EntityCommentView({ navigation }) {
     const PostCommentContainer = styled.View`flex-grow: 0;`;
     const { moduleType, entityId } = navigation.state.params;
-    console.log(navigation.state.params);
     const entityProps = {
         moduleType,
         entityId,
