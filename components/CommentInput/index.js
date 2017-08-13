@@ -51,7 +51,7 @@ export default class CommentInput extends Component {
 
   onSubmit() {
     const { comment } = this.state;
-    const { entityId, moduleType } = this.props;
+    const { entityId, moduleType, doGetComments } = this.props;
     const requestConfig = {
       entityId,
       moduleType,
@@ -59,7 +59,7 @@ export default class CommentInput extends Component {
     };
 
     this.setState({ isSubmitting: true });
-    postComment(requestConfig).then(this.onSubmitFinished());
+    postComment(requestConfig).then(doGetComments()).then(this.onSubmitFinished());
   }
 
   onSubmitFinished() {
