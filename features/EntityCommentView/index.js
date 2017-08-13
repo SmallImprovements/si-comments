@@ -17,6 +17,7 @@ export default function EntityCommentView({ navigation }) {
     return (
         <KeyboardAwareScrollView
             navigation={navigation}
+            extraHeight={85}
             contentContainerStyle={{
                 flex: 1,
                 flexDirection: 'column',
