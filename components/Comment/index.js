@@ -23,8 +23,6 @@ const CommentContent = styled.View`
     margin-left: ${standardPadding * 0.5}px;
 `;
 
-// const CommentContentContainer = styled.View`padding: 0 ${standardPadding * 0.5}px;`;
-
 const LightGrayText = styled.Text`color: gray;`;
 
 const CommentText = styled.View`margin-bottom: ${standardPadding * 0.5}px;`;
