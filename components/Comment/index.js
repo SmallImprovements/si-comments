@@ -33,13 +33,12 @@ export default function Comment(props) {
     const { moduleType } = props;
     let commentData = props;
 
-    if (moduleType === 'MESSAGE') {
+    if (moduleType === 'MESSAGE' || moduleType === 'PRAISE') {
         commentData = transformPraiseCommentModel(commentData);
     }
 
     const { body } = commentData;
     const { logo, name } = commentData.author;
-
     return (
         <CommentContainer>
             <Avatar logoUrl={logo} />
