@@ -22,6 +22,7 @@ export default function EntityCommentView({ navigation }) {
                 flex: 1,
                 flexDirection: 'column',
             }}
+            keyboardShouldPersistTaps="always"
         >
             <ScrollView style={{ flex: 1 }}>
                 <EntityPreview {...entityProps} />
