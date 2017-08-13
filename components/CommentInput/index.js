@@ -41,9 +41,7 @@ export default class CommentInput extends Component {
     const requestConfig = {
       entityId,
       moduleType,
-      data: {
-        comment,
-      },
+      comment,
     };
     this.setState({ isSubmitting: true });
     postComment(requestConfig).then(this.setState({ isSubmitting: false })).catch();
