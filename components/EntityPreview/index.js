@@ -5,6 +5,14 @@ import ObjectivePreviewWithData from './ObjectivePreview';
 import PraisePreviewWithData from './PraisePreview';
 
 export default function EntityPreview({ moduleType, entityId }) {
+    return (
+        <Card style={{ height: 80 }}>
+            {chooseTemplate(moduleType, entityId)}
+        </Card>
+    );
+}
+
+function chooseTemplate(moduleType, entityId) {
     switch (moduleType) {
         case 'OBJECTIVE':
             return <ObjectivePreviewWithData entityId={entityId} />;

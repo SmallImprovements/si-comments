@@ -7,18 +7,16 @@ export default function PraisePreview({ praise }) {
 	const { title, author } = praise;
 	return (
 		<TouchableHighlight onPress={showAlert}>
-			<Card style={{ height: 80 }}>
-				<Flex>
-					<View>
-						<Text style={{ fontWeight: 'bold' }}>
-							{title}
-						</Text>
-						<Text>
-							Written by: {author.name}
-						</Text>
-					</View>
-				</Flex>
-			</Card>
+			<Flex>
+				<View>
+					<Text style={{ fontWeight: 'bold' }}>
+						{title}
+					</Text>
+					<Text>
+						Written by: {author.name}
+					</Text>
+				</View>
+			</Flex>
 		</TouchableHighlight>
 	);
 }

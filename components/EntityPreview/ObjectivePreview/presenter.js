@@ -14,20 +14,18 @@ export default function ObjectivePreview({ objective }) {
 	const { title, icon, cycleName } = objective;
 	return (
 		<TouchableHighlight onPress={showAlert}>
-			<Card style={{ height: 80 }}>
-				<Flex>
-					<ObjectiveIcon source={require('../../../assets/images/objective_icon.png')} />
-					<View>
-						<Text style={{ fontWeight: 'bold' }}>
-							{title}
-						</Text>
+			<Flex>
+				<ObjectiveIcon source={require('../../../assets/images/objective_icon.png')} />
+				<View>
+					<Text style={{ fontWeight: 'bold' }}>
+						{title}
+					</Text>
 
-						<Text style={{ color: '#777' }}>
-							{cycleName}
-						</Text>
-					</View>
-				</Flex>
-			</Card>
+					<Text style={{ color: '#777' }}>
+						{cycleName}
+					</Text>
+				</View>
+			</Flex>
 		</TouchableHighlight>
 	);
 }
