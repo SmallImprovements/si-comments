@@ -4,14 +4,17 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import CommentInput from '../../components/CommentInput';
 import Comment from '../../components/Comment';
 import EntityPreview from '../../components/EntityPreview';
-import { mockComments, mockObjective } from '../../api/mockData';
 import styled from 'styled-components/native';
 import CommentsList from '../CommentsList';
 
-export default function EntityCommentView(props) {
-    const { navigation } = props;
+export default function EntityCommentView({ navigation }) {
     const PostCommentContainer = styled.View`flex-grow: 0;`;
     const { moduleType, entityId } = navigation.state.params;
+    console.log(navigation.state.params);
+    const entityProps = {
+        moduleType,
+        entityId,
+    };
     return (
         <KeyboardAwareScrollView
             navigation={navigation}
@@ -21,11 +24,11 @@ export default function EntityCommentView(props) {
             }}
         >
             <ScrollView style={{ flex: 1 }}>
-                <EntityPreview type={moduleType} entityId={entityId} />
-                <CommentsList entityId={entityId} moduleType={moduleType} />
+                <EntityPreview {...entityProps} />
+                <CommentsList {...entityProps} />
             </ScrollView>
             <PostCommentContainer>
-                <CommentInput />
+                <CommentInput {...entityProps} />
             </PostCommentContainer>
         </KeyboardAwareScrollView>
     );
