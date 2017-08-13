@@ -74,17 +74,21 @@ export default class CommentInput extends Component {
   render() {
     const { inputRef } = this.props;
     const { isSubmitting, comment } = this.state;
+
+    const inputFieldProps = {
+      editable: !isSubmitting,
+      placeholder: 'Write a comment...',
+      value: comment,
+      onChangeText: this.handleCommentChange,
+      multiline: true,
+      style: { height: this.state.inputFieldHeight },
+      keyboardType: 'default',
+      onContentSizeChange: this.onContentSizeChange.bind(this),
+      keyboardShouldPersistTaps: 'always',
+    };
     return (
       <CommentInputContainer>
-        <CommentInputField
-          editable={!isSubmitting}
-          placeholder="Write a comment..."
-          value={comment}
-          onChangeText={this.handleCommentChange}
-          multiline={true}
-          style={{ height: this.state.inputFieldHeight }}
-          onContentSizeChange={this.onContentSizeChange.bind(this)}
-        />
+        <CommentInputField {...inputFieldProps} />
         <Button title="Post" onPress={this.onSubmit} disabled={isSubmitting || !comment} />
       </CommentInputContainer>
     );
