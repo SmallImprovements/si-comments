@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components/native';
-import { Text, View, TextInput, Button } from 'react-native';
+import { View, TextInput, Button } from 'react-native';
 import styleVars from '../../assets/styles/vars';
 import { postComment } from '../../services/api';
 
@@ -12,12 +12,17 @@ const CommentInputContainer = styled.View`
   borderColor: lightgray;
   borderLeftWidth: 0;
   borderRightWidth: 0;
+  borderBottomWidth: 0;
   flex-direction: row;
   align-items: center;
+  
 `;
 const CommentInputField = styled.TextInput`
-  padding: ${standardPadding * 0.75}px;
   flex-grow: 1;
+  font-size: 15px;
+  margin-left: ${standardPadding}px;
+  margin-bottom: ${standardPadding}px;
+  margin-top: ${standardPadding}px;
 `;
 
 export default class CommentInput extends Component {
@@ -28,11 +33,20 @@ export default class CommentInput extends Component {
     this.state = {
       comment: null,
       isSubmitting: false,
+      inputFieldHeight: null,
     };
   }
 
   handleCommentChange(value) {
     this.setState({ comment: value });
+  }
+
+  onContentSizeChange(event) {
+    const { contentSize } = event.nativeEvent;
+
+    this.setState({
+      inputFieldHeight: contentSize.height > 200 ? 200 : contentSize.height,
+    });
   }
 
   onSubmit() {
@@ -43,20 +57,35 @@ export default class CommentInput extends Component {
       moduleType,
       comment,
     };
+
     this.setState({ isSubmitting: true });
-    postComment(requestConfig).then(this.setState({ isSubmitting: false })).catch();
+    postComment(requestConfig).then(this.onSubmitFinished());
+  }
+
+  onSubmitFinished() {
+    return setTimeout(
+      function() {
+        this.setState({ isSubmitting: false, comment: null });
+      }.bind(this),
+      1500
+    );
   }
 
   render() {
     const { inputRef } = this.props;
-    const { isSubmitting } = this.state;
+    const { isSubmitting, comment } = this.state;
     return (
       <CommentInputContainer>
-        <CommentInputField placeholder="Write a comment..." onChangeText={this.handleCommentChange} />
-        <Button title="Post" onPress={this.onSubmit} />
-        <Text>
-          {isSubmitting ? 'Submitting' : null}
-        </Text>
+        <CommentInputField
+          editable={!isSubmitting}
+          placeholder="Write a comment..."
+          value={comment}
+          onChangeText={this.handleCommentChange}
+          multiline={true}
+          style={{ height: this.state.inputFieldHeight }}
+          onContentSizeChange={this.onContentSizeChange.bind(this)}
+        />
+        <Button title="Post" onPress={this.onSubmit} disabled={isSubmitting || !comment} />
       </CommentInputContainer>
     );
   }
