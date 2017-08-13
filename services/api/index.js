@@ -41,8 +41,7 @@ export function getComments(entityId, moduleType) {
 	}
 }
 
-export function postPraiseComment(praiseId, data) {
-	console.log(praiseId, data);
+export function postPraiseComment(praiseId, comment) {
 	const config = {
 		headers: {
 			'Content-Type': 'application/json',
@@ -50,7 +49,7 @@ export function postPraiseComment(praiseId, data) {
 	};
 	const dto = {
 		masterMessageId: praiseId,
-		message: data.comment,
+		message: comment,
 		title: 'Re: sdfdf',
 		visibleTo: [],
 	};
@@ -59,39 +58,32 @@ export function postPraiseComment(praiseId, data) {
 		.then(res => res.data, err => ({ err, status: 'ERROR' }));
 }
 
-export function postObjectiveComment(objectiveId, data) {
-	console.log(objectiveId, data);
+export function postObjectiveComment(objectiveId, comment) {
 	const config = {
 		headers: {
 			'Content-Type': 'application/json',
 		},
 	};
 	const dto = {
-		masterMessageId: objectiveId,
-		message: data,
-		title: 'Re: sdfdf',
+		author: '',
+		message: comment,
+		objectiveId: objectiveId,
+		title: 'Feebdack about objective:',
 		visibleTo: [],
 	};
-	// "/objective-cycles/{cycleId}/objectives/{id}/messages"
-	return http.post(`${BASE_URL}/objective-cycles/${cycleId}/objectives/${objectiveId}/messages`, dto, config).then(
-		res => {
-			// console.log(res);
-			return res.data;
-		},
-		err => {
-			console.log(err);
-		}
-	);
+	return http
+		.post(`${BASE_URL}/objectives/${objectiveId}/messages`, dto, config)
+		.then(res => res.data, err => ({ err, status: 'ERROR' }));
 }
 
-export function postComment({ moduleType, entityId, data }) {
+export function postComment({ moduleType, entityId, comment }) {
 	switch (moduleType) {
 		case 'OBJECTIVE':
-			return postObjectiveComment(entityId, data);
+			return postObjectiveComment(entityId, comment);
 		case 'MESSAGE':
-			return postPraiseComment(entityId, data);
+			return postPraiseComment(entityId, comment);
 		case 'PRAISE':
-			return postPraiseComment(entityId, data);
+			return postPraiseComment(entityId, comment);
 		default:
 			throw new Error('No valid  moduleType provided to postComment');
 	}
