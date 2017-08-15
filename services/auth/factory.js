@@ -53,7 +53,6 @@ export default function auth(http) {
 
             setUser(user);
             notifyAuthChangeListeners();
-            // console.log('loginWithToken', res);
             return { user, status: 'OK' };
             // return api.replacements
             //     .getGmailReplacements()
