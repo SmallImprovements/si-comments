@@ -5,21 +5,23 @@ import CommentInput from '../../components/CommentInput';
 import Comment from '../../components/Comment';
 import EntityPreview from '../../components/EntityPreview';
 import styled from 'styled-components/native';
-import CommentsList from '../CommentsList';
+import CommentsList from '../CommentsList/presenter';
 import { getComments } from '../../services/api';
 
 export default class EntityCommentView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            comments: null,
+            comments: [],
         };
+        this.inputRefs = {};
     }
     doGetComments() {
         const { navigation } = this.props;
         const { entityId, moduleType } = navigation.state.params;
         return getComments(entityId, moduleType).then(res => {
             this.setState({ comments: res });
+            this.inputRefs['scrollView'].scrollTo({ x: 0, y: 0 });
         });
     }
 
@@ -30,6 +32,7 @@ export default class EntityCommentView extends Component {
     }
     render() {
         const { navigation } = this.props;
+        const { comments } = this.state;
         const PostCommentContainer = styled.View`flex-grow: 0;`;
         const { moduleType, entityId } = navigation.state.params;
         const entityProps = {
@@ -46,9 +49,9 @@ export default class EntityCommentView extends Component {
                 }}
                 keyboardShouldPersistTaps="always"
             >
-                <ScrollView style={{ flex: 1 }}>
+                <ScrollView style={{ flex: 1 }} ref={input => (this.inputRefs['scrollView'] = input)}>
                     <EntityPreview {...entityProps} />
-                    <CommentsList {...entityProps} />
+                    <CommentsList {...entityProps} comments={comments} />
                 </ScrollView>
                 <PostCommentContainer>
                     <CommentInput {...entityProps} doGetComments={this.doGetComments.bind(this)} />
