@@ -59,16 +59,7 @@ export default class CommentInput extends Component {
     };
 
     this.setState({ isSubmitting: true });
-    postComment(requestConfig).then(doGetComments()).then(this.onSubmitFinished());
-  }
-
-  onSubmitFinished() {
-    return setTimeout(
-      function() {
-        this.setState({ isSubmitting: false, comment: null });
-      }.bind(this),
-      1500
-    );
+    postComment(requestConfig).then(doGetComments()).then(this.setState({ isSubmitting: false, comment: null }));
   }
 
   render() {
