@@ -13,3 +13,5 @@ const TYPES_ALLOWED = {
 export function filterNotifications(notifications) {
 	return filter(notifications, o => includes(values(TYPES_ALLOWED), o.type));
 }
+
+

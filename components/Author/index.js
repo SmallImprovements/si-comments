@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { View, Text } from 'react-native';
+import { Text } from 'react-native';
 import Avatar from '../Avatar';
 import styleVars from '../../assets/styles/vars';
 

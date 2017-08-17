@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { View, Text, Image, Alert, TouchableHighlight } from 'react-native';
+import { View, Text, Alert, TouchableHighlight } from 'react-native';
 import Flex from '../../Flex';
 
 const ObjectiveIcon = styled.Image`
@@ -10,8 +10,18 @@ const ObjectiveIcon = styled.Image`
 	margin-right: 10px;
 `;
 
+const showAlert = () =>
+	Alert.alert('Open in Small Improvements?', "You'll be redirected to the Small Improvements app your browser", [
+		{ text: 'Open', onPress: () => console.log('Open Pressed') },
+		{
+			text: 'Cancel',
+			onPress: () => console.log('Cancel Pressed'),
+			style: 'cancel',
+		},
+	]);
+
 export default function ObjectivePreview({ objective }) {
-	const { title, icon, cycleName } = objective;
+	const { title, cycleName } = objective;
 	return (
 		<TouchableHighlight onPress={showAlert}>
 			<Flex>
@@ -29,13 +39,3 @@ export default function ObjectivePreview({ objective }) {
 		</TouchableHighlight>
 	);
 }
-
-const showAlert = () =>
-	Alert.alert('Open in Small Improvements?', "You'll be redirected to the Small Improvements app your browser", [
-		{ text: 'Open', onPress: () => console.log('Open Pressed') },
-		{
-			text: 'Cancel',
-			onPress: () => console.log('Cancel Pressed'),
-			style: 'cancel',
-		},
-	]);

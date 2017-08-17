@@ -132,8 +132,8 @@
             "beforeColon": false,
             "afterColon": true
         }],
-        "new-cap": [2, {                 // http://eslint.org/docs/rules/new-cap
-          "newIsCap": true
+        "new-cap": [0, {                 // http://eslint.org/docs/rules/new-cap
+          "newIsCap": false
         }],
         "new-parens": 2,
         // we need to disable this now because the babel-parser adds "use-strict" by itself

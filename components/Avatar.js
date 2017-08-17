@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import Svg from './Svg';
-import { View, Image } from 'react-native';
 import { endsWith } from 'lodash';
 
 const AVATAR_SIZE = 30;

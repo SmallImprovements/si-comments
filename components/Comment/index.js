@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { View, Text, TouchableHighlight } from 'react-native';
+import { Text, TouchableHighlight } from 'react-native';
 import styleVars from '../../assets/styles/vars';
 import Avatar from '../Avatar';
-import Flex from '../Flex';
 import HTMLView from 'react-native-htmlview';
 const { standardPadding, commentBorder, commentBackgroundColour } = styleVars;
 

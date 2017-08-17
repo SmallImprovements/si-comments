@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Button, TextInput, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, Button, ActivityIndicator, Alert } from 'react-native';
 import StyledInput from '../../components/StyledInput';
 import { HeaderOne } from '../../components/Text';
 import auth from '../../services/auth';
@@ -24,7 +24,7 @@ export default class Login extends Component {
 
     this.setState({ isLoggingIn: true });
 
-    auth.login(this.state.email).catch(err => {
+    auth.login(email).catch(err => {
       const { message } = err;
       this.setState({ isLoggingIn: false });
       this.showErrorAlert(message);
@@ -48,9 +48,9 @@ export default class Login extends Component {
     );
   }
   render() {
-    const { currentUser } = this.props;
-    const { email, isLoggingIn, loginError } = this.state;
-    const { logUserIn, handleInputChange } = this;
+    // const { currentUser } = this.props;
+    const { email, isLoggingIn } = this.state;
+    const { logUserIn } = this;
 
     const emailFieldProps = {
       onChangeText: this.handleEmailChange,
@@ -76,7 +76,7 @@ export default class Login extends Component {
       blurOnSubmit: true,
       keyboardType: 'default',
       returnKeyType: 'go',
-      innerRef: input => (this.inputRefs['passwordField'] = input),
+      innerRef: input => (this.inputRefs.passwordField = input),
     };
     return (
       <View

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components/native';
-import { View, TextInput, Button } from 'react-native';
+import { Button } from 'react-native';
 import styleVars from '../../assets/styles/vars';
 import { postComment } from '../../services/api';
 
@@ -63,7 +63,6 @@ export default class CommentInput extends Component {
   }
 
   render() {
-    const { inputRef } = this.props;
     const { isSubmitting, comment } = this.state;
 
     const inputFieldProps = {

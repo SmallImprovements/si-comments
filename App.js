@@ -1,9 +1,20 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, Text, Alert } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, Alert } from 'react-native';
 import { AppLoading, Asset, Font, Notifications } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
 import registerForPushNotificationsAsync from './services/notifications/pushNotifications';
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+    },
+    statusBarUnderlay: {
+        height: 24,
+        backgroundColor: 'rgba(0,0,0,0.2)',
+    },
+});
 
 export default class App extends React.Component {
     state = {
@@ -24,7 +35,6 @@ export default class App extends React.Component {
     };
 
     render() {
-        const { pushNotification } = this.state;
         if (!this.state.assetsAreLoaded && !this.props.skipLoadingScreen) {
             return <AppLoading />;
         } else {
@@ -64,30 +74,19 @@ export default class App extends React.Component {
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
-    statusBarUnderlay: {
-        height: 24,
-        backgroundColor: 'rgba(0,0,0,0.2)',
-    },
-});
-
-function mockPushNotification() {
-    return fetch('https://exp.host/--/api/v2/push/send', {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'Accept-Encoding': 'application/json',
-        },
-        body: JSON.stringify(fromMock),
-    }).then(res => {
-        console.log(res);
-    });
-}
+// function mockPushNotification() {
+//     return fetch('https://exp.host/--/api/v2/push/send', {
+//         method: 'POST',
+//         headers: {
+//             Accept: 'application/json',
+//             'Content-Type': 'application/json',
+//             'Accept-Encoding': 'application/json',
+//         },
+//         body: JSON.stringify(fromMock),
+//     }).then(res => {
+//         console.log(res);
+//     });
+// }
 
 /* 
     Mock data from the body of a request
@@ -101,10 +100,10 @@ function mockPushNotification() {
           i suppose it doesn't have to be body/title, it could 
           be what ever edata we want to send like URL etc.
 */
-const fromMock = {
-    to: 'ExponentPushToken[xDf15uL4vznPUtwAxAn0cB]',
-    title: 'iOS native Notification Title',
-    body: 'The body of a native iOS notification',
-    sound: 'default',
-    data: { title: 'The title of an in-app notification', body: 'The body of an in-app notification' },
-};
+// const fromMock = {
+//     to: 'ExponentPushToken[xDf15uL4vznPUtwAxAn0cB]',
+//     title: 'iOS native Notification Title',
+//     body: 'The body of a native iOS notification',
+//     sound: 'default',
+//     data: { title: 'The title of an in-app notification', body: 'The body of an in-app notification' },
+// };

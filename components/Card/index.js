@@ -1,10 +1,8 @@
-import React from 'react';
 import styled from 'styled-components/native';
-import { View } from 'react-native';
 import styleVars from '../../assets/styles/vars';
 
-const { standardPadding, cardBorderRadius, cardBoxShadow, cardBorderColor, cardMargin } = styleVars;
-export default (Card = styled.View`
+const { standardPadding, cardBorderRadius, cardBorderColor, cardMargin } = styleVars;
+const Card = styled.View`
     padding: ${standardPadding}px;
     background-color: white;
     border-color: ${cardBorderColor};
@@ -15,4 +13,6 @@ export default (Card = styled.View`
     shadowOffset: 2px;
     shadowOpacity: 0.04;
     shadowRadius: 4px;
-`);
+`;
+
+export default Card;

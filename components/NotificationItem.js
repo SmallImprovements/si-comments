@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { View, Text, TouchableHighlight, Button } from 'react-native';
-import ModalExample from './Modal';
+import { View, Text, TouchableHighlight } from 'react-native';
 import Avatar from './Avatar';
 
 const StyledView = styled.View`

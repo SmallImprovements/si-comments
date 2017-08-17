@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Modal, Text, TouchableHighlight, View } from 'react-native';
+import React from 'react';
+import { Modal } from 'react-native';
 
 export default function ModalExample({ children, modalVisible }) {
     return (

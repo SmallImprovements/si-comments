@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ListView, Text, RefreshControl, ActivityIndicator } from 'react-native';
+import { View, ListView, RefreshControl, ActivityIndicator } from 'react-native';
 import { NotificationItem } from '../../components/NotificationItem';
 import { filterNotifications } from '../../services/notifications';
 import { getNotifications } from '../../services/api';
@@ -77,7 +77,7 @@ export default class NotificationsList extends Component {
     }
 }
 
-NotificationsList.navigationOptions = ({ navigation, screenProps }) => {
+NotificationsList.navigationOptions = () => {
     return {
         title: 'Notifications',
     };

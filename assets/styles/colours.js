@@ -1,4 +1,4 @@
-export default (colourVars = {
+const colourVars = {
     SIBlue: '#4495d8',
     SIDarkBlue: '#285796',
     SIDesertRed: '#e06839',
@@ -25,4 +25,6 @@ export default (colourVars = {
     SIGray6: '#EBEDEE',
     SIGray7: '#F5F5F5',
     SIGray8: '#FAFAFA',
-});
+};
+
+export default colourVars;

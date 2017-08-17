@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { ScrollView, Text } from 'react-native';
+import { ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import CommentInput from '../../components/CommentInput';
-import Comment from '../../components/Comment';
 import EntityPreview from '../../components/EntityPreview';
 import styled from 'styled-components/native';
 import CommentsList from '../CommentsList/presenter';
@@ -21,7 +20,7 @@ export default class EntityCommentView extends Component {
         const { entityId, moduleType } = navigation.state.params;
         return getComments(entityId, moduleType).then(res => {
             this.setState({ comments: res });
-            this.inputRefs['scrollView'].scrollTo({ x: 0, y: 0 });
+            this.inputRefs.scrollView.scrollTo({ x: 0, y: 0 });
         });
     }
 
@@ -49,7 +48,7 @@ export default class EntityCommentView extends Component {
                 }}
                 keyboardShouldPersistTaps="always"
             >
-                <ScrollView style={{ flex: 1 }} ref={input => (this.inputRefs['scrollView'] = input)}>
+                <ScrollView style={{ flex: 1 }} ref={input => (this.inputRefs.scrollView = input)}>
                     <EntityPreview {...entityProps} />
                     <CommentsList {...entityProps} comments={comments} />
                 </ScrollView>
@@ -61,7 +60,7 @@ export default class EntityCommentView extends Component {
     }
 }
 
-EntityCommentView.navigationOptions = ({ navigation, screenProps }) => {
+EntityCommentView.navigationOptions = () => {
     return {
         title: 'Comments',
     };

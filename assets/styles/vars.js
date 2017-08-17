@@ -1,5 +1,5 @@
 import colourVars from './colours.js';
-export default (styleVars = {
+const styleVars = {
     standardPadding: 20,
     commentBorder: '1px solid rgba(0,0,0,0.08)',
     commentBackgroundColour: colourVars.SILightBlue,
@@ -17,4 +17,6 @@ export default (styleVars = {
     fontSizeXL: 22,
     fontSizeXXL: 26,
     fontSizeJumbo: 60,
-});
+};
+
+export default styleVars;

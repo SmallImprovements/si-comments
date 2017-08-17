@@ -1,5 +1,4 @@
 import React from 'react';
-import { View, Text, Image, Alert, TouchableHighlight } from 'react-native';
 import Card from '../Card';
 import ObjectivePreviewWithData from './ObjectivePreview';
 import PraisePreviewWithData from './PraisePreview';

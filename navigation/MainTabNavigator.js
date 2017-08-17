@@ -2,7 +2,6 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { TabNavigator, TabBarBottom } from 'react-navigation';
-import http from '../services/auth';
 
 import Colors from '../constants/Colors';
 
