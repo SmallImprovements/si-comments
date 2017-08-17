@@ -1,6 +1,11 @@
 import http from '../http';
 
 const BASE_URL = '/api/v2';
+const DEFAULT_HEADERS = {
+	headers: {
+		'Content-Type': 'application/json',
+	},
+};
 
 export function getNotifications() {
 	return http.get(`${BASE_URL}/notificationLogs/latest`).then(res => res.data, err => ({ err, status: 'ERROR' }));
@@ -42,11 +47,6 @@ export function getComments(entityId, moduleType) {
 }
 
 export function postPraiseComment(praiseId, comment) {
-	const config = {
-		headers: {
-			'Content-Type': 'application/json',
-		},
-	};
 	const dto = {
 		masterMessageId: praiseId,
 		message: comment,
@@ -54,16 +54,11 @@ export function postPraiseComment(praiseId, comment) {
 		visibleTo: [],
 	};
 	return http
-		.post(`${BASE_URL}/praise/${praiseId}/comments`, dto, config)
+		.post(`${BASE_URL}/praise/${praiseId}/comments`, dto, DEFAULT_HEADERS)
 		.then(res => res.data, err => ({ err, status: 'ERROR' }));
 }
 
 export function postObjectiveComment(objectiveId, comment) {
-	const config = {
-		headers: {
-			'Content-Type': 'application/json',
-		},
-	};
 	const dto = {
 		author: '',
 		message: comment,
@@ -72,7 +67,7 @@ export function postObjectiveComment(objectiveId, comment) {
 		visibleTo: [],
 	};
 	return http
-		.post(`${BASE_URL}/objectives/${objectiveId}/messages`, dto, config)
+		.post(`${BASE_URL}/objectives/${objectiveId}/messages`, dto, DEFAULT_HEADERS)
 		.then(res => res.data, err => ({ err, status: 'ERROR' }));
 }
 
@@ -87,4 +82,10 @@ export function postComment({ moduleType, entityId, comment }) {
 		default:
 			throw new Error('No valid  moduleType provided to postComment');
 	}
+}
+
+export function markNotificationAsRead(id) {
+	return http
+		.post(`${BASE_URL}/notificationLogs/markAsRead/${id}`, null, DEFAULT_HEADERS)
+		.then(res => res.data, err => ({ err, status: 'ERROR' }));
 }
