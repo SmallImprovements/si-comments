@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { Notifications } from 'expo';
 import { View, ListView, RefreshControl, ActivityIndicator } from 'react-native';
 import { NotificationItem } from '../../components/NotificationItem';
 import { filterNotifications } from '../../services/notifications';
 import { getNotifications } from '../../services/api';
+import registerForPushNotificationsAsync from '../../services/notifications/pushNotifications';
 export default class NotificationsList extends Component {
     constructor(props) {
         super(props);
@@ -45,6 +47,15 @@ export default class NotificationsList extends Component {
             dataSource: ds.cloneWithRows(this.doGetNotifications()),
         };
     }
+
+    _handleNotification = notification => {
+        this.doGetNotifications();
+    };
+
+    componentWillMount() {
+        registerForPushNotificationsAsync();
+        this._notificationSubscription = Notifications.addListener(this._handleNotification);
+    }
     render() {
         const { navigation } = this.props;
         const { dataSource } = this.state;
@@ -59,8 +70,8 @@ export default class NotificationsList extends Component {
                               return (
                                   <NotificationItem
                                       key={rowData.id}
-                                      text={rowData.type}
                                       onSelect={() => this.onSelect(navigation, rowData)}
+                                      {...rowData}
                                   />
                               );
                           }}
