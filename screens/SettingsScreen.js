@@ -5,7 +5,7 @@ import auth from '../services/auth';
 
 export default class SettingsScreen extends React.Component {
     static navigationOptions = {
-        title: 'app.json',
+        title: 'My Account',
     };
 
     render() {

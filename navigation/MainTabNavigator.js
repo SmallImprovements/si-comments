@@ -30,7 +30,7 @@ export default TabNavigator(
                                 : 'md-notifications-none';
                         break;
                     case 'Settings':
-                        iconName = Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options';
+                        iconName = Platform.OS === 'ios' ? `ios-contact${focused ? '' : '-outline'}` : 'md-options';
                 }
                 return (
                     <Ionicons
