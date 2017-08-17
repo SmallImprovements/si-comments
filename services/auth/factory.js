@@ -52,16 +52,21 @@ export default function auth(http) {
             }
 
             setUser(user);
-            notifyAuthChangeListeners();
-            return { user, status: 'OK' };
-            // return api.replacements
-            //     .getGmailReplacements()
-            //     .then(replacements => {
-            //         setReplacements(replacements);
-            //         notifyAuthChangeListeners();
-            //         return { user, status: "OK" };
-            //     });
+            return getGmailReplacements().then(replacements => {
+                setReplacements(replacements);
+                notifyAuthChangeListeners();
+                return { user, status: 'OK' };
+            });
         });
+    }
+
+    function getGmailReplacements() {
+        return http.get('/api/v2/gmail/app/replacements').then(
+            res => res.data,
+            err => {
+                return { err: err };
+            }
+        );
     }
 
     function tryLoginFromCache(email) {
