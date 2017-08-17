@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView } from 'react-native';
+import { Notifications } from 'expo';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import CommentInput from '../../components/CommentInput';
 import EntityPreview from '../../components/EntityPreview';
@@ -29,6 +30,15 @@ export default class EntityCommentView extends Component {
         const { entityId, moduleType } = navigation.state.params;
         this.doGetComments(entityId, moduleType);
     }
+
+    _handleNotification = notification => {
+        this.doGetComments();
+    };
+
+    componentWillMount() {
+        this._notificationSubscription = Notifications.addListener(this._handleNotification);
+    }
+
     render() {
         const { navigation } = this.props;
         const { comments } = this.state;
