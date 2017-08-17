@@ -4,7 +4,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import CommentInput from '../../components/CommentInput';
 import EntityPreview from '../../components/EntityPreview';
 import styled from 'styled-components/native';
-import CommentsList from '../CommentsList/presenter';
+import CommentsList from '../CommentsList';
 import { getComments } from '../../services/api';
 
 export default class EntityCommentView extends Component {
