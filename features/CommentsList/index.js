@@ -10,8 +10,8 @@ export default function CommentsList({ comments, moduleType }) {
 	}
 	return (
 		<View>
-			{comments.length
-				? comments.map(comment => <Comment {...comment} key={comment.id} moduleType={moduleType} />)
+			{sortedComments.length
+				? sortedComments.map(comment => <Comment {...comment} key={comment.id} moduleType={moduleType} />)
 				: <ActivityIndicator />}
 		</View>
 	);
