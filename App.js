@@ -3,7 +3,7 @@ import { Platform, StatusBar, StyleSheet, View, Alert } from 'react-native';
 import { AppLoading, Asset, Font, Notifications } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
-import registerForPushNotificationsAsync from './services/notifications/pushNotifications';
+import registerForPushNotificationsAsync from './services/push-notifications';
 
 const styles = StyleSheet.create({
     container: {

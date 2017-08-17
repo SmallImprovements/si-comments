@@ -25,6 +25,7 @@ async function registerForPushNotificationsAsync() {
 
   // POST the token to our backend so we can use it to send pushes from there
   http.defaults.baseURL = 'http://192.168.1.25:8080';
+  console.log('Device Push Notification Token: ', token);
   return http
     .post(PUSH_ENDPOINT, {
       params: { token: token },
