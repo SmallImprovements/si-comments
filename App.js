@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View, Alert } from 'react-native';
-import { AppLoading, Asset, Font, Notifications } from 'expo';
+import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
 import registerForPushNotificationsAsync from './services/push-notifications';
@@ -24,15 +24,7 @@ export default class App extends React.Component {
     componentWillMount() {
         this._loadAssetsAsync();
         registerForPushNotificationsAsync();
-        this._notificationSubscription = Notifications.addListener(this._handleNotification);
-        // mockPushNotification();
-        // Notifications.presentLocalNotificationAsync(localNotification);
     }
-    _handleNotification = notification => {
-        const { data } = notification;
-        const { body, title } = data;
-        Alert.alert(title, body, [{ text: 'OK', onPress: () => console.log('OK Pressed') }], { cancelable: true });
-    };
 
     render() {
         if (!this.state.assetsAreLoaded && !this.props.skipLoadingScreen) {
