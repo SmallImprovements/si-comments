@@ -27,7 +27,7 @@ const LightGrayText = styled.Text`color: gray;`;
 const CommentText = styled.View`margin-bottom: ${standardPadding * 0.5}px;`;
 
 export default function Comment(props) {
-    const { moduleType } = props;
+    const { moduleType, onPressReply } = props;
     let commentData = props;
 
     if (moduleType === 'MESSAGE' || moduleType === 'PRAISE') {
@@ -47,7 +47,7 @@ export default function Comment(props) {
                     <HTMLView value={body ? body : 'Empty comment'} />
                 </CommentText>
 
-                <TouchableHighlight onPress={() => console.log('clicked Reply')}>
+                <TouchableHighlight onPress={onPressReply}>
                     <LightGrayText>Reply</LightGrayText>
                 </TouchableHighlight>
             </CommentContent>
