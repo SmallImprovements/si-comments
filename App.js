@@ -23,7 +23,9 @@ export default class App extends React.Component {
 
     componentWillMount() {
         this._loadAssetsAsync();
-        registerForPushNotificationsAsync();
+        /* This should be uncommented once the backend can properly receive and store a Device token
+            registerForPushNotificationsAsync();
+        */
     }
 
     render() {
