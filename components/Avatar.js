@@ -4,7 +4,7 @@ import Svg from './Svg';
 import { endsWith } from 'lodash';
 
 const AVATAR_SIZE = 30;
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = 'http://192.168.1.25:8080';
 
 const AvatarContainer = styled.View`
 	border-radius: ${AVATAR_SIZE / 2}px;
@@ -26,7 +26,6 @@ const SvgStyle = {
 
 export default function Avatar(props) {
 	const { logoUrl } = props;
-
 	const avatarSource = {
 		uri: `${BASE_URL}${logoUrl}`,
 	};
