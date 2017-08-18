@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Alert, TouchableHighlight } from 'react-native';
 import Flex from '../../Flex';
+import ModuleIcon from '../../ModuleIcon';
 
 const showAlert = () =>
 	Alert.alert('Open in Small Improvements?', "You'll be redirected to the Small Improvements app your browser", [
@@ -18,6 +19,7 @@ export default function PraisePreview({ praise }) {
 		<TouchableHighlight onPress={showAlert}>
 			<Flex>
 				<View>
+					<ModuleIcon type="PRAISE" />
 					<Text style={{ fontWeight: 'bold' }}>
 						{title}
 					</Text>
