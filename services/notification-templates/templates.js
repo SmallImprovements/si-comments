@@ -1,12 +1,12 @@
 import * as helper from './helper';
-// function createMessageTemplate(fragment) {
-// 	return {
-// 		chooseTemplate: item => ({
-// 			text: `${getDefaultActorPhrase(item)} ${fragment}`,
-// 			getValuesFrom: getDefaultValues,
-// 		}),
-// 	};
-// }
+function createMessageTemplate(fragment) {
+	return {
+		chooseTemplate: item => ({
+			text: `${getDefaultActorPhrase(item)} ${fragment}`,
+			getValuesFrom: getDefaultValues,
+		}),
+	};
+}
 
 function createPraiseTemplate(fragment) {
 	return {
@@ -50,17 +50,28 @@ function getRepetitionPhrase(repetitionCount) {
 }
 
 const TEMPLATES = {
-	// MESSAGE_COMMENT_FOR_AUTHOR: createMessageTemplate('commented on a :messages.singular: you wrote.'),
-	// MESSAGE_COMMENT_FOR_RECIPIENT: createMessageTemplate('commented on a :messages.singular: about you.'),
-	// MESSAGE_COMMENT_MENTIONED_YOU: createMessageTemplate('mentioned you in a comment on a :messages.singular:.'),
+	MESSAGE_COMMENT_FOR_AUTHOR: createMessageTemplate('commented on a :messages.singular: you wrote.'),
+	MESSAGE_COMMENT_FOR_RECIPIENT: createMessageTemplate('commented on a :messages.singular: about you.'),
+	MESSAGE_COMMENT_MENTIONED_YOU: createMessageTemplate('mentioned you in a comment on a :messages.singular:.'),
 
 	PRAISE_COMMENT_FOR_AUTHOR: createPraiseTemplate('commented on a :praise.singular.big: you wrote.'),
 	PRAISE_COMMENT_FOR_RECIPIENT: createPraiseTemplate('commented on a :praise.singular.big: for you.'),
 	PRAISE_COMMENT_MENTIONED_YOU: createPraiseTemplate('mentioned you in a comment on a :praise.singular.big:.'),
+	PRAISE_RECEIVED: createPraiseTemplate('gave you :praise.singular.big:.'),
 
 	OBJECTIVE_COMMENT_CREATED_FOR_OWNER: {
 		standard: {
 			text: '{{actor}} commented on your :objective.singular.big:.',
+			getValuesFrom: function(item) {
+				return {
+					actor: helper.transformActorName(item.actor),
+				};
+			},
+		},
+	},
+	OBJECTIVE_CREATED_FOR_YOU: {
+		standard: {
+			text: '{{actor}} created an :objective.singular.big: for you.',
 			getValuesFrom: function(item) {
 				return {
 					actor: helper.transformActorName(item.actor),
