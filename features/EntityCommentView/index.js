@@ -21,8 +21,18 @@ export default class EntityCommentView extends Component {
         const { entityId, moduleType } = navigation.state.params;
         return getComments(entityId, moduleType).then(res => {
             this.setState({ comments: res });
-            this.inputRefs.scrollView.scrollToEnd();
+            // this.inputRefs.scrollView.scrollToEnd();
         });
+    }
+
+    focusCommentInputField() {
+        // this.inputRefs.commentInput.focus();
+    }
+
+    getInputRef(input) {
+        // console.log(this.inputRefs);
+        this.inputRefs.commentInput = input;
+        console.log(input == undefined);
     }
 
     componentDidMount() {
@@ -60,10 +70,14 @@ export default class EntityCommentView extends Component {
             >
                 <ScrollView style={{ flex: 1 }} ref={input => (this.inputRefs.scrollView = input)}>
                     <EntityPreview {...entityProps} />
-                    <CommentsList {...entityProps} comments={comments} />
+                    <CommentsList {...entityProps} comments={comments} onPressReply={this.focusCommentInputField} />
                 </ScrollView>
                 <PostCommentContainer>
-                    <CommentInput {...entityProps} doGetComments={this.doGetComments.bind(this)} />
+                    <CommentInput
+                        {...entityProps}
+                        doGetComments={this.doGetComments.bind(this)}
+                        getInputRef={ref => this.getInputRef(ref)}
+                    />
                 </PostCommentContainer>
             </KeyboardAwareScrollView>
         );
