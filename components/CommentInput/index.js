@@ -49,6 +49,11 @@ export default class CommentInput extends Component {
     });
   }
 
+  setInputRef(input) {
+    const { getInputRef } = this.props;
+    getInputRef(input);
+  }
+
   onSubmit() {
     const { comment } = this.state;
     const { entityId, moduleType, doGetComments } = this.props;
@@ -64,6 +69,7 @@ export default class CommentInput extends Component {
 
   render() {
     const { isSubmitting, comment } = this.state;
+    const { getInputRef } = this.props;
 
     const inputFieldProps = {
       editable: !isSubmitting,
@@ -75,6 +81,7 @@ export default class CommentInput extends Component {
       keyboardType: 'default',
       onContentSizeChange: this.onContentSizeChange.bind(this),
       keyboardShouldPersistTaps: 'always',
+      ref: input => this.setInputRef(input),
     };
     return (
       <CommentInputContainer>
