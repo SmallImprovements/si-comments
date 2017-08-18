@@ -4,7 +4,10 @@ import { View, Text, TouchableHighlight } from 'react-native';
 import Avatar from '../Avatar';
 import { markNotificationAsRead } from '../../services/api';
 import * as templateService from '../../services/notification-templates';
+import ModuleIcon from '../ModuleIcon';
+import styleVars from '../../assets/styles/vars';
 
+const { standardPadding } = styleVars;
 const StyledView = styled.View`
     flex: 1;
     flex-direction: row;
@@ -12,6 +15,11 @@ const StyledView = styled.View`
     padding: 10px;
     border-bottom-width: 1px;
     border-bottom-color: #dadee1;
+`;
+
+const NotificationSentence = styled.View`
+    flex-shrink: 1;
+    margin-left: ${standardPadding * 0.5}px;
 `;
 
 export class NotificationItem extends React.Component {
@@ -25,13 +33,12 @@ export class NotificationItem extends React.Component {
     }
 
     onSelectItem(onSelect, id) {
-        // this.setState({ isRead: !this.state.isRead });
-        markNotificationAsRead(id);
+        // markNotificationAsRead(id);
         onSelect();
     }
 
     render() {
-        const { onSelect, type, id, visitedAt, actor } = this.props;
+        const { onSelect, type, id, visitedAt, actor, module, createdAt } = this.props;
         const { logo } = actor;
         const { isRead } = this.state;
 
@@ -39,19 +46,19 @@ export class NotificationItem extends React.Component {
             <TouchableHighlight onPress={() => this.onSelectItem(onSelect, id)}>
                 <StyledView style={{ backgroundColor: isRead ? 'white' : '#f0f4f9' }}>
                     <Avatar logoUrl={logo} />
-                    <View>
-                        <NotificationSentence {...this.props} />
-                    </View>
+                    <NotificationSentence>
+                        <Text>
+                            {templateService.transform(this.props)}
+                        </Text>
+                        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                            <ModuleIcon type={module} />
+                            <Text style={{ marginLeft: 5, color: '#777' }}>
+                                {createdAt}
+                            </Text>
+                        </View>
+                    </NotificationSentence>
                 </StyledView>
             </TouchableHighlight>
         );
     }
-}
-
-function NotificationSentence(notification) {
-    return (
-        <Text>
-            {templateService.transform(notification)}
-        </Text>
-    );
 }
