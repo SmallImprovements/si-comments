@@ -7,7 +7,7 @@ import colors from '../assets/styles/colours';
 import NotificationsScreen from '../screens/NotificationsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
-const { SIBlue, SIGray3 } = colors;
+const { SIBlue, SIGray4 } = colors;
 export default TabNavigator(
     {
         Notifications: {
@@ -37,7 +37,7 @@ export default TabNavigator(
                         name={iconName}
                         size={28}
                         style={{ marginBottom: -3 }}
-                        color={focused ? SIBlue : SIGray3}
+                        color={focused ? SIBlue : SIGray4}
                     />
                 );
             },
@@ -47,5 +47,11 @@ export default TabNavigator(
         animationEnabled: false,
         swipeEnabled: true,
         initialRouteName: 'Notifications',
+        tabBarOptions: {
+            style: {
+                borderTopColor: SIGray4,
+                borderTopWidth: 1,
+            },
+        },
     }
 );

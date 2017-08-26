@@ -14,7 +14,7 @@ const StyledView = styled.View`
     align-items: center;
     padding: 10px;
     border-bottom-width: 1px;
-    border-bottom-color: #dadee1;
+    border-color: #dadee1;
 `;
 
 const NotificationSentence = styled.View`
@@ -33,8 +33,9 @@ export class NotificationItem extends React.Component {
     }
 
     onSelectItem(onSelect, id) {
-        // markNotificationAsRead(id);
+        markNotificationAsRead(id);
         onSelect();
+        this.setState({ isRead: !this.state.isRead });
     }
 
     render() {

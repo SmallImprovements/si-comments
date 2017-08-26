@@ -18,8 +18,7 @@ export default function PraisePreview({ praise }) {
 	return (
 		<TouchableHighlight onPress={showAlert}>
 			<Flex>
-				<View>
-					<ModuleIcon type="PRAISE" />
+				<View style={{ flexGrow: 1 }}>
 					<Text style={{ fontWeight: 'bold' }}>
 						{title}
 					</Text>
@@ -27,6 +26,7 @@ export default function PraisePreview({ praise }) {
 						Written by: {author.name}
 					</Text>
 				</View>
+				<ModuleIcon type="PRAISE" />
 			</Flex>
 		</TouchableHighlight>
 	);

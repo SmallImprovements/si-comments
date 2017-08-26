@@ -4,6 +4,7 @@ import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
 import registerForPushNotificationsAsync from './services/push-notifications';
+import auth from './services/auth';
 
 const styles = StyleSheet.create({
     container: {
@@ -19,17 +20,21 @@ const styles = StyleSheet.create({
 export default class App extends React.Component {
     state = {
         assetsAreLoaded: false,
+        loggedIn: false,
     };
 
     componentWillMount() {
         this._loadAssetsAsync();
+        auth.tryLoginFromCache().then(this.setState({ loggedIn: true })).catch(err => {
+            console.log(err);
+        });
         /* This should be uncommented once the backend can properly receive and store a Device token
             registerForPushNotificationsAsync();
         */
     }
 
     render() {
-        if (!this.state.assetsAreLoaded && !this.props.skipLoadingScreen) {
+        if (!this.state.assetsAreLoaded && !this.state.loggedIn && !this.props.skipLoadingScreen) {
             return <AppLoading />;
         } else {
             return (
