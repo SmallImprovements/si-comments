@@ -1,23 +1,50 @@
 import { forEach } from 'lodash/fp';
+import { AsyncStorage } from 'react-native';
 
 const IS_REMOTE_TESTING = true;
-const BASE_URL = IS_REMOTE_TESTING ? 'http://192.168.1.25:8080' : 'http://localhost:8080';
+const BASE_URL = IS_REMOTE_TESTING ? 'http://192.168.2.104:8080' : 'http://localhost:8080';
 
 export default function auth(http) {
     const state = {
         user: null,
         tokenProvider: {
-            requestToken: () =>
+            requestToken: code =>
                 http
-                    .get('/api/external-services/token-dev', {
-                        params: { loginName: 'demo@example.com' },
-                    })
-                    .then(res => res.data.access_token),
-            getStoredToken: () => Promise.resolve(null),
-            removeToken: () => Promise.resolve(),
+                    .post(
+                        `/api/external-services/token?code=${code}`,
+                        {},
+                        {
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        }
+                    )
+                    .then(res => {
+                        if (!res.data.access_token) {
+                            throw new Error('Failed at requestToken');
+                        }
+                        return res.data.access_token;
+                    }),
+            getStoredToken: () =>
+                AsyncStorage.getItem('userToken').then(token => token).catch(err => {
+                    console.log('Error here:', err);
+                }),
+            removeToken: () => removeTokenFromLocalDB(),
         },
         replacements: {},
     };
+
+    function storeTokenInLocalDB(token) {
+        // @todo why is this getting called 3 times after logging in?
+        console.log('storeTokenInLocalDB', token);
+        if (!token) {
+            return;
+        }
+        AsyncStorage.setItem('userToken', token);
+        return token;
+    }
+
+    function removeTokenFromLocalDB() {
+        AsyncStorage.setItem('userToken', '').done();
+    }
 
     const authChangeListeners = [];
 
@@ -44,6 +71,7 @@ export default function auth(http) {
     }
 
     function loginWithToken(token) {
+        http.defaults.baseURL = BASE_URL;
         setAuthorizationHeader(token);
         return http.get('/api/v2/users/me').then(res => {
             const user = res.data;
@@ -69,35 +97,23 @@ export default function auth(http) {
         );
     }
 
-    function tryLoginFromCache(email) {
+    function tryLoginFromCache() {
         const { tokenProvider } = state;
         if (!tokenProvider || !tokenProvider.getStoredToken) {
             throw new Error('No valid tokenProvider specified');
         }
 
-        return tokenProvider.getStoredToken(email).then(token => {
-            return token ? loginWithToken(token) : { user: null, status: 'OK' };
+        return tokenProvider.getStoredToken().then(loginWithToken).catch(err => {
+            console.log('Error after getStoredToken', err);
         });
     }
 
-    function login(USER_EMAIL) {
+    function login(code) {
         const { tokenProvider } = state;
         if (!tokenProvider || !tokenProvider.requestToken) {
             throw new Error('No valid tokenProvider specified');
         }
-        // @todo this shouldn't be set here
-        http.defaults.baseURL = BASE_URL;
-        return requestToken(USER_EMAIL).then(loginWithToken);
-    }
-
-    function requestToken(USER_EMAIL) {
-        return http
-            .get('/api/external-services/token-dev', {
-                params: { loginName: USER_EMAIL },
-            })
-            .then(res => {
-                return res.data.access_token;
-            });
+        return tokenProvider.requestToken(code).then(storeTokenInLocalDB).then(loginWithToken);
     }
 
     function logout() {
@@ -111,7 +127,7 @@ export default function auth(http) {
         if (!tokenProvider || !tokenProvider.removeToken) {
             throw new Error('No valid tokenProvider specified');
         }
-        return tokenProvider.removeToken(user.email);
+        return tokenProvider.removeToken();
     }
 
     function isLoggedIn() {
