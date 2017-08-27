@@ -6,8 +6,11 @@ import { markNotificationAsRead } from '../../services/api';
 import * as templateService from '../../services/notification-templates';
 import ModuleIcon from '../ModuleIcon';
 import styleVars from '../../assets/styles/vars';
+import colorVars from '../../assets/styles/colours';
+import DateDisplay from '../DateDisplay';
 
 const { standardPadding } = styleVars;
+const { SIGray4 } = colorVars;
 const StyledView = styled.View`
     flex: 1;
     flex-direction: row;
@@ -20,6 +23,11 @@ const StyledView = styled.View`
 const NotificationSentence = styled.View`
     flex-shrink: 1;
     margin-left: ${standardPadding * 0.5}px;
+`;
+
+const NotificationDate = styled(DateDisplay)`
+    margin-left: ${standardPadding * 0.25}px;
+    color: ${SIGray4};
 `;
 
 export class NotificationItem extends React.Component {
@@ -39,7 +47,7 @@ export class NotificationItem extends React.Component {
     }
 
     render() {
-        const { onSelect, type, id, visitedAt, actor, module, createdAt } = this.props;
+        const { onSelect, id, actor, module, createdAt } = this.props;
         const { logo } = actor;
         const { isRead } = this.state;
 
@@ -53,9 +61,7 @@ export class NotificationItem extends React.Component {
                         </Text>
                         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                             <ModuleIcon type={module} />
-                            <Text style={{ marginLeft: 5, color: '#777' }}>
-                                {createdAt}
-                            </Text>
+                            <NotificationDate date={createdAt} />
                         </View>
                     </NotificationSentence>
                 </StyledView>
