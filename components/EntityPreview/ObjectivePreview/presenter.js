@@ -11,6 +11,7 @@ const ObjectiveIcon = styled.Image`
 `;
 
 const showAlert = () =>
+	/* eslint-disable no-console */
 	Alert.alert('Open in Small Improvements?', "You'll be redirected to the Small Improvements app your browser", [
 		{ text: 'Open', onPress: () => console.log('Open Pressed') },
 		{
@@ -19,6 +20,7 @@ const showAlert = () =>
 			style: 'cancel',
 		},
 	]);
+/* eslint-enable no-console */
 
 export default function ObjectivePreview({ objective }) {
 	const { title, cycleName } = objective;

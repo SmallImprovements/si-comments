@@ -8,13 +8,13 @@ export function transformSentence(text, values) {
 	return replace(text, values);
 }
 
-const replacements = {
+const mockReplacements = {
 	'objective.singular.big': 'Objective',
 	'praise.singular.big': 'Praise',
 };
 
 function replacement(key) {
-	return replacements[key] || key;
+	return mockReplacements[key] || key;
 }
 
 function resolveReplacements(template) {

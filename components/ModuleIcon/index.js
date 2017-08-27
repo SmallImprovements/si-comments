@@ -1,8 +1,6 @@
 import React from 'react';
-import Svg from '../Svg';
 import { PropTypes } from 'react';
 import { keys } from 'lodash/fp';
-import { Image } from 'react-native';
 import styled from 'styled-components/native';
 
 const ICON_BY_TYPE = {

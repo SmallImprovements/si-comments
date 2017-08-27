@@ -1,12 +1,12 @@
 import Expo from 'expo';
 import React, { Component } from 'react';
 import { View, Text, Button, ActivityIndicator, Alert, Linking, Image } from 'react-native';
-import StyledInput from '../../components/StyledInput';
-import { HeaderOne } from '../../components/Text';
 import auth from '../../services/auth';
 import siLogo from '../../assets/icons/app-icon.png';
+import { BASE_URL } from '../../services/auth/factory';
 
 // Example taken from https://github.com/expo/auth0-example/blob/master/main.js
+const IS_DEV = process.env.NODE_ENV === 'development';
 let redirectUri;
 if (Expo.Constants.manifest.xde) {
 	// Hi there, dear reader!
@@ -17,10 +17,10 @@ if (Expo.Constants.manifest.xde) {
 } else {
 	redirectUri = `${Expo.Constants.linkingUri}/+/redirect`;
 }
-const SIClientId = 'pdnNOE8axmLRPk6opnr6pSbIxmFJxAlA';
+// const SIClientId = 'pdnNOE8axmLRPk6opnr6pSbIxmFJxAlA';
 // const SIDomain = 'https://www.small-improvements.com';
 // const SIDomain = 'http://192.168.1.25:8080';
-const SIDomain = 'http://192.168.2.104:8080';
+// const SIDomain = 'http://192.168.2.104:8080';
 
 export default class LoginRemote extends Component {
 	constructor(props) {
@@ -34,6 +34,7 @@ export default class LoginRemote extends Component {
 	componentDidMount() {
 		Linking.addEventListener('url', this.handleAuth0Redirect);
 	}
+
 	logUserIn() {
 		const { code } = this.state;
 
@@ -47,16 +48,18 @@ export default class LoginRemote extends Component {
 	}
 
 	showErrorAlert(message) {
+		/* eslint-disable no-console */
 		Alert.alert(
 			"Can't Log In",
 			`Either your email address or password is incorrect. ${message}`,
 			[{ text: 'OK', onPress: () => console.log('OK Pressed') }],
 			{ cancelable: true }
 		);
+		/* eslint-enable no-console */
 	}
 
 	getRandomState() {
-		var randomNumbers = new Uint32Array(1);
+		// var randomNumbers = new Uint32Array(1);
 		// window.crypto.getRandomValues(randomNumbers);
 		// return encodeURIComponent(randomNumbers.join());
 		return encodeURIComponent(12827329817392187398374293847);
@@ -64,7 +67,7 @@ export default class LoginRemote extends Component {
 
 	loginWithSIAuth = async () => {
 		const redirectionURL =
-			`${SIDomain}/external-services/authorize/gmail` +
+			`${BASE_URL}/external-services/authorize/gmail` +
 			this.toQueryString({
 				state: this.getRandomState(),
 				redirect_uri: redirectUri,
@@ -123,7 +126,7 @@ export default class LoginRemote extends Component {
 							<Text style={{ textAlign: 'center', marginTop: 20 }}>
 								To continue, please sign in with Small Improvements
 							</Text>
-							<Button onPress={this.loginWithSIAuth} title="Sign in..." />
+							<Button onPress={IS_DEV ? this.logUserIn : this.loginWithSIAuth} title="Sign in..." />
 						</View>}
 			</View>
 		);

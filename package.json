@@ -7,10 +7,11 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "test": "node_modules/jest/bin/jest.js",
-    "lint": "node_modules/eslint/bin/eslint.js .",
+    "lint": "eslint .",
     "format": "npm run prettier-all -- --write",
     "prettier-default": "prettier --single-quote --tab-width 4 --print-width 120 --trailing-comma es5",
-    "prettier-all": "npm run prettier-default -- '{*.js,!(node_modules)/**/!(*.min).js}'"
+    "prettier-all": "npm run prettier-default -- '{*.js,!(node_modules)/**/!(*.min).js}'",
+    "watch": "esw . --watch"
   },
   "jest": {
     "preset": "jest-expo"
@@ -25,6 +26,7 @@
     "expo": "19.0.0",
     "ladda-react": "0.2.9",
     "lodash": "^4.17.4",
+    "moment": "^2.18.1",
     "prettier": "^1.5.3",
     "react": "16.0.0-alpha.12",
     "react-native": "https://github.com/expo/react-native/archive/sdk-19.0.0.tar.gz",
@@ -39,6 +41,7 @@
     "babel-eslint": "^7.2.3",
     "eslint-plugin-lodash": "^2.4.4",
     "eslint-plugin-react": "^7.2.0",
+    "eslint-watch": "^3.1.2",
     "jest-expo": "19.0.0"
   }
 }

@@ -1,8 +1,8 @@
 import { forEach } from 'lodash/fp';
 import { AsyncStorage } from 'react-native';
 
-const IS_REMOTE_TESTING = true;
-const BASE_URL = IS_REMOTE_TESTING ? 'http://192.168.2.104:8080' : 'http://localhost:8080';
+const IS_DEV = process.env.NODE_ENV === 'development';
+export const BASE_URL = IS_DEV ? 'http://192.168.2.104:8080' : 'http://www.small-improvements.com';
 
 export default function auth(http) {
     const state = {
@@ -23,10 +23,7 @@ export default function auth(http) {
                         }
                         return res.data.access_token;
                     }),
-            getStoredToken: () =>
-                AsyncStorage.getItem('userToken').then(token => token).catch(err => {
-                    console.log('Error here:', err);
-                }),
+            getStoredToken: () => AsyncStorage.getItem('userToken').then(token => token).catch(err => err),
             removeToken: () => removeTokenFromLocalDB(),
         },
         replacements: {},
@@ -34,7 +31,7 @@ export default function auth(http) {
 
     function storeTokenInLocalDB(token) {
         // @todo why is this getting called 3 times after logging in?
-        console.log('storeTokenInLocalDB', token);
+        // console.log('storeTokenInLocalDB', token);
         if (!token) {
             return;
         }
@@ -76,7 +73,7 @@ export default function auth(http) {
         return http.get('/api/v2/users/me').then(res => {
             const user = res.data;
             if (!user) {
-                throw new Error('Failed at LoginWithtoken');
+                throw new Error('No user object received');
             }
 
             setUser(user);
@@ -85,7 +82,7 @@ export default function auth(http) {
                 notifyAuthChangeListeners();
                 return { user, status: 'OK' };
             });
-        });
+        }, err => err);
     }
 
     function getGmailReplacements() {
@@ -102,10 +99,10 @@ export default function auth(http) {
         if (!tokenProvider || !tokenProvider.getStoredToken) {
             throw new Error('No valid tokenProvider specified');
         }
-
-        return tokenProvider.getStoredToken().then(loginWithToken).catch(err => {
-            console.log('Error after getStoredToken', err);
-        });
+        // AsyncStorage.getItem('userToken').then(res => {
+        //     console.log(res);
+        // });
+        return tokenProvider.getStoredToken().then(loginWithToken).catch(err => err);
     }
 
     function login(code) {
@@ -117,7 +114,7 @@ export default function auth(http) {
     }
 
     function logout() {
-        const { tokenProvider, user } = state;
+        const { tokenProvider } = state;
 
         setUser(null);
         setReplacements({});

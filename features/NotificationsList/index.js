@@ -48,7 +48,7 @@ export default class NotificationsList extends Component {
     };
   }
 
-  _handleNotification = notification => {
+  _handleNotification = () => {
     this.doGetNotifications();
   };
 

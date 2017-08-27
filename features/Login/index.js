@@ -40,12 +40,14 @@ export default class Login extends Component {
   }
 
   showErrorAlert(message) {
+    /* eslint-disable no-console */
     Alert.alert(
       "Can't Log In",
       `Either your email address or password is incorrect. ${message}`,
       [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
       { cancelable: true }
     );
+    /* eslint-enable no-console */
   }
   render() {
     // const { currentUser } = this.props;

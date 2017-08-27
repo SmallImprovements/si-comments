@@ -1,16 +1,9 @@
 import React from 'react';
 import { Modal } from 'react-native';
 
-export default function ModalExample({ children, modalVisible }) {
+export default function ModalExample({ children, modalVisible, onClose }) {
     return (
-        <Modal
-            animationType={'slide'}
-            transparent={false}
-            visible={modalVisible}
-            onRequestClose={() => {
-                alert('Modal has been closed.');
-            }}
-        >
+        <Modal animationType={'slide'} transparent={false} visible={modalVisible} onRequestClose={onClose}>
             {children}
         </Modal>
     );

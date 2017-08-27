@@ -1,10 +1,11 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, Alert } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
-import registerForPushNotificationsAsync from './services/push-notifications';
+// import registerForPushNotificationsAsync from './services/push-notifications';
 import auth from './services/auth';
+import http from './services/http';
 
 const styles = StyleSheet.create({
     container: {
@@ -17,6 +18,8 @@ const styles = StyleSheet.create({
     },
 });
 
+const IS_DEV = process.env.NODE_ENV === 'development';
+
 export default class App extends React.Component {
     state = {
         assetsAreLoaded: false,
@@ -25,9 +28,21 @@ export default class App extends React.Component {
 
     componentWillMount() {
         this._loadAssetsAsync();
-        auth.tryLoginFromCache().then(this.setState({ loggedIn: true })).catch(err => {
-            console.log(err);
-        });
+
+        if (IS_DEV) {
+            auth.useTokenProvider({
+                requestToken: () =>
+                    http
+                        .get('/api/external-services/token-dev', {
+                            params: { loginName: 'demo@example.com' },
+                        })
+                        .then(res => res.data.access_token),
+                getStoredToken: () => Promise.resolve(null),
+                removeToken: () => Promise.resolve(),
+            });
+        }
+
+        auth.tryLoginFromCache().then(this.setState({ loggedIn: true })).catch(err => err);
         /* This should be uncommented once the backend can properly receive and store a Device token
             registerForPushNotificationsAsync();
         */
@@ -62,11 +77,13 @@ export default class App extends React.Component {
         } catch (e) {
             // In this case, you might want to report the error to your error
             // reporting service, for example Sentry
+            /* eslint-disable no-console */
             console.warn(
                 'There was an error caching assets (see: App.js), perhaps due to a ' +
                     'network timeout, so we skipped caching. Reload the app to try again.'
             );
             console.log(e);
+            /* eslint-enable no-console */
         } finally {
             this.setState({ assetsAreLoaded: true });
         }

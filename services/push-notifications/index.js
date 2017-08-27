@@ -5,7 +5,7 @@ const PUSH_ENDPOINT = '/api/v2/notificationLogs/push-token/12345';
 async function registerForPushNotificationsAsync() {
   const { existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
   let finalStatus = existingStatus;
-  console.log('Push notifications check entered');
+  // console.log('Push notifications check entered');
   // only ask if permissions have not already been determined, because
   // iOS won't necessarily prompt the user a second time.
   if (existingStatus !== 'granted') {
@@ -25,13 +25,13 @@ async function registerForPushNotificationsAsync() {
 
   // POST the token to our backend so we can use it to send pushes from there
   http.defaults.baseURL = 'http://192.168.1.25:8080';
-  console.log('Device Push Notification Token: ', token);
+  // console.log('Device Push Notification Token: ', token);
   return http
     .post(PUSH_ENDPOINT, {
       params: { token: token },
     })
     .then(res => {
-      console.log('Successfully hit Push Token endppoint');
+      // console.log('Successfully hit Push Token endppoint');
       return res.data;
     });
 }

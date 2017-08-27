@@ -35,7 +35,7 @@ export default class EntityCommentView extends Component {
         this.doGetComments(entityId, moduleType);
     }
 
-    _handleNotification = notification => {
+    _handleNotification = () => {
         this.doGetComments();
     };
 

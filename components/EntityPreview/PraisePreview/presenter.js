@@ -4,6 +4,7 @@ import Flex from '../../Flex';
 import ModuleIcon from '../../ModuleIcon';
 
 const showAlert = () =>
+	/* eslint-disable no-console */
 	Alert.alert('Open in Small Improvements?', "You'll be redirected to the Small Improvements app your browser", [
 		{ text: 'Open', onPress: () => console.log('Open Pressed') },
 		{
@@ -12,6 +13,7 @@ const showAlert = () =>
 			style: 'cancel',
 		},
 	]);
+/* eslint-enable no-console */
 
 export default function PraisePreview({ praise }) {
 	const { title, author } = praise;
