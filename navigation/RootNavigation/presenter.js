@@ -3,7 +3,7 @@ import { StackNavigator } from 'react-navigation';
 import MainTabNavigator from '../MainTabNavigator';
 import LoginScreen from '../../screens/LoginScreen';
 
-function RootStackNavigator({ screenProps, currentUser }) {
+function RootStackNavigator({ currentUser }) {
     const stackNavigatorConfigs = {
         initialRouteName: currentUser ? 'Main' : 'Login',
         navigationOptions: () => ({
@@ -22,12 +22,13 @@ function RootStackNavigator({ screenProps, currentUser }) {
             screen: LoginScreen,
         },
     };
+    const screenProps = { currentUser };
     /* eslint-disable new-cap */
     const CustomNavigator = StackNavigator(routeConfigs, stackNavigatorConfigs);
     /* eslint-enable new-cap */
-    return <CustomNavigator screenProps={screenProps} />;
+    return <CustomNavigator screenProps={screenProps} currentUser={currentUser} />;
 }
 
-export default function RootNavigator({ currentUser, screenProps }) {
-    return <RootStackNavigator screenProps={screenProps} currentUser={currentUser} />;
+export default function RootNavigator({ currentUser }) {
+    return <RootStackNavigator currentUser={currentUser} />;
 }
