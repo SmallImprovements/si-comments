@@ -4,7 +4,12 @@ import { View, Text, Button, ActivityIndicator, Alert, Linking, Image } from 're
 import auth from '../../services/auth';
 import siLogo from '../../assets/icons/app-icon.png';
 import { BASE_URL } from '../../services/auth/factory';
+import { HeaderOne, HeaderTwo } from '../../components/Text';
+import styled from 'styled-components/native';
+import colorVars from '../../assets/styles/colours';
 
+const { SIBlack } = colorVars;
+const LoginHeaderText = styled(HeaderTwo)`color: ${SIBlack};`;
 // Example taken from https://github.com/expo/auth0-example/blob/master/main.js
 const IS_DEV = process.env.NODE_ENV === 'development';
 let redirectUri;
@@ -106,27 +111,36 @@ export default class LoginRemote extends Component {
 	render() {
 		const { isLoggingIn } = this.state;
 		return (
-			<View
-				style={{
-					flex: 1,
-					justifyContent: 'center',
-					height: '100%',
-				}}
-			>
+			<View style={{ height: '100%', backgroundColor: 'white', flex: 1, justifyContent: 'center' }}>
 				{isLoggingIn
 					? <View>
 							<ActivityIndicator />
 							<Text style={{ textAlign: 'center', marginTop: 20 }}>Logging In...</Text>
 						</View>
-					: <View>
+					: <View
+							style={{
+								flex: 1,
+							}}
+						>
+							<View style={{ flexGrow: 1, flex: 1, justifyContent: 'center' }}>
+								<HeaderOne style={{ textAlign: 'center', marginBottom: 20 }}>SI Comments</HeaderOne>
+								<Image
+									style={{ width: 60, height: 60, marginLeft: 'auto', marginRight: 'auto' }}
+									source={siLogo}
+								/>
+								<LoginHeaderText style={{ textAlign: 'center', marginTop: 20, marginBottom: 20 }}>
+									To continue, please sign in with Small Improvements
+								</LoginHeaderText>
+								<Button onPress={IS_DEV ? this.logUserIn : this.loginWithSIAuth} title="Sign in..." />
+							</View>
 							<Image
-								style={{ width: 90, height: 90, marginLeft: 'auto', marginRight: 'auto' }}
-								source={siLogo}
+								resizeMode="contain"
+								style={{
+									width: '100%',
+									height: 200,
+								}}
+								source={require('../../assets/images/login_background.png')}
 							/>
-							<Text style={{ textAlign: 'center', marginTop: 20 }}>
-								To continue, please sign in with Small Improvements
-							</Text>
-							<Button onPress={IS_DEV ? this.logUserIn : this.loginWithSIAuth} title="Sign in..." />
 						</View>}
 			</View>
 		);
