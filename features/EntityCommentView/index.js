@@ -12,7 +12,7 @@ export default class EntityCommentView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            comments: [],
+            comments: null,
         };
         this.inputRefs = {};
     }
