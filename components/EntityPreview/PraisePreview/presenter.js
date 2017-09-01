@@ -42,7 +42,7 @@ export default function PraisePreview({ praise }) {
 					}}
 				>
 					<Avatar avatarSize={60} logoUrl={firstRecipient.logo} />
-					<Flex style={{ flexWrap: 'wrap', marginTop: 20 }}>
+					<Flex style={{ flexWrap: 'wrap', marginTop: 10 }}>
 						<HeaderTwo style={{ fontWeight: 'bold', flexBasis: '100%', textAlign: 'center' }}>
 							{title}
 						</HeaderTwo>
