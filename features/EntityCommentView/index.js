@@ -21,7 +21,7 @@ export default class EntityCommentView extends Component {
         const { entityId, moduleType } = navigation.state.params;
         return getComments(entityId, moduleType).then(res => {
             this.setState({ comments: res });
-            // this.inputRefs.scrollView.scrollToEnd();
+            this.inputRefs.scrollView.scrollToEnd();
         });
     }
 
