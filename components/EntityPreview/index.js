@@ -5,7 +5,7 @@ import PraisePreviewWithData from './PraisePreview';
 
 export default function EntityPreview({ moduleType, entityId }) {
     return (
-        <Card style={{ height: 80 }}>
+        <Card style={{ minHeight: 80 }}>
             {chooseTemplate(moduleType, entityId)}
         </Card>
     );
