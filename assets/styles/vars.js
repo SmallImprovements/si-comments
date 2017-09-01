@@ -4,11 +4,11 @@ const styleVars = {
     commentBorder: '1px solid rgba(0,0,0,0.08)',
     commentBackgroundColour: colourVars.SILightBlue,
 
-    cardBorderColor: 'rgba(0, 0, 0, 0.10)',
+    cardBorderColor: colourVars.SIGray5,
     cardPadding: 20,
     cardMargin: 10,
     cardBackgroundColor: 'white',
-    cardBorderRadius: 3,
+    cardBorderRadius: 6,
     cardBorderWidth: 1,
 
     fontSizeS: 13,
