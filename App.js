@@ -5,7 +5,6 @@ import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
 // import registerForPushNotificationsAsync from './services/push-notifications';
 import auth from './services/auth';
-import http from './services/http';
 
 const styles = StyleSheet.create({
     container: {
@@ -18,8 +17,6 @@ const styles = StyleSheet.create({
     },
 });
 
-const IS_DEV = process.env.NODE_ENV === 'development';
-
 export default class App extends React.Component {
     state = {
         assetsAreLoaded: false,
@@ -29,20 +26,7 @@ export default class App extends React.Component {
     componentWillMount() {
         this._loadAssetsAsync();
 
-        if (IS_DEV) {
-            auth.useTokenProvider({
-                requestToken: () =>
-                    http
-                        .get('/api/external-services/token-dev', {
-                            params: { loginName: 'demo@example.com' },
-                        })
-                        .then(res => res.data.access_token),
-                getStoredToken: () => Promise.resolve(null),
-                removeToken: () => Promise.resolve(),
-            });
-        }
-
-        auth.tryLoginFromCache().then(this.setState({ loggedIn: true })).catch(err => err);
+        auth.tryLoginFromCache().then(this.setState({ loggedIn: true }));
         /* This should be uncommented once the backend can properly receive and store a Device token
             registerForPushNotificationsAsync();
         */
