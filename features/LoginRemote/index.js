@@ -11,14 +11,15 @@ import colorVars from '../../assets/styles/colours';
 const { SIBlack } = colorVars;
 const LoginHeaderText = styled(HeaderTwo)`color: ${SIBlack};`;
 // Example taken from https://github.com/expo/auth0-example/blob/master/main.js
-const IS_DEV = process.env.NODE_ENV === 'development';
+// const IS_DEV = !process.env.NODE_ENV === 'development';
 let redirectUri;
 if (Expo.Constants.manifest.xde) {
 	// Hi there, dear reader!
 	// This value needs to be the tunnel url for your local Expo project.
 	// It also needs to be listed in valid callback urls of your Auth0 Client
 	// Settings. See the README for more information.
-	redirectUri = 'exp://w8-i3v.lucastobrazil.si-comments.exp.direct/+/redirect';
+	// redirectUri = 'exp://w8-i3v.lucastobrazil.si-comments.exp.direct/+/redirect';
+	redirectUri = 'exp://192.168.2.104:19000/+/redirect';
 } else {
 	redirectUri = `${Expo.Constants.linkingUri}/+/redirect`;
 }
@@ -34,22 +35,31 @@ export default class LoginRemote extends Component {
 			isLoggingIn: false,
 		};
 		this.logUserIn = this.logUserIn.bind(this);
+		this.showErrorAlert = this.showErrorAlert.bind(this);
 	}
 
 	componentDidMount() {
 		Linking.addEventListener('url', this.handleAuth0Redirect);
 	}
 
+	componentWillUnmount() {
+		Linking.removeEventListener('url', this.handleAuth0Redirect);
+	}
+
 	logUserIn() {
 		const { code } = this.state;
+		console.log('caled logUserIn', code);
 
 		this.setState({ isLoggingIn: true });
 
-		auth.login(code).catch(err => {
-			const { message } = err;
-			this.setState({ isLoggingIn: false });
-			this.showErrorAlert(message);
-		});
+		auth.login(code).then(
+			res => res,
+			err => {
+				const { message } = err;
+				this.setState({ isLoggingIn: false });
+				this.showErrorAlert(message);
+			}
+		);
 	}
 
 	showErrorAlert(message) {
@@ -131,7 +141,7 @@ export default class LoginRemote extends Component {
 								<LoginHeaderText style={{ textAlign: 'center', marginTop: 20, marginBottom: 20 }}>
 									To continue, please sign in with Small Improvements
 								</LoginHeaderText>
-								<Button onPress={IS_DEV ? this.logUserIn : this.loginWithSIAuth} title="Sign in..." />
+								<Button onPress={this.loginWithSIAuth} title="Sign in..." />
 							</View>
 							<Image
 								resizeMode="contain"
