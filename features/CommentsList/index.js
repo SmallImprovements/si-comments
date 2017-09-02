@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Button } from 'react-native';
 import Comment from '../../components/Comment';
 import { ActivityIndicator } from 'react-native';
 import { reverse } from 'lodash';
