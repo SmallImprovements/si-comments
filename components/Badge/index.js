@@ -1,6 +1,5 @@
 import React from 'react';
 import { Image } from 'react-native';
-import Svg from '../Svg';
 
 const BADGE_BY_NAME = {
 	b_flowers: require('./png/b_flowers.png'),
