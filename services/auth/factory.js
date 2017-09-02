@@ -17,30 +17,57 @@ export default function auth(http) {
                             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                         }
                     )
-                    .then(res => {
-                        if (!res.data.access_token) {
-                            throw new Error('Failed at requestToken');
+                    .then(
+                        res => {
+                            console.log('RequestToken resolved', res.data);
+                            if (!res.data.access_token) {
+                                return Promise.reject('No token');
+                            }
+                            return res.data.access_token;
+                        },
+                        err => {
+                            console.log('errrrrrr', err);
+                            return err;
                         }
-                        return res.data.access_token;
-                    }),
-            getStoredToken: () => AsyncStorage.getItem('userToken').then(token => token).catch(err => err),
+                    ),
+            getStoredToken: () => getStoredTokenFromDB(),
+
             removeToken: () => removeTokenFromLocalDB(),
         },
         replacements: {},
     };
-
+    function getStoredTokenFromDB() {
+        return AsyncStorage.getItem('userToken').then(
+            token => {
+                if (!token) {
+                    return console.log('no token found!');
+                }
+                return token;
+            },
+            err => Promise.reject('getStoredTokenFromDB fail', err)
+        );
+    }
     function storeTokenInLocalDB(token) {
         // @todo why is this getting called 3 times after logging in?
-        // console.log('storeTokenInLocalDB', token);
+        console.log('storeTokenInLocalDB', token);
         if (!token) {
             return;
         }
-        AsyncStorage.setItem('userToken', token);
+        AsyncStorage.setItem('userToken', token).done();
         return token;
     }
 
     function removeTokenFromLocalDB() {
-        AsyncStorage.setItem('userToken', '').done();
+        console.log('removeTokenFromLocalDB');
+        AsyncStorage.removeItem('userToken').done();
+    }
+    /* THIS IS JUST FOR DEBUGGING */
+    function clearAllFromLocalDB() {
+        console.log('clearAllFromLocalDB');
+        AsyncStorage.clear().then(res => {
+            console.log('Cleared');
+            return res;
+        });
     }
 
     const authChangeListeners = [];
@@ -69,6 +96,10 @@ export default function auth(http) {
 
     function loginWithToken(token) {
         http.defaults.baseURL = BASE_URL;
+        console.log('loginWithToken', token);
+        if (!token) {
+            return;
+        }
         setAuthorizationHeader(token);
         return http.get('/api/v2/users/me').then(res => {
             const user = res.data;
@@ -99,10 +130,8 @@ export default function auth(http) {
         if (!tokenProvider || !tokenProvider.getStoredToken) {
             throw new Error('No valid tokenProvider specified');
         }
-        // AsyncStorage.getItem('userToken').then(res => {
-        //     console.log(res);
-        // });
-        return tokenProvider.getStoredToken().then(loginWithToken).catch(err => err);
+        return tokenProvider.getStoredToken().then(loginWithToken, err => err).catch(err => err);
+        // return tokenProvider.getStoredToken().then(loginWithToken);
     }
 
     function login(code) {
@@ -110,7 +139,22 @@ export default function auth(http) {
         if (!tokenProvider || !tokenProvider.requestToken) {
             throw new Error('No valid tokenProvider specified');
         }
-        return tokenProvider.requestToken(code).then(storeTokenInLocalDB).then(loginWithToken);
+
+        if (!code) {
+            throw new Error('No valid code provided');
+        }
+
+        return tokenProvider
+            .requestToken(code)
+            .then(storeTokenInLocalDB, err => {
+                console.log('argh!', err);
+                return err;
+            })
+            .then(loginWithToken, err => {
+                console.log('argh!', err);
+                return err;
+            })
+            .catch(err => err);
     }
 
     function logout() {
@@ -160,5 +204,6 @@ export default function auth(http) {
         setUser,
         onAuthChange,
         useTokenProvider,
+        clearAllFromLocalDB,
     };
 }
