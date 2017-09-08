@@ -131,7 +131,6 @@ export default function auth(http) {
             throw new Error('No valid tokenProvider specified');
         }
         return tokenProvider.getStoredToken().then(loginWithToken, err => err).catch(err => err);
-        // return tokenProvider.getStoredToken().then(loginWithToken);
     }
 
     function login(code) {
