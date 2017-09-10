@@ -13,3 +13,8 @@ The second exciting thing about this project is exploring more Realtime behaviou
 
 ## Starting Point:
 I used the Expo SDK for local dev. Here you can set up a boilerplate project that includes Tabbed Navigation. Most of the boilerplate is removed but still some is in there for reference.
+
+## Setup
+1. Clone this repository
+2. Download the Expe <a href="https://expo.io/tools">XDE SDK</a>. This is the software the runs the local development server / packager.
+3. Open the project in your favourite IDE, and be sure to have Prettier installed / running before committing. There is a `.prettierrc` file that contains the config. 
