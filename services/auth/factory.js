@@ -106,7 +106,6 @@ export default function auth(http) {
             if (!user) {
                 throw new Error('No user object received');
             }
-
             setUser(user);
             return getGmailReplacements().then(replacements => {
                 setReplacements(replacements);
@@ -130,7 +129,10 @@ export default function auth(http) {
         if (!tokenProvider || !tokenProvider.getStoredToken) {
             throw new Error('No valid tokenProvider specified');
         }
-        return tokenProvider.getStoredToken().then(loginWithToken, err => err).catch(err => err);
+        return tokenProvider
+            .getStoredToken()
+            .then(loginWithToken, err => err)
+            .catch(err => err);
     }
 
     function login(code) {
