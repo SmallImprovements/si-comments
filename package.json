@@ -27,7 +27,7 @@
     "ladda-react": "0.2.9",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
-    "prettier": "^1.5.3",
+    "prettier": "^1.6.1",
     "react": "16.0.0-alpha.12",
     "react-native": "https://github.com/expo/react-native/archive/sdk-19.0.0.tar.gz",
     "react-native-htmlview": "^0.12.0",
