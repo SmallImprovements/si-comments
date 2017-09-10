@@ -17,6 +17,8 @@ const styleVars = {
     fontSizeXL: 22,
     fontSizeXXL: 26,
     fontSizeJumbo: 60,
+
+    subduedTextColor: colourVars.SIGray3,
 };
 
 export default styleVars;
