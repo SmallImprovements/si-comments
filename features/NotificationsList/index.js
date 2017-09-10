@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Notifications } from 'expo';
-import { View, ListView, RefreshControl, ActivityIndicator, Text } from 'react-native';
+import { View, FlatList, RefreshControl, ActivityIndicator, Text } from 'react-native';
 import { NotificationItem } from '../../components/NotificationItem';
 import { filterNotifications } from '../../services/notifications';
 import { getNotifications } from '../../services/api';
@@ -25,14 +25,10 @@ export default class NotificationsList extends Component {
     }
 
     doGetNotifications() {
-        const ds = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2,
-        });
         return getNotifications().then(res => {
             this.setState({
-                dataSource: ds.cloneWithRows(this.filterTheNotifications(res)),
+                dataSource: this.filterTheNotifications(res),
             });
-            // this.setState({ dataSource: ds.cloneWithRows(res) });
         });
     }
 
@@ -55,11 +51,8 @@ export default class NotificationsList extends Component {
     }
 
     componentDidMount() {
-        const ds = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2,
-        });
         return {
-            dataSource: ds.cloneWithRows(this.doGetNotifications()),
+            dataSource: this.doGetNotifications(),
         };
     }
 
@@ -83,20 +76,15 @@ export default class NotificationsList extends Component {
         }
         return (
             <View style={{ flex: 1, justifyContent: 'center' }}>
-                {dataSource.getRowCount() ? (
-                    <ListView
+                {dataSource.length ? (
+                    <FlatList
                         navigation={navigation}
-                        dataSource={this.state.dataSource}
+                        data={dataSource}
                         style={{ backgroundColor: '#fff', height: '100%' }}
-                        renderRow={rowData => {
-                            return (
-                                <NotificationItem
-                                    key={rowData.id}
-                                    onSelect={() => this.onSelect(navigation, rowData)}
-                                    {...rowData}
-                                />
-                            );
+                        renderItem={({ item }) => {
+                            return <NotificationItem onSelect={() => this.onSelect(navigation, item)} {...item} />;
                         }}
+                        keyExtractor={item => item.id}
                         refreshControl={
                             <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh.bind(this)} />
                         }
