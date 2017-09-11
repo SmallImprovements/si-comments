@@ -64,9 +64,10 @@ export default class NotificationsList extends Component {
         this._notificationSubscription = Notifications.addListener(this._handleNotification);
     }
 
-    // componentWillUnmount() {
-    //   Notifications.removeListener(this._handleNotification);
-    // }
+    componentWillUnmount() {
+        // Notifications.removeListener(this._handleNotification);
+        this._notificationSubscription.remove();
+    }
     render() {
         const { navigation } = this.props;
         const { dataSource } = this.state;
