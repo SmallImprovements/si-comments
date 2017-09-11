@@ -9,7 +9,7 @@ import styleVars from '../../assets/styles/vars';
 import colorVars from '../../assets/styles/colours';
 import DateDisplay from '../DateDisplay';
 
-const { standardPadding } = styleVars;
+const { standardPadding, subduedTextColor } = styleVars;
 const { SIGray4 } = colorVars;
 const StyledView = styled.View`
     flex: 1;
@@ -27,7 +27,7 @@ const NotificationSentence = styled.View`
 
 const NotificationDate = styled(DateDisplay)`
     margin-left: ${standardPadding * 0.25}px;
-    color: ${SIGray4};
+    color: ${subduedTextColor};
 `;
 
 export class NotificationItem extends React.Component {
@@ -56,10 +56,8 @@ export class NotificationItem extends React.Component {
                 <StyledView style={{ backgroundColor: isRead ? 'white' : '#f0f4f9' }}>
                     <Avatar logoUrl={logo} />
                     <NotificationSentence>
-                        <Text>
-                            {templateService.transform(this.props)}
-                        </Text>
-                        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                        <Text>{templateService.transform(this.props)}</Text>
+                        <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: standardPadding * 0.125 }}>
                             <ModuleIcon type={module} />
                             <NotificationDate date={createdAt} />
                         </View>
