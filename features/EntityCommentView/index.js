@@ -43,6 +43,10 @@ export default class EntityCommentView extends Component {
         this._notificationSubscription = Notifications.addListener(this._handleNotification);
     }
 
+    componentWillUnmount() {
+        this._notificationSubscription.remove();
+    }
+
     render() {
         const { navigation } = this.props;
         const { comments } = this.state;
