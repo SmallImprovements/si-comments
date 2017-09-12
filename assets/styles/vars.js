@@ -2,7 +2,7 @@ import colourVars from './colours.js';
 const styleVars = {
     standardPadding: 20,
     commentBorder: '1px solid rgba(0,0,0,0.08)',
-    commentBackgroundColour: colourVars.SILightBlue,
+    commentBackgroundColour: 'white',
 
     cardBorderColor: colourVars.SIGray5,
     cardPadding: 20,
