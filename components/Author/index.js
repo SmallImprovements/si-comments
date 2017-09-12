@@ -15,9 +15,7 @@ export default function Author({ authorName, imageSource, avatarUrl }) {
     return (
         <AuthorContainer>
             <Avatar source={avatarUrl ? { uri: avatarUrl } : imageSource} />
-            <Text>
-                {authorName}
-            </Text>
+            <Text>{authorName}</Text>
         </AuthorContainer>
     );
 }

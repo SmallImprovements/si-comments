@@ -6,11 +6,11 @@ import { toRelativeDate } from '../services/date';
 // import styleVars from '../assets/styles/vars';
 
 export default function DateDisplay(props) {
-	const { date } = props;
-	const formattedDate = toRelativeDate(date);
-	return (
-		<Text style={props.style} {...props}>
-			{formattedDate}
-		</Text>
-	);
+    const { date } = props;
+    const formattedDate = toRelativeDate(date);
+    return (
+        <Text style={props.style} {...props}>
+            {formattedDate}
+        </Text>
+    );
 }

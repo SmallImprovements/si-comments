@@ -40,9 +40,7 @@ export default class SettingsScreen extends React.Component {
                         {name}
                     </Text>
                 </HeaderOne>
-                <HeaderOne style={{ color: userToken ? 'black' : 'red' }}>
-                    Token is {userToken || 'not set!'}
-                </HeaderOne>
+                <HeaderOne style={{ color: userToken ? 'black' : 'red' }}>Token is {userToken || 'not set!'}</HeaderOne>
                 <View>
                     <Button title="Logout" onPress={logout} />
                     <Button title="Clear all Local Storage" onPress={clearAllFromLocalDB} />

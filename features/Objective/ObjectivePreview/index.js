@@ -5,14 +5,14 @@ import { getObjectiveById } from '../../../services/api';
 import { ActivityIndicator } from 'react-native';
 
 const PreviewWithData = withData({
-	resolve: {
-		objective: ({ entityId }) => {
-			return getObjectiveById(entityId);
-		},
-	},
-	pendingComponent: () => <ActivityIndicator />,
+    resolve: {
+        objective: ({ entityId }) => {
+            return getObjectiveById(entityId);
+        },
+    },
+    pendingComponent: () => <ActivityIndicator />,
 })(ObjectivePreview);
 
 export default function ObjectivePreviewWithData({ entityId }) {
-	return <PreviewWithData entityId={entityId} />;
+    return <PreviewWithData entityId={entityId} />;
 }
