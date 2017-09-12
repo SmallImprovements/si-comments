@@ -20,6 +20,7 @@ if (Expo.Constants.manifest.xde) {
     // Settings. See the README for more information.
     // redirectUri = 'exp://w8-i3v.lucastobrazil.si-comments.exp.direct/+/redirect';
     redirectUri = 'exp://192.168.2.104:19000/+/redirect';
+    // redirectUri = 'exp://localhost:19000/+/redirect';
 } else {
     redirectUri = `${Expo.Constants.linkingUri}/+/redirect`;
 }
@@ -28,7 +29,7 @@ if (Expo.Constants.manifest.xde) {
 // const SIDomain = 'http://192.168.1.25:8080';
 // const SIDomain = 'http://192.168.2.104:8080';
 
-export default class LoginRemote extends Component {
+export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {

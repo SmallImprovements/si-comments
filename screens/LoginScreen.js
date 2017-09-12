@@ -1,9 +1,8 @@
 import React from 'react';
-// import Login from '../features/Login';
-import LoginRemote from '../features/LoginRemote';
+import Login from '../features/Login';
 
 export default class LoginScreen extends React.Component {
-	render() {
-		return <LoginRemote />;
-	}
+    render() {
+        return <Login />;
+    }
 }
