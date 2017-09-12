@@ -5,14 +5,14 @@ import { getPraiseById } from '../../../services/api';
 import { ActivityIndicator } from 'react-native';
 
 const PreviewWithData = withData({
-	resolve: {
-		praise: ({ entityId }) => {
-			return getPraiseById(entityId);
-		},
-	},
-	pendingComponent: () => <ActivityIndicator />,
+    resolve: {
+        praise: ({ entityId }) => {
+            return getPraiseById(entityId);
+        },
+    },
+    pendingComponent: () => <ActivityIndicator />,
 })(PraisePreview);
 
 export default function PraisePreviewWithData({ entityId }) {
-	return <PreviewWithData entityId={entityId} />;
+    return <PreviewWithData entityId={entityId} />;
 }

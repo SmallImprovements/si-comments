@@ -3,7 +3,7 @@ import { ScrollView } from 'react-native';
 import { Notifications } from 'expo';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import CommentInput from '../../components/CommentInput';
-import EntityPreview from '../../components/EntityPreview';
+import EntityPreview from './EntityPreview';
 import styled from 'styled-components/native';
 import CommentsList from '../CommentsList';
 import { getComments } from '../../services/api';
