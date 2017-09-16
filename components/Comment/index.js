@@ -5,7 +5,8 @@ import styleVars from '../../assets/styles/vars';
 import Avatar from '../Avatar';
 import HTMLView from 'react-native-htmlview';
 import DateDisplay from '../DateDisplay';
-import { deletePraiseComment } from '../../services/api';
+import { doDeleteComment } from './service';
+
 const { standardPadding, commentBorder, commentBackgroundColour, subduedTextColor } = styleVars;
 
 const CommentContainer = styled.View`
@@ -32,45 +33,30 @@ const LightGrayText = styled.Text`
 const CommentText = styled.View`margin-bottom: ${standardPadding * 0.5}px;`;
 const CommentDate = styled(DateDisplay)`color: ${subduedTextColor};`;
 
-function doDelete(isPraise, masterMessageId, id, doGetComments) {
-    if (!isPraise) {
-        // todo: implement objective comment deletion
-        return;
-    }
-    return deletePraiseComment(masterMessageId, id).then(
-        res => {
-            const { err } = res;
-            if (res.status === 'ERROR') {
-                Alert.alert(
-                    "Can't delete comment",
-                    `${err}`,
-                    [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
-                    {
-                        cancelable: true,
-                    }
-                );
-            }
-            doGetComments();
-            return res;
-        },
-        err => console.log('error deleting comment', err)
-    );
-}
-
 export default function Comment(props) {
     const { moduleType, onPressReply, doGetComments } = props;
     let commentData = props;
-    let canEditMessage, canEditComment;
+    let masterEntityId;
 
     const isPraise = moduleType === 'MESSAGE' || moduleType === 'PRAISE';
 
     if (isPraise) {
         commentData = transformPraiseCommentModel(commentData);
-        canEditMessage = commentData.permissions.canEditMessage;
-        canEditComment = commentData.permissions.canEditComment;
+        masterEntityId = commentData.masterMessageId;
+    } else {
+        masterEntityId = commentData.objectiveId;
     }
-    const { body, createdAt, masterMessageId, id } = commentData;
+
+    const { body, createdAt, id } = commentData;
     const { logo, name } = commentData.author;
+    const { canEditMessage } = commentData.permissions;
+
+    const deleteProps = {
+        masterEntityId,
+        id,
+        moduleType,
+        doGetComments,
+    };
 
     const showCommentOptions = () => {
         ActionSheetIOS.showActionSheetWithOptions(
@@ -91,15 +77,14 @@ export default function Comment(props) {
                         Clipboard.setString(body);
                         break;
                     case 2:
-                        doDelete(isPraise, masterMessageId, id, doGetComments);
-                        break;
+                        return doDeleteComment(deleteProps);
                     default:
                         break;
                 }
             }
         );
     };
-    return canEditMessage && canEditMessage ? (
+    return canEditMessage ? (
         <TouchableOpacity onLongPress={showCommentOptions}>
             <CommentBody logo={logo} body={body} createdAt={createdAt} onPressReply={onPressReply} name={name} />
         </TouchableOpacity>
