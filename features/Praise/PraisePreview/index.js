@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Alert, TouchableHighlight, ActivityIndicator } from 'react-native';
+import { View, Text, Alert, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Flex from '../../../components/Flex';
 import Avatar from '../../../components/Avatar';
 import Badge from '../../../components/Badge';
@@ -83,7 +83,7 @@ export default class PraisePreview extends Component {
         const firstRecipient = recipients[0];
 
         return (
-            <TouchableHighlight onPress={showAlert}>
+            <TouchableOpacity onPress={showAlert}>
                 <Flex>
                     <StyledBadge badge={badge} />
                     <View
@@ -112,7 +112,7 @@ export default class PraisePreview extends Component {
                         </Flex>
                     </View>
                 </Flex>
-            </TouchableHighlight>
+            </TouchableOpacity>
         );
     }
 }

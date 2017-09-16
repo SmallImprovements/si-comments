@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { View, Text, Alert, TouchableHighlight } from 'react-native';
+import { View, Text, Alert, TouchableOpacity } from 'react-native';
 import Flex from '../../../components/Flex';
 
 const ObjectiveIcon = styled.Image`
@@ -25,7 +25,7 @@ const showAlert = () =>
 export default function ObjectivePreview({ objective }) {
     const { title, cycleName } = objective;
     return (
-        <TouchableHighlight onPress={showAlert}>
+        <TouchableOpacity onPress={showAlert}>
             <Flex>
                 <ObjectiveIcon source={require('../../../assets/images/objective_icon.png')} />
                 <View>
@@ -34,6 +34,6 @@ export default function ObjectivePreview({ objective }) {
                     <Text style={{ color: '#777' }}>{cycleName}</Text>
                 </View>
             </Flex>
-        </TouchableHighlight>
+        </TouchableOpacity>
     );
 }

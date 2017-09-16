@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { View, Text, TouchableHighlight, TouchableOpacity, ActionSheetIOS, Alert, Clipboard } from 'react-native';
+import { View, Text, TouchableOpacity, ActionSheetIOS, Alert, Clipboard } from 'react-native';
 import styleVars from '../../assets/styles/vars';
 import Avatar from '../Avatar';
 import HTMLView from 'react-native-htmlview';
@@ -120,9 +120,9 @@ function CommentBody({ logo, body, createdAt, onPressReply, name }) {
                 <View style={{ flex: 1, flexDirection: 'row' }}>
                     <CommentDate date={createdAt} />
                     <Text> · </Text>
-                    <TouchableHighlight onPress={onPressReply}>
+                    <TouchableOpacity onPress={onPressReply}>
                         <LightGrayText>Reply</LightGrayText>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                 </View>
             </CommentContent>
         </CommentContainer>
