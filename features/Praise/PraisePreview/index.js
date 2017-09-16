@@ -103,12 +103,14 @@ export default class PraisePreview extends Component {
                             <Text style={{ color: SIGray3, flexBasis: '100%', textAlign: 'center' }}>
                                 Written by: {author.name}
                             </Text>
-                            <LikeButton
-                                praise={praise}
-                                onLike={this.onVote.bind(this)}
-                                isLiked={praise.permissions.canVoteDown}
-                                isLoading={isLikePending}
-                            />
+                            <Flex style={{ justifyContent: 'flex-end' }}>
+                                <LikeButton
+                                    praise={praise}
+                                    onLike={this.onVote.bind(this)}
+                                    isLiked={praise.permissions.canVoteDown}
+                                    isLoading={isLikePending}
+                                />
+                            </Flex>
                         </Flex>
                     </View>
                 </Flex>
