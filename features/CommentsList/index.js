@@ -6,7 +6,7 @@ import { reverse } from 'lodash';
 import styled from 'styled-components/native';
 import colorVars from '../../assets/styles/colours';
 
-export default function CommentsList({ comments, moduleType, onPressReply, inputRef }) {
+export default function CommentsList({ comments, moduleType, onPressReply, inputRef, doGetComments }) {
     let dataSource = comments;
     if (moduleType === 'OBJECTIVE') {
         dataSource = reverse(dataSource);
@@ -27,6 +27,7 @@ export default function CommentsList({ comments, moduleType, onPressReply, input
                                 moduleType={moduleType}
                                 onPressReply={onPressReply}
                                 inputRef={inputRef}
+                                doGetComments={doGetComments}
                             />
                         );
                     }}

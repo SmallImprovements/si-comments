@@ -72,6 +72,7 @@ export default class EntityCommentView extends Component {
                         {...entityProps}
                         comments={comments}
                         onPressReply={this.focusCommentInputField.bind(this)}
+                        doGetComments={this.doGetComments.bind(this)}
                     />
                 </ScrollView>
                 <PostCommentContainer>
