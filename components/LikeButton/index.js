@@ -25,7 +25,7 @@ class LikeButton extends Component {
     constructor(props) {
         super(props);
     }
-    
+
     componentWillMount() {
         this.setState({ isLiked: this.props.isLiked });
     }
