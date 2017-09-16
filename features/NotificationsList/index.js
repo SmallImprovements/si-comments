@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Notifications } from 'expo';
-import { View, FlatList, RefreshControl, ActivityIndicator, Text } from 'react-native';
+import { View, FlatList, RefreshControl, ActivityIndicator, Text, Button, TouchableOpacity } from 'react-native';
 import { NotificationItem } from '../../components/NotificationItem';
 import { filterNotifications } from '../../services/notifications';
 import { getNotifications } from '../../services/api';
 import styled from 'styled-components/native';
 import styleVars from '../../assets/styles/vars';
+import Avatar from '../../components/Avatar';
 
 const { subduedTextColor } = styleVars;
 const NoNotificationsText = styled.Text`
@@ -98,8 +99,19 @@ export default class NotificationsList extends Component {
     }
 }
 
-NotificationsList.navigationOptions = () => {
+NotificationsList.navigationOptions = ({ navigation, screenProps }) => {
+    const { currentUser } = screenProps;
     return {
         title: 'Notifications',
+        headerRight: (
+            <TouchableOpacity
+                onPress={() => {
+                    navigation.navigate('Settings');
+                }}
+                style={{ marginRight: 10 }}
+            >
+                <Avatar logoUrl={currentUser.logo} />
+            </TouchableOpacity>
+        ),
     };
 };

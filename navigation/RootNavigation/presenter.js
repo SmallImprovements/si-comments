@@ -1,7 +1,7 @@
 import React from 'react';
 import { StackNavigator } from 'react-navigation';
-import MainTabNavigator from '../MainTabNavigator';
 import LoginScreen from '../../screens/LoginScreen';
+import NotificationsScreen from '../../screens/NotificationsScreen';
 
 function RootStackNavigator({ currentUser }) {
     const stackNavigatorConfigs = {
@@ -16,7 +16,7 @@ function RootStackNavigator({ currentUser }) {
 
     const routeConfigs = {
         Main: {
-            screen: MainTabNavigator,
+            screen: NotificationsScreen,
         },
         Login: {
             screen: LoginScreen,
