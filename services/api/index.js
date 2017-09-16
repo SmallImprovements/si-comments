@@ -84,6 +84,12 @@ export function postComment({ moduleType, entityId, comment }) {
     }
 }
 
+export function deletePraiseComment(praiseId, commentId) {
+    return http
+        .delete(`${BASE_URL}/praise/${praiseId}/comments/${commentId}`, null, DEFAULT_HEADERS)
+        .then(res => res.data, err => ({ err, status: 'ERROR' }));
+}
+
 export function markNotificationAsRead(id) {
     return http
         .post(`${BASE_URL}/notificationLogs/markAsRead/${id}`, null, DEFAULT_HEADERS)
