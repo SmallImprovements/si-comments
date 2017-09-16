@@ -90,6 +90,12 @@ export function deletePraiseComment(praiseId, commentId) {
         .then(res => res.data, err => ({ err, status: 'ERROR' }));
 }
 
+export function deleteObjectiveComment(objectiveId, commentId) {
+    return http
+        .delete(`${BASE_URL}/objectives/${objectiveId}/messages/${commentId}`, null, DEFAULT_HEADERS)
+        .then(res => res.data, err => ({ err, status: 'ERROR' }));
+}
+
 export function markNotificationAsRead(id) {
     return http
         .post(`${BASE_URL}/notificationLogs/markAsRead/${id}`, null, DEFAULT_HEADERS)
