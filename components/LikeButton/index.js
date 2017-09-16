@@ -13,6 +13,7 @@ const StyledLikeButton = styled.View`
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    height: 15px;
 `;
 
 const HeartIcon = styled.Image`
