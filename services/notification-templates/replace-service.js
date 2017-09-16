@@ -11,6 +11,7 @@ export function transformSentence(text, values) {
 const mockReplacements = {
     'objective.singular.big': 'Objective',
     'praise.singular.big': 'Praise',
+    'messages.singular': 'message',
 };
 
 function replacement(key) {
