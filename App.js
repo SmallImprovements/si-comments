@@ -1,21 +1,10 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, View } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
 // import registerForPushNotificationsAsync from './services/push-notifications';
 import auth from './services/auth';
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
-    statusBarUnderlay: {
-        height: 24,
-        backgroundColor: 'rgba(0,0,0,0.2)',
-    },
-});
 
 export default class App extends React.Component {
     state = {
@@ -37,9 +26,21 @@ export default class App extends React.Component {
             return <AppLoading />;
         } else {
             return (
-                <View style={styles.container}>
+                <View
+                    style={{
+                        flex: 1,
+                        backgroundColor: '#fff',
+                    }}
+                >
                     {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-                    {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
+                    {Platform.OS === 'android' && (
+                        <View
+                            style={{
+                                height: 24,
+                                backgroundColor: 'rgba(0,0,0,0.2)',
+                            }}
+                        />
+                    )}
                     <RootNavigation />
                 </View>
             );
