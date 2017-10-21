@@ -216,7 +216,6 @@ export default function auth(http) {
     function deleteDeviceId() {
         // here we just get it from the device then tell the server to delete
         return Notifications.getExpoPushTokenAsync().then(res => {
-            console.log(res);
             http
                 .delete(`/api/v2/mobile-app/register-device/${res}`, {
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -224,16 +223,6 @@ export default function auth(http) {
                 .then(res => res, err => err);
         });
     }
-
-    // function getDeviceIdLocally() {
-    //     console.log('getDeviceIdLocally');
-    //     return AsyncStorage.getItem('deviceId');
-    // }
-
-    // function deleteDeviceIdLocally() {
-    //     console.log('deleteDeviceIdLocally');
-    //     AsyncStorage.removeItem('deviceId').done();
-    // }
 
     return {
         tryLoginFromCache,

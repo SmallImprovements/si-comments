@@ -1,6 +1,5 @@
 import { Permissions, Notifications } from 'expo';
 import auth from '../auth';
-// const PUSH_ENDPOINT = '/api/v2/mobile-app/register-device';
 import { AsyncStorage } from 'react-native';
 
 async function registerForPushNotificationsAsync() {
