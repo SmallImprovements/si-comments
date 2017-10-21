@@ -7,9 +7,12 @@ import { BASE_URL } from '../../services/auth/factory';
 import { HeaderOne, HeaderTwo } from '../../components/Text';
 import styled from 'styled-components/native';
 import colorVars from '../../assets/styles/colours';
+import registerForPushNotificationsAsync from '../../services/push-notifications';
 
 const { SIBlack } = colorVars;
-const LoginHeaderText = styled(HeaderTwo)`color: ${SIBlack};`;
+const LoginHeaderText = styled(HeaderTwo)`
+    color: ${SIBlack};
+`;
 // Example taken from https://github.com/expo/auth0-example/blob/master/main.js
 // const IS_DEV = !process.env.NODE_ENV === 'development';
 let redirectUri;
@@ -18,8 +21,8 @@ if (Expo.Constants.manifest.xde) {
     // This value needs to be the tunnel url for your local Expo project.
     // It also needs to be listed in valid callback urls of your Auth0 Client
     // Settings. See the README for more information.
-    // redirectUri = 'exp://w8-i3v.lucastobrazil.si-comments.exp.direct/+/redirect';
-    redirectUri = 'exp://192.168.2.104:19000/+/redirect';
+    redirectUri = 'exp://192.168.2.100:19000/+/redirect';
+    // redirectUri = 'exp://localhost:19000/+/redirect';
     // redirectUri = 'exp://localhost:19000/+/redirect';
 } else {
     redirectUri = `${Expo.Constants.linkingUri}/+/redirect`;
@@ -53,14 +56,17 @@ export default class Login extends Component {
 
         this.setState({ isLoggingIn: true });
 
-        auth.login(code).then(
-            res => res,
-            err => {
-                const { message } = err;
-                this.setState({ isLoggingIn: false });
-                this.showErrorAlert(message);
-            }
-        );
+        auth
+            .login(code)
+            .then(
+                res => res,
+                err => {
+                    const { message } = err;
+                    this.setState({ isLoggingIn: false });
+                    this.showErrorAlert(message);
+                }
+            )
+            .then(registerForPushNotificationsAsync);
     }
 
     showErrorAlert(message) {

@@ -1,8 +1,12 @@
 import { forEach } from 'lodash/fp';
 import { AsyncStorage } from 'react-native';
+import { Notifications } from 'expo';
 
 const IS_DEV = process.env.NODE_ENV === 'development';
-export const BASE_URL = IS_DEV ? 'http://192.168.2.104:8080' : 'http://www.small-improvements.com';
+// export const BASE_URL = IS_DEV ? 'http://192.168.2.104:8080' : 'http://www.small-improvements.com';
+export const BASE_URL = IS_DEV
+    ? 'http://192.168.2.100:8080'
+    : 'https://sandbox-team-green-dot-small-improvements-hrd.appspot.com/';
 
 export default function auth(http) {
     const state = {
@@ -26,7 +30,7 @@ export default function auth(http) {
                             return res.data.access_token;
                         },
                         err => {
-                            console.log('errrrrrr', err);
+                            console.log('Error at requestToken', err);
                             return err;
                         }
                     ),
@@ -36,6 +40,7 @@ export default function auth(http) {
         },
         replacements: {},
     };
+
     function getStoredTokenFromDB() {
         return AsyncStorage.getItem('userToken').then(
             token => {
@@ -145,6 +150,8 @@ export default function auth(http) {
             throw new Error('No valid code provided');
         }
 
+        console.log('login', code);
+
         return tokenProvider
             .requestToken(code)
             .then(storeTokenInLocalDB, err => {
@@ -163,6 +170,7 @@ export default function auth(http) {
 
         setUser(null);
         setReplacements({});
+        deleteDeviceId();
         setAuthorizationHeader(null);
         notifyAuthChangeListeners();
 
@@ -195,6 +203,38 @@ export default function auth(http) {
         http.defaults.headers.common.Authorization = bearer;
     }
 
+    function registerDeviceId(deviceId) {
+        // this is called as part of the getExpoPushTokenAsync flow, which gives the deviceId
+        console.log('Device Push Notification Token: ', deviceId);
+        return http
+            .post(`/api/v2/mobile-app/register-device/${deviceId}`, {
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            })
+            .then(res => res, err => err);
+    }
+
+    function deleteDeviceId() {
+        // here we just get it from the device then tell the server to delete
+        return Notifications.getExpoPushTokenAsync().then(res => {
+            console.log(res);
+            http
+                .delete(`/api/v2/mobile-app/register-device/${res}`, {
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                })
+                .then(res => res, err => err);
+        });
+    }
+
+    // function getDeviceIdLocally() {
+    //     console.log('getDeviceIdLocally');
+    //     return AsyncStorage.getItem('deviceId');
+    // }
+
+    // function deleteDeviceIdLocally() {
+    //     console.log('deleteDeviceIdLocally');
+    //     AsyncStorage.removeItem('deviceId').done();
+    // }
+
     return {
         tryLoginFromCache,
         login,
@@ -206,5 +246,6 @@ export default function auth(http) {
         onAuthChange,
         useTokenProvider,
         clearAllFromLocalDB,
+        registerDeviceId,
     };
 }

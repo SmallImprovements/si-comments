@@ -3,7 +3,6 @@ import { Platform, StatusBar, View } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
-// import registerForPushNotificationsAsync from './services/push-notifications';
 import auth from './services/auth';
 
 export default class App extends React.Component {
@@ -16,9 +15,6 @@ export default class App extends React.Component {
         this._loadAssetsAsync();
 
         auth.tryLoginFromCache().then(this.setState({ loggedIn: true }));
-        /* This should be uncommented once the backend can properly receive and store a Device token
-            registerForPushNotificationsAsync();
-        */
     }
 
     render() {

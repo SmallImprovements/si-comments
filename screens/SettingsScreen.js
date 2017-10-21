@@ -14,22 +14,23 @@ export default class SettingsScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userToken: null,
+            deviceId: null,
         };
     }
 
     componentWillMount() {
-        AsyncStorage.getItem('userToken')
+        AsyncStorage.getItem('deviceId')
             .then(value => {
-                this.setState({ userToken: value });
-            })
+                this.setState({ deviceId: value });
+            }, err => err)
             .done();
     }
 
     render() {
         const { currentUser } = this.props.screenProps;
         const { name, logo, email } = currentUser;
-        const { userToken } = this.state;
+        const { deviceId } = this.state;
+
         const logout = () => auth.logout();
         const clearAllFromLocalDB = () => auth.clearAllFromLocalDB();
         return (
@@ -38,6 +39,9 @@ export default class SettingsScreen extends React.Component {
                     <Avatar logoUrl={logo} avatarSize={80} />
                     <HeaderOne style={{ marginTop: 10 }}>{name}</HeaderOne>
                     <Text style={{ marginTop: 10, color: SIGray2 }}>{email}</Text>
+                    <Text style={{ marginTop: 10, color: SIGray2 }}>
+                        {deviceId ? deviceId : 'Push notifications not enabled'}
+                    </Text>
                 </View>
                 <View style={{ marginBottom: 40 }}>
                     <Button color={SIMainRed} title="Logout" onPress={logout} />
