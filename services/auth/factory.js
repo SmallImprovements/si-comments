@@ -92,10 +92,6 @@ export default function auth(http) {
         return replacements;
     }
 
-    function useTokenProvider(tokenProvider) {
-        state.tokenProvider = tokenProvider;
-    }
-
     function loginWithToken(token) {
         http.defaults.baseURL = BASE_URL;
         console.log('loginWithToken', token);
@@ -228,7 +224,6 @@ export default function auth(http) {
         getReplacements,
         setUser,
         onAuthChange,
-        useTokenProvider,
         clearAllFromLocalDB,
         registerDeviceId,
     };
