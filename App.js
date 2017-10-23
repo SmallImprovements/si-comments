@@ -70,37 +70,3 @@ export default class App extends React.Component {
         }
     }
 }
-
-// function mockPushNotification() {
-//     return fetch('https://exp.host/--/api/v2/push/send', {
-//         method: 'POST',
-//         headers: {
-//             Accept: 'application/json',
-//             'Content-Type': 'application/json',
-//             'Accept-Encoding': 'application/json',
-//         },
-//         body: JSON.stringify(fromMock),
-//     }).then(res => {
-//         console.log(res);
-//     });
-// }
-
-/* 
-    Mock data from the body of a request
-    to: the push token of the device who should receive it
-    title: the title content of a native iOS push notification
-    body: the body content of a native iOS push notification
-    sound: ....
-    data: this content is what the app itself can read /receive.
-          yes it seems weird that it's duplicated from the 
-          body/title above, but not sure why...
-          i suppose it doesn't have to be body/title, it could 
-          be what ever edata we want to send like URL etc.
-*/
-// const fromMock = {
-//     to: 'ExponentPushToken[xDf15uL4vznPUtwAxAn0cB]',
-//     title: 'iOS native Notification Title',
-//     body: 'The body of a native iOS notification',
-//     sound: 'default',
-//     data: { title: 'The title of an in-app notification', body: 'The body of an in-app notification' },
-// };
