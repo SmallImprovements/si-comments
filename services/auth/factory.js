@@ -5,41 +5,38 @@ import { Notifications } from 'expo';
 const IS_DEV = process.env.NODE_ENV === 'development';
 // export const BASE_URL = IS_DEV ? 'http://192.168.2.104:8080' : 'http://www.small-improvements.com';
 export const BASE_URL = IS_DEV
-    ? 'http://192.168.2.100:8080'
+    ? 'http://192.168.2.102:8080'
     : 'https://sandbox-team-green-dot-small-improvements-hrd.appspot.com';
 
 export default function auth(http) {
     const state = {
         user: null,
-        tokenProvider: {
-            requestToken: code =>
-                http
-                    .post(
-                        `/api/external-services/token?code=${code}`,
-                        {},
-                        {
-                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                        }
-                    )
-                    .then(
-                        res => {
-                            console.log('RequestToken resolved', res.data);
-                            if (!res.data.access_token) {
-                                return Promise.reject('No token');
-                            }
-                            return res.data.access_token;
-                        },
-                        err => {
-                            console.log('Error at requestToken', err);
-                            return err;
-                        }
-                    ),
-            getStoredToken: () => getStoredTokenFromDB(),
-
-            removeToken: () => removeTokenFromLocalDB(),
-        },
         replacements: {},
     };
+
+    function requestToken(code) {
+        return http
+            .post(
+                `/api/external-services/token?code=${code}`,
+                {},
+                {
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                }
+            )
+            .then(
+                res => {
+                    console.log('RequestToken resolved', res.data);
+                    if (!res.data.access_token) {
+                        return Promise.reject('No token');
+                    }
+                    return res.data.access_token;
+                },
+                err => {
+                    console.log('Error at requestToken', err);
+                    return err;
+                }
+            );
+    }
 
     function getStoredTokenFromDB() {
         return AsyncStorage.getItem('userToken').then(
@@ -130,21 +127,20 @@ export default function auth(http) {
     }
 
     function tryLoginFromCache() {
-        const { tokenProvider } = state;
-        if (!tokenProvider || !tokenProvider.getStoredToken) {
-            throw new Error('No valid tokenProvider specified');
-        }
-        return tokenProvider
-            .getStoredToken()
+        // const { tokenProvider } = state;
+        // if (!tokenProvider || !tokenProvider.getStoredToken) {
+        //     throw new Error('No valid tokenProvider specified');
+        // }
+        return getStoredTokenFromDB()
             .then(loginWithToken, err => err)
             .catch(err => err);
     }
 
     function login(code) {
-        const { tokenProvider } = state;
-        if (!tokenProvider || !tokenProvider.requestToken) {
-            throw new Error('No valid tokenProvider specified');
-        }
+        // const { tokenProvider } = state;
+        // if (!tokenProvider || !tokenProvider.requestToken) {
+        //     throw new Error('No valid tokenProvider specified');
+        // }
 
         if (!code) {
             throw new Error('No valid code provided');
@@ -152,8 +148,7 @@ export default function auth(http) {
 
         console.log('login', code);
 
-        return tokenProvider
-            .requestToken(code)
+        return requestToken(code)
             .then(storeTokenInLocalDB, err => {
                 console.log('argh!', err);
                 return err;
@@ -166,7 +161,7 @@ export default function auth(http) {
     }
 
     function logout() {
-        const { tokenProvider } = state;
+        // const { tokenProvider } = state;
 
         setUser(null);
         setReplacements({});
@@ -174,10 +169,10 @@ export default function auth(http) {
         setAuthorizationHeader(null);
         notifyAuthChangeListeners();
 
-        if (!tokenProvider || !tokenProvider.removeToken) {
-            throw new Error('No valid tokenProvider specified');
-        }
-        return tokenProvider.removeToken();
+        // if (!tokenProvider || !tokenProvider.removeToken) {
+        //     throw new Error('No valid tokenProvider specified');
+        // }
+        return removeTokenFromLocalDB();
     }
 
     function isLoggedIn() {
