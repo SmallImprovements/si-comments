@@ -6,7 +6,7 @@ const IS_DEV = process.env.NODE_ENV === 'development';
 // export const BASE_URL = IS_DEV ? 'http://192.168.2.104:8080' : 'http://www.small-improvements.com';
 export const BASE_URL = IS_DEV
     ? 'http://192.168.2.100:8080'
-    : 'https://sandbox-team-green-dot-small-improvements-hrd.appspot.com/';
+    : 'https://sandbox-team-green-dot-small-improvements-hrd.appspot.com';
 
 export default function auth(http) {
     const state = {
