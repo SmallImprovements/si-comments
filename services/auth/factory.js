@@ -15,6 +15,8 @@ export default function auth(http) {
         replacements: {},
     };
 
+    const authChangeListeners = [];
+
     function requestToken(code) {
         return http
             .post(
@@ -72,8 +74,6 @@ export default function auth(http) {
             return res;
         });
     }
-
-    const authChangeListeners = [];
 
     function getUser() {
         return state.user;
