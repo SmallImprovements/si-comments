@@ -124,21 +124,12 @@ export default function auth(http) {
     }
 
     function tryLoginFromCache() {
-        // const { tokenProvider } = state;
-        // if (!tokenProvider || !tokenProvider.getStoredToken) {
-        //     throw new Error('No valid tokenProvider specified');
-        // }
         return getStoredTokenFromDB()
             .then(loginWithToken, err => err)
             .catch(err => err);
     }
 
     function login(code) {
-        // const { tokenProvider } = state;
-        // if (!tokenProvider || !tokenProvider.requestToken) {
-        //     throw new Error('No valid tokenProvider specified');
-        // }
-
         if (!code) {
             throw new Error('No valid code provided');
         }
@@ -158,17 +149,12 @@ export default function auth(http) {
     }
 
     function logout() {
-        // const { tokenProvider } = state;
-
         setUser(null);
         setReplacements({});
         deleteDeviceId();
         setAuthorizationHeader(null);
         notifyAuthChangeListeners();
 
-        // if (!tokenProvider || !tokenProvider.removeToken) {
-        //     throw new Error('No valid tokenProvider specified');
-        // }
         return removeTokenFromLocalDB();
     }
 
