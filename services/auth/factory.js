@@ -17,28 +17,24 @@ export default function auth(http) {
 
     const authChangeListeners = [];
 
+    const httpConfig = {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    };
+
     function requestToken(code) {
-        return http
-            .post(
-                `/api/external-services/token?code=${code}`,
-                {},
-                {
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        return http.post(`/api/external-services/token?code=${code}`, {}, httpConfig).then(
+            res => {
+                console.log('RequestToken resolved', res.data);
+                if (!res.data.access_token) {
+                    return Promise.reject('No token');
                 }
-            )
-            .then(
-                res => {
-                    console.log('RequestToken resolved', res.data);
-                    if (!res.data.access_token) {
-                        return Promise.reject('No token');
-                    }
-                    return res.data.access_token;
-                },
-                err => {
-                    console.log('Error at requestToken', err);
-                    return err;
-                }
-            );
+                return res.data.access_token;
+            },
+            err => {
+                console.log('Error at requestToken', err);
+                return err;
+            }
+        );
     }
 
     function getStoredTokenFromDB() {
@@ -184,21 +180,13 @@ export default function auth(http) {
     function registerDeviceId(deviceId) {
         // this is called as part of the getExpoPushTokenAsync flow, which gives the deviceId
         console.log('Device Push Notification Token: ', deviceId);
-        return http
-            .post(`/api/v2/mobile-app/register-device/${deviceId}`, {
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            })
-            .then(res => res, err => err);
+        return http.post(`/api/v2/mobile-app/register-device/${deviceId}`, httpConfig).then(res => res, err => err);
     }
 
     function deleteDeviceId() {
         // here we just get it from the device then tell the server to delete
         return Notifications.getExpoPushTokenAsync().then(res => {
-            http
-                .delete(`/api/v2/mobile-app/register-device/${res}`, {
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                })
-                .then(res => res, err => err);
+            http.delete(`/api/v2/mobile-app/register-device/${res}`, httpConfig).then(res => res, err => err);
         });
     }
 
