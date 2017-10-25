@@ -22,12 +22,12 @@ export default function auth(http) {
     };
 
     function tryLoginFromCache() {
-        return getStoredTokenFromDB()
+        return getStoredToken()
             .then(loginWithToken, err => err)
             .catch(err => err);
     }
 
-    function getStoredTokenFromDB() {
+    function getStoredToken() {
         return AsyncStorage.getItem('userToken').then(
             token => {
                 if (!token) {
@@ -99,7 +99,7 @@ export default function auth(http) {
         console.log('login', code);
 
         return requestToken(code)
-            .then(storeTokenInLocalDB, err => {
+            .then(setStoredToken, err => {
                 console.log('argh!', err);
                 return err;
             })
@@ -126,9 +126,9 @@ export default function auth(http) {
         );
     }
 
-    function storeTokenInLocalDB(token) {
+    function setStoredToken(token) {
         // @todo why is this getting called 3 times after logging in?
-        console.log('storeTokenInLocalDB', token);
+        console.log('setStoredToken', token);
         if (!token) {
             return;
         }
@@ -139,8 +139,8 @@ export default function auth(http) {
         END OF LOGIN
     *****************/
 
-    function removeTokenFromLocalDB() {
-        console.log('removeTokenFromLocalDB');
+    function deleteStoredToken() {
+        console.log('deleteStoredToken');
         AsyncStorage.removeItem('userToken').done();
     }
     /* THIS IS JUST FOR DEBUGGING */
@@ -172,7 +172,7 @@ export default function auth(http) {
         setAuthorizationHeader(null);
         notifyAuthChangeListeners();
 
-        return removeTokenFromLocalDB();
+        return deleteStoredToken();
     }
 
     function isLoggedIn() {
