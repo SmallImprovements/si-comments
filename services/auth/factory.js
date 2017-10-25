@@ -21,20 +21,10 @@ export default function auth(http) {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     };
 
-    function requestToken(code) {
-        return http.post(`/api/external-services/token?code=${code}`, {}, httpConfig).then(
-            res => {
-                console.log('RequestToken resolved', res.data);
-                if (!res.data.access_token) {
-                    return Promise.reject('No token');
-                }
-                return res.data.access_token;
-            },
-            err => {
-                console.log('Error at requestToken', err);
-                return err;
-            }
-        );
+    function tryLoginFromCache() {
+        return getStoredTokenFromDB()
+            .then(loginWithToken, err => err)
+            .catch(err => err);
     }
 
     function getStoredTokenFromDB() {
@@ -48,46 +38,10 @@ export default function auth(http) {
             err => Promise.reject('getStoredTokenFromDB fail', err)
         );
     }
-    function storeTokenInLocalDB(token) {
-        // @todo why is this getting called 3 times after logging in?
-        console.log('storeTokenInLocalDB', token);
-        if (!token) {
-            return;
-        }
-        AsyncStorage.setItem('userToken', token).done();
-        return token;
-    }
 
-    function removeTokenFromLocalDB() {
-        console.log('removeTokenFromLocalDB');
-        AsyncStorage.removeItem('userToken').done();
-    }
-    /* THIS IS JUST FOR DEBUGGING */
-    function clearAllFromLocalDB() {
-        console.log('clearAllFromLocalDB');
-        AsyncStorage.clear().then(res => {
-            console.log('Cleared');
-            return res;
-        });
-    }
-
-    function getUser() {
-        return state.user;
-    }
-
-    function setUser(user) {
-        state.user = user;
-        return user;
-    }
-
-    function getReplacements() {
-        return state.replacements;
-    }
-
-    function setReplacements(replacements) {
-        state.replacements = replacements;
-        return replacements;
-    }
+    /****************************
+        Logging In Process 
+    ****************************/
 
     function loginWithToken(token) {
         http.defaults.baseURL = BASE_URL;
@@ -110,20 +64,32 @@ export default function auth(http) {
         }, err => err);
     }
 
-    function getGmailReplacements() {
-        return http.get('/api/v2/gmail/app/replacements').then(
-            res => res.data,
-            err => {
-                return { err: err };
-            }
-        );
+    function setAuthorizationHeader(token) {
+        const bearer = token ? `Bearer ${token}` : null;
+        http.defaults.headers.common.Authorization = bearer;
     }
 
-    function tryLoginFromCache() {
-        return getStoredTokenFromDB()
-            .then(loginWithToken, err => err)
-            .catch(err => err);
+    function setUser(user) {
+        state.user = user;
+        return user;
     }
+
+    function getReplacements() {
+        return state.replacements;
+    }
+
+    function setReplacements(replacements) {
+        state.replacements = replacements;
+        return replacements;
+    }
+
+    function notifyAuthChangeListeners() {
+        forEach(listener => listener(getUser(), getReplacements()), authChangeListeners);
+    }
+
+    /****************************************
+        Login 
+    *****************************************/
 
     function login(code) {
         if (!code) {
@@ -142,6 +108,61 @@ export default function auth(http) {
                 return err;
             })
             .catch(err => err);
+    }
+
+    function requestToken(code) {
+        return http.post(`/api/external-services/token?code=${code}`, {}, httpConfig).then(
+            res => {
+                console.log('RequestToken resolved', res.data);
+                if (!res.data.access_token) {
+                    return Promise.reject('No token');
+                }
+                return res.data.access_token;
+            },
+            err => {
+                console.log('Error at requestToken', err);
+                return err;
+            }
+        );
+    }
+
+    function storeTokenInLocalDB(token) {
+        // @todo why is this getting called 3 times after logging in?
+        console.log('storeTokenInLocalDB', token);
+        if (!token) {
+            return;
+        }
+        AsyncStorage.setItem('userToken', token).done();
+        return token;
+    }
+    /*****************
+        END OF LOGIN
+    *****************/
+
+    function removeTokenFromLocalDB() {
+        console.log('removeTokenFromLocalDB');
+        AsyncStorage.removeItem('userToken').done();
+    }
+    /* THIS IS JUST FOR DEBUGGING */
+    function clearAllFromLocalDB() {
+        console.log('clearAllFromLocalDB');
+        AsyncStorage.clear().then(res => {
+            console.log('Cleared');
+            return res;
+        });
+    }
+
+    function getUser() {
+        return state.user;
+    }
+
+    function getGmailReplacements() {
+        return http.get('/api/v2/gmail/app/replacements').then(
+            res => res.data,
+            err => {
+                return { err: err };
+            }
+        );
     }
 
     function logout() {
@@ -166,15 +187,6 @@ export default function auth(http) {
                 authChangeListeners.splice(i, 1);
             }
         };
-    }
-
-    function notifyAuthChangeListeners() {
-        forEach(listener => listener(getUser(), getReplacements()), authChangeListeners);
-    }
-
-    function setAuthorizationHeader(token) {
-        const bearer = token ? `Bearer ${token}` : null;
-        http.defaults.headers.common.Authorization = bearer;
     }
 
     function registerDeviceId(deviceId) {
