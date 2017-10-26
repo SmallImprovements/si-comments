@@ -86,21 +86,15 @@ export default function auth(http) {
             throw new Error('No valid code provided');
         }
 
-        console.log('login', code);
+        console.log('Called Login after Dismissing web login', code);
 
         return requestToken(code)
-            .then(setStoredToken, err => {
-                console.log('argh!', err);
-                return err;
-            })
-            .then(loginWithToken, err => {
-                console.log('argh!', err);
-                return err;
-            })
-            .catch(err => err);
+            .then(setStoredToken)
+            .then(loginWithToken);
     }
 
     function requestToken(code) {
+        console.log('Request token with code ', code);
         return http.post(`/api/external-services/token?code=${code}`, {}, httpConfig).then(
             res => {
                 console.log('RequestToken resolved', res.data);
