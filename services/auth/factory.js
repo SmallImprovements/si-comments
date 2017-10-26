@@ -78,7 +78,7 @@ export default function auth(http) {
     }
 
     /****************************************
-        Login 
+        Login - called if user has no stored token, and needs to request one
     *****************************************/
 
     function login(code) {
