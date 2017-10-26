@@ -111,12 +111,11 @@ export default function auth(http) {
     }
 
     function setStoredToken(token) {
-        // @todo why is this getting called 3 times after logging in?
         console.log('setStoredToken', token);
         if (!token) {
             return;
         }
-        AsyncStorage.setItem('userToken', token).done();
+        AsyncStorage.setItem('userToken', token);
         return token;
     }
     /*****************
