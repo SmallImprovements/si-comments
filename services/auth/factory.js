@@ -133,7 +133,7 @@ export default function auth(http) {
         AsyncStorage.clear().then(res => {
             console.log('Cleared');
             return res;
-        });
+        }, err => err);
     }
 
     function getUser() {
