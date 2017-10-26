@@ -26,15 +26,7 @@ export default function auth(http) {
     }
 
     function getStoredToken() {
-        return AsyncStorage.getItem('userToken').then(
-            token => {
-                if (!token) {
-                    return console.log('no token found!');
-                }
-                return token;
-            },
-            err => Promise.reject('getStoredTokenFromDB fail', err)
-        );
+        return AsyncStorage.getItem('userToken');
     }
 
     /****************************
