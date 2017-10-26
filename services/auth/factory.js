@@ -22,9 +22,7 @@ export default function auth(http) {
     };
 
     function tryLoginFromCache() {
-        return getStoredToken()
-            .then(loginWithToken, err => err)
-            .catch(err => err);
+        return getStoredToken().then(loginWithToken, err => err);
     }
 
     function getStoredToken() {
