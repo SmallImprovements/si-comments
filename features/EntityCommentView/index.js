@@ -36,6 +36,11 @@ export default class EntityCommentView extends Component {
     }
 
     _handleNotification = () => {
+        /*
+            This is used to fake our live updating. 
+            Basically if the user receives ANY push notifications, 
+            it forces this screen to re-fetch in case there are new comments. 
+        */
         this.doGetComments();
     };
 
@@ -50,7 +55,9 @@ export default class EntityCommentView extends Component {
     render() {
         const { navigation } = this.props;
         const { comments } = this.state;
-        const PostCommentContainer = styled.View`flex-grow: 0;`;
+        const PostCommentContainer = styled.View`
+            flex-grow: 0;
+        `;
         const { moduleType, entityId } = navigation.state.params;
         const entityProps = {
             moduleType,
