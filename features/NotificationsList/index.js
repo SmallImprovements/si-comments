@@ -90,6 +90,10 @@ export default class NotificationsList extends Component {
                         refreshControl={
                             <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh.bind(this)} />
                         }
+                        onEndReachedThreshold={20}
+                        onEndReached={() => {
+                            this.doGetNotifications({ offset: lastUpdatedNotificationsCount + 1, limit: 1 });
+                        }}
                     />
                 ) : (
                     <NoNotificationsText>You have no Notifications</NoNotificationsText>
