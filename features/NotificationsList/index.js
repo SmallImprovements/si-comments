@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Notifications } from 'expo';
-import { View, FlatList, RefreshControl, ActivityIndicator, Text, Button, TouchableOpacity } from 'react-native';
+import { concat } from 'lodash';
+import { View, FlatList, RefreshControl, ActivityIndicator, TouchableOpacity, Text } from 'react-native';
 import { NotificationItem } from '../../components/NotificationItem';
 import { filterNotifications } from '../../services/notifications';
 import { getNotifications } from '../../services/api';
@@ -20,6 +21,7 @@ export default class NotificationsList extends Component {
         this.state = {
             refreshing: false,
             dataSource: null,
+            lastUpdatedNotificationsCount: 0,
         };
 
         this.onSelect = this.onSelect.bind(this);
@@ -54,9 +56,9 @@ export default class NotificationsList extends Component {
         return filterNotifications(notifications);
     }
 
-    onRefresh() {
+    onRefresh({ offset, limit }) {
         this.setState({ refreshing: true });
-        this.doGetNotifications().then(() => {
+        this.doGetNotifications({ offset, limit }).then(() => {
             this.setState({ refreshing: false });
         });
     }
@@ -70,7 +72,7 @@ export default class NotificationsList extends Component {
 
     componentDidMount() {
         return {
-            dataSource: this.doGetNotifications(),
+            dataSource: this.doGetNotifications({ offset: 0, limit: 30 }),
         };
     }
 
@@ -88,13 +90,13 @@ export default class NotificationsList extends Component {
     }
     render() {
         const { navigation } = this.props;
-        const { dataSource } = this.state;
-
+        const { dataSource, lastUpdatedNotificationsCount } = this.state;
+        console.log('lastUpdatedNotificationsCount', lastUpdatedNotificationsCount);
         if (!dataSource) {
             return <ActivityIndicator />;
         }
         return (
-            <View style={{ flex: 1, justifyContent: 'center' }}>
+            <View style={{ flex: 1, justifyContent: 'center', height: 50 }}>
                 {dataSource.length ? (
                     <FlatList
                         navigation={navigation}
@@ -105,7 +107,10 @@ export default class NotificationsList extends Component {
                         }}
                         keyExtractor={item => item.id}
                         refreshControl={
-                            <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh.bind(this)} />
+                            <RefreshControl
+                                refreshing={this.state.refreshing}
+                                onRefresh={this.onRefresh.bind(this, { offset: 0, limit: 30 })}
+                            />
                         }
                         onEndReachedThreshold={20}
                         onEndReached={() => {
