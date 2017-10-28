@@ -25,10 +25,27 @@ export default class NotificationsList extends Component {
         this.onSelect = this.onSelect.bind(this);
     }
 
-    doGetNotifications() {
-        return getNotifications().then(res => {
+    doGetNotifications({ offset, limit }) {
+        const { dataSource, lastUpdatedNotificationsCount } = this.state;
+        return getNotifications({ offset, limit }).then(res => {
+            if (!res) {
+                return;
+            }
+            /*
+             Horrible hack because we're currently filtering 
+             out certain notifications, so we need to keep track 
+             of the original count of unfiltered notifications
+             */
+            const newUpdatedNotificationsCount = lastUpdatedNotificationsCount + res.length;
+
+            const filteredNotifications = this.filterTheNotifications(res);
+
+            // If new notifications have been retrieved, combine them
+            const notifications = concat(dataSource || [], filteredNotifications);
+
             this.setState({
-                dataSource: this.filterTheNotifications(res),
+                dataSource: notifications,
+                lastUpdatedNotificationsCount: newUpdatedNotificationsCount,
             });
         });
     }
