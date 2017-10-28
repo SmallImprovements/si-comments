@@ -94,6 +94,7 @@ export default class NotificationsList extends Component {
                         onEndReached={() => {
                             this.doGetNotifications({ offset: lastUpdatedNotificationsCount + 1, limit: 1 });
                         }}
+                        ListFooterComponent={<Text>No more notifications... only fetching 30</Text>}
                     />
                 ) : (
                     <NoNotificationsText>You have no Notifications</NoNotificationsText>
