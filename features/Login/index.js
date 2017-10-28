@@ -1,6 +1,6 @@
 import Expo from 'expo';
 import React, { Component } from 'react';
-import { View, Text, Button, ActivityIndicator, Alert, Linking, Image } from 'react-native';
+import { View, Text, Button, ActivityIndicator, Alert, Linking, Image, TouchableOpacity } from 'react-native';
 import auth from '../../services/auth';
 import siLogo from '../../assets/icons/app-icon.png';
 import { BASE_URL } from '../../services/auth/factory';
@@ -8,20 +8,21 @@ import { HeaderOne, HeaderTwo } from '../../components/Text';
 import styled from 'styled-components/native';
 import colorVars from '../../assets/styles/colours';
 import registerForPushNotificationsAsync from '../../services/push-notifications';
+import StyledButton from '../../components/Button';
 
 const { SIBlack } = colorVars;
 const LoginHeaderText = styled(HeaderTwo)`
     color: ${SIBlack};
 `;
 // Example taken from https://github.com/expo/auth0-example/blob/master/main.js
-// const IS_DEV = !process.env.NODE_ENV === 'development';
+const IS_DEV = process.env.NODE_ENV === 'development';
 let redirectUri;
 if (Expo.Constants.manifest.xde) {
     // Hi there, dear reader!
     // This value needs to be the tunnel url for your local Expo project.
     // It also needs to be listed in valid callback urls of your Auth0 Client
     // Settings. See the README for more information.
-    redirectUri = 'exp://192.168.2.100:19000/+/redirect';
+    redirectUri = 'exp://192.168.2.102:19000/+/redirect';
     // redirectUri = 'exp://localhost:19000/+/redirect';
     // redirectUri = 'exp://localhost:19000/+/redirect';
 } else {
@@ -140,17 +141,19 @@ export default class Login extends Component {
                             flex: 1,
                         }}
                     >
-                        <View style={{ flexGrow: 1, flex: 1, justifyContent: 'center' }}>
-                            <HeaderOne style={{ textAlign: 'center', marginBottom: 20 }}>SI Comments</HeaderOne>
+                        <View style={{ flexGrow: 1, flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                             <Image
                                 style={{ width: 60, height: 60, marginLeft: 'auto', marginRight: 'auto' }}
                                 source={siLogo}
                             />
+                            <HeaderOne style={{ textAlign: 'center', marginTop: 20 }}>Live Comments</HeaderOne>
                             <LoginHeaderText style={{ textAlign: 'center', marginTop: 20, marginBottom: 20 }}>
                                 To continue, please sign in with Small Improvements
                             </LoginHeaderText>
-                            <Button onPress={this.loginWithSIAuth} title="Sign in..." />
-                            <Button onPress={auth.clearAllFromLocalDB} title="Clera DB" />
+                            <View style={{ width: 'auto' }}>
+                                <StyledButton onPress={this.loginWithSIAuth} title="Sign in" />
+                            </View>
+                            {IS_DEV && <Button onPress={auth.clearAllFromLocalDB} title="Clera DB" />}
                         </View>
                         <Image
                             resizeMode="contain"
