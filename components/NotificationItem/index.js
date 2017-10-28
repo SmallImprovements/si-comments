@@ -43,7 +43,7 @@ export class NotificationItem extends React.Component {
     onSelectItem(onSelect, id) {
         markNotificationAsRead(id);
         onSelect();
-        this.setState({ isRead: !this.state.isRead });
+        this.setState({ isRead: true });
     }
 
     render() {
