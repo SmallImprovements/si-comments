@@ -7,9 +7,9 @@ const DEFAULT_HEADERS = {
     },
 };
 
-export function getNotifications() {
+export function getNotifications({ offset, limit }) {
     return http
-        .get(`${BASE_URL}/notificationLogs/latest`, { params: { limit: 20 } })
+        .get(`${BASE_URL}/notificationLogs/latest`, { params: { offset: offset || 0, limit: limit || 20 } })
         .then(res => res.data, err => ({ err, status: 'ERROR' }));
 }
 
