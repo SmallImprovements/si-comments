@@ -30,8 +30,12 @@ const LightGrayText = styled.Text`
     font-weight: bold;
 `;
 
-const CommentText = styled.View`margin-bottom: ${standardPadding * 0.5}px;`;
-const CommentDate = styled(DateDisplay)`color: ${subduedTextColor};`;
+const CommentText = styled.View`
+    margin-bottom: ${standardPadding * 0.5}px;
+`;
+const CommentDate = styled(DateDisplay)`
+    color: ${subduedTextColor};
+`;
 
 export default function Comment(props) {
     const { moduleType, onPressReply, doGetComments } = props;
@@ -61,7 +65,7 @@ export default function Comment(props) {
     const showCommentOptions = () => {
         ActionSheetIOS.showActionSheetWithOptions(
             {
-                options: ['Edit', 'Copy', 'Delete', 'Cancel'],
+                options: ['Edit', 'Copy Comment Text', 'Delete', 'Cancel'],
                 cancelButtonIndex: 3,
                 destructiveButtonIndex: 2,
             },
