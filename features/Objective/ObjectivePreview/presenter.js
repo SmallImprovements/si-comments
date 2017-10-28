@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { View, Text, Alert, TouchableOpacity } from 'react-native';
 import Flex from '../../../components/Flex';
+import { noop } from 'lodash';
 
 const ObjectiveIcon = styled.Image`
     width: 40px;
@@ -16,7 +17,7 @@ const showAlert = () =>
         { text: 'Open', onPress: () => console.log('Open Pressed') },
         {
             text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
+            onPress: noop,
             style: 'cancel',
         },
     ]);
