@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform, StatusBar, View } from 'react-native';
-import { AppLoading, Asset, Font } from 'expo';
+import { AppLoading, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
 import auth from './services/auth';
@@ -8,17 +8,22 @@ import auth from './services/auth';
 export default class App extends React.Component {
     state = {
         assetsAreLoaded: false,
-        loggedIn: false,
+        isLoggingIn: true,
     };
 
     componentWillMount() {
         this._loadAssetsAsync();
 
-        auth.tryLoginFromCache().then(this.setState({ loggedIn: true }));
+        auth.tryLoginFromCache().then(
+            this.setState({
+                isLoggingIn: false,
+            })
+        );
     }
 
     render() {
-        if (!this.state.assetsAreLoaded && !this.state.loggedIn && !this.props.skipLoadingScreen) {
+        const isPending = !this.state.assetsAreLoaded || this.state.isLoggingIn;
+        if (isPending) {
             return <AppLoading />;
         } else {
             return (
@@ -46,7 +51,7 @@ export default class App extends React.Component {
     async _loadAssetsAsync() {
         try {
             await Promise.all([
-                Asset.loadAsync([require('./assets/images/robot-dev.png'), require('./assets/images/robot-prod.png')]),
+                // Asset.loadAsync([require('./assets/images/robot-dev.png'), require('./assets/images/robot-prod.png')]),
                 Font.loadAsync([
                     // This is the font that we are using for our tab bar
                     Ionicons.font,
