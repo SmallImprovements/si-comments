@@ -8,7 +8,9 @@ const DEFAULT_HEADERS = {
 };
 
 export function getNotifications() {
-    return http.get(`${BASE_URL}/notificationLogs/latest`).then(res => res.data, err => ({ err, status: 'ERROR' }));
+    return http
+        .get(`${BASE_URL}/notificationLogs/latest`, { params: { limit: 20 } })
+        .then(res => res.data, err => ({ err, status: 'ERROR' }));
 }
 
 export function getObjectiveById(objectiveId) {
