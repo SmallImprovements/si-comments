@@ -83,7 +83,7 @@ export default class PraisePreview extends Component {
         const firstRecipient = recipients[0];
 
         return (
-            <TouchableOpacity onPress={showAlert}>
+            <TouchableOpacity onPress={showAlert} activeOpacity={0.9}>
                 <Flex>
                     <StyledBadge badge={badge} />
                     <View
@@ -95,14 +95,14 @@ export default class PraisePreview extends Component {
                     >
                         <Avatar avatarSize={60} logoUrl={firstRecipient.logo} />
                         <Flex style={{ flexWrap: 'wrap', marginTop: 10 }}>
-                            <HeaderOne style={{ fontWeight: 'bold', flexBasis: '100%', textAlign: 'center' }}>
-                                {recipients.map(person => <Text key={person.id}>{person.name} </Text>)}
+                            <HeaderOne
+                                style={{ fontWeight: 'bold', flexBasis: '100%', textAlign: 'center', marginBottom: 20 }}
+                            >
+                                {recipients.map(person => <Text key={person.id}>{person.name}, </Text>)}
                             </HeaderOne>
-                            <HeaderTwo> {title}</HeaderTwo>
-                            <HTMLView value={message ? message : ''} style={{ width: '100%' }} />
-                            <Text style={{ color: SIGray3, flexBasis: '100%', textAlign: 'center' }}>
-                                Written by: {author.name}
-                            </Text>
+                            <HeaderTwo>{title}</HeaderTwo>
+                            <HTMLView value={message ? message : ''} style={{ width: '100%', marginBottom: 20 }} />
+                            <Text style={{ color: SIGray3, flexBasis: '100%' }}>Written by: {author.name}</Text>
                             <Flex style={{ justifyContent: 'flex-end' }}>
                                 <LikeButton
                                     praise={praise}
