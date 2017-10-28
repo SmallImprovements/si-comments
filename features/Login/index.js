@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, Text, Button, ActivityIndicator, Alert, Linking, Image, TouchableOpacity } from 'react-native';
 import auth from '../../services/auth';
 import siLogo from '../../assets/icons/app-icon.png';
-import { BASE_URL } from '../../services/auth/factory';
+import { BASE_URL, DEV_IP } from '../../services/auth/factory';
 import { HeaderOne, HeaderTwo } from '../../components/Text';
 import styled from 'styled-components/native';
 import colorVars from '../../assets/styles/colours';
@@ -22,7 +22,7 @@ if (Expo.Constants.manifest.xde) {
     // This value needs to be the tunnel url for your local Expo project.
     // It also needs to be listed in valid callback urls of your Auth0 Client
     // Settings. See the README for more information.
-    redirectUri = 'exp://192.168.2.102:19000/+/redirect';
+    redirectUri = `exp://${DEV_IP}:19000/+/redirect`;
     // redirectUri = 'exp://localhost:19000/+/redirect';
     // redirectUri = 'exp://localhost:19000/+/redirect';
 } else {
@@ -53,10 +53,8 @@ export default class Login extends Component {
 
     logUserIn() {
         const { code } = this.state;
-        console.log('caled logUserIn', code);
-
         this.setState({ isLoggingIn: true });
-
+        console.log('Code recieved was---> ', code);
         auth
             .login(code)
             .then(
