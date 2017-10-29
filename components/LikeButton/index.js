@@ -1,5 +1,6 @@
 import React from 'react';
-import { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import { Component } from 'react';
 import { TouchableOpacity, View, Text, ActivityIndicator } from 'react-native';
 import styled from 'styled-components/native';
 import colorVars from '../../assets/styles/colours';
