@@ -9,10 +9,10 @@ const Card = styled.View`
     border-width: 1px;
     margin: ${cardMargin}px;
     border-radius: ${cardBorderRadius}px;
-    shadowcolor: black;
-    shadowoffset: 2px;
-    shadowopacity: 0.04;
-    shadowradius: 4px;
+    shadowColor: black;
+    shadowOffset: 2px;
+    shadowOpacity: 0.04;
+    shadowRadius: 4px;
 `;
 
 export default Card;
