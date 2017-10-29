@@ -7,4 +7,6 @@ export const HeaderOne = styled.Text`
     font-size: ${fontSizeXL}px;
     font-weight: bold;
 `;
-export const HeaderTwo = styled.Text`font-size: ${fontSizeL}px;`;
+export const HeaderTwo = styled.Text`
+    font-size: ${fontSizeL}px;
+`;
