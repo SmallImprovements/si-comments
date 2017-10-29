@@ -74,7 +74,11 @@ export default class NotificationsList extends Component {
         const { dataSource } = this.state;
 
         if (!dataSource) {
-            return <ActivityIndicator />;
+            return (
+                <View style={{ flex: 1, justifyContent: 'center' }}>
+                    <ActivityIndicator />
+                </View>
+            );
         }
         return (
             <View style={{ flex: 1, justifyContent: 'center' }}>

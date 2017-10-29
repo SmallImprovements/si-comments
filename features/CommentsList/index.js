@@ -13,7 +13,7 @@ export default function CommentsList({ comments, moduleType, onPressReply, input
     }
 
     if (!dataSource) {
-        return <ActivityIndicator />;
+        return <ActivityIndicator style={{ marginTop: 20 }} />;
     }
     return (
         <View>
