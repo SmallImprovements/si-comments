@@ -8,22 +8,15 @@ import auth from './services/auth';
 export default class App extends React.Component {
     state = {
         assetsAreLoaded: false,
-        isLoggingIn: true,
     };
 
     componentWillMount() {
         this._loadAssetsAsync();
-
-        auth.tryLoginFromCache().then(
-            this.setState({
-                isLoggingIn: false,
-            })
-        );
     }
 
     render() {
-        const isPending = !this.state.assetsAreLoaded || this.state.isLoggingIn;
-        if (isPending) {
+        const { assetsAreLoaded } = this.state;
+        if (!assetsAreLoaded) {
             return <AppLoading />;
         } else {
             return (

@@ -51,6 +51,17 @@ export default class Login extends Component {
         Linking.removeEventListener('url', this.handleAuth0Redirect);
     }
 
+    componentWillMount() {
+        this.setState({ isLoggingIn: true });
+        auth.tryLoginFromCache().then(res => {
+            if (!res) {
+                this.setState({
+                    isLoggingIn: false,
+                });
+            }
+        });
+    }
+
     logUserIn() {
         const { code } = this.state;
         this.setState({ isLoggingIn: true });
