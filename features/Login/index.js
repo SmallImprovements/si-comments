@@ -18,26 +18,16 @@ const LoginHeaderText = styled(HeaderTwo)`
 const IS_DEV = process.env.NODE_ENV === 'development';
 let redirectUri;
 if (Expo.Constants.manifest.xde) {
-    // Hi there, dear reader!
-    // This value needs to be the tunnel url for your local Expo project.
-    // It also needs to be listed in valid callback urls of your Auth0 Client
-    // Settings. See the README for more information.
     redirectUri = `exp://${DEV_IP}:19000/+/redirect`;
-    // redirectUri = 'exp://localhost:19000/+/redirect';
-    // redirectUri = 'exp://localhost:19000/+/redirect';
 } else {
     redirectUri = `${Expo.Constants.linkingUri}/+/redirect`;
 }
-// const SIClientId = 'pdnNOE8axmLRPk6opnr6pSbIxmFJxAlA';
-// const SIDomain = 'https://www.small-improvements.com';
-// const SIDomain = 'http://192.168.1.25:8080';
-// const SIDomain = 'http://192.168.2.104:8080';
 
 export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoggingIn: false,
+            isLoggingIn: true,
         };
         this.logUserIn = this.logUserIn.bind(this);
         this.showErrorAlert = this.showErrorAlert.bind(this);
