@@ -71,7 +71,7 @@ export default class CommentInput extends Component {
             placeholder: 'Write a comment...',
             value: comment,
             onChangeText: this.handleCommentChange,
-            multiline: true,
+            // multiline: true,
             style: { height: this.state.inputFieldHeight },
             keyboardType: 'default',
             onContentSizeChange: this.onContentSizeChange.bind(this),
