@@ -77,6 +77,7 @@ export default class CommentInput extends Component {
             onContentSizeChange: this.onContentSizeChange.bind(this),
             keyboardShouldPersistTaps: 'always',
             innerRef: input => (this.inputField = input),
+            underlineColorAndroid: 'transparent',
         };
         return (
             <CommentInputContainer>
