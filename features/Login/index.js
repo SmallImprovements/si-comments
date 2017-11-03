@@ -152,7 +152,7 @@ export default class Login extends Component {
                             <View style={{ width: 'auto' }}>
                                 <StyledButton onPress={this.loginWithSIAuth} title="Sign in" />
                             </View>
-                            {IS_DEV && <Button onPress={auth.clearAllFromLocalDB} title="Clera DB" />}
+                            {IS_DEV && <Button onPress={auth.clearAllFromLocalDB} title="Clear DB" />}
                         </View>
                         <Image
                             resizeMode="contain"
