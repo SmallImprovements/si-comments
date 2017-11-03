@@ -7,6 +7,9 @@ import EntityPreview from './EntityPreview';
 import styled from 'styled-components/native';
 import CommentsList from '../CommentsList';
 import { getComments } from '../../services/api';
+import styleVars from '../../assets/styles/vars';
+
+const { navigationBorderColor } = styleVars;
 
 export default class EntityCommentView extends Component {
     constructor(props) {
@@ -97,5 +100,11 @@ export default class EntityCommentView extends Component {
 EntityCommentView.navigationOptions = () => {
     return {
         title: 'Comments',
+        headerStyle: {
+            elevation: 0,
+            shadowOpacity: 0,
+            borderBottomWidth: 1,
+            borderBottomColor: navigationBorderColor,
+        },
     };
 };

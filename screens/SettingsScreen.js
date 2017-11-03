@@ -4,11 +4,19 @@ import auth from '../services/auth';
 import Avatar from '../components/Avatar';
 import { HeaderOne } from '../components/Text';
 import colorVars from '../assets/styles/colours';
+import styleVars from '../assets/styles/vars';
 
 const { SIMainRed, SIGray2 } = colorVars;
+const { navigationBorderColor } = styleVars;
 export default class SettingsScreen extends React.Component {
     static navigationOptions = {
         title: 'My Account',
+        headerStyle: {
+            elevation: 0,
+            shadowOpacity: 0,
+            borderBottomWidth: 1,
+            borderBottomColor: navigationBorderColor,
+        },
     };
 
     constructor(props) {

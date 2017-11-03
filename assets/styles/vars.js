@@ -19,6 +19,8 @@ const styleVars = {
     fontSizeJumbo: 60,
 
     subduedTextColor: colourVars.SIGray3,
+
+    navigationBorderColor: colourVars.SIGray4,
 };
 
 export default styleVars;

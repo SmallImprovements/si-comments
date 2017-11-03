@@ -8,7 +8,7 @@ import styled from 'styled-components/native';
 import styleVars from '../../assets/styles/vars';
 import Avatar from '../../components/Avatar';
 
-const { subduedTextColor } = styleVars;
+const { subduedTextColor, navigationBorderColor } = styleVars;
 const NoNotificationsText = styled.Text`
     color: ${subduedTextColor};
     margin: 20px 0;
@@ -117,5 +117,11 @@ NotificationsList.navigationOptions = ({ navigation, screenProps }) => {
                 <Avatar logoUrl={currentUser.logo} />
             </TouchableOpacity>
         ),
+        headerStyle: {
+            elevation: 0,
+            shadowOpacity: 0,
+            borderBottomWidth: 1,
+            borderBottomColor: navigationBorderColor,
+        },
     };
 };
