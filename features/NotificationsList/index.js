@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Platform } from 'react-native';
 import { Notifications } from 'expo';
 import { View, FlatList, RefreshControl, ActivityIndicator, Text, Button, TouchableOpacity } from 'react-native';
 import { NotificationItem } from '../../components/NotificationItem';
@@ -105,7 +106,7 @@ export default class NotificationsList extends Component {
 
 NotificationsList.navigationOptions = ({ navigation, screenProps }) => {
     const { currentUser } = screenProps;
-    return {
+    const baseNavOptions = {
         title: 'Notifications',
         headerRight: (
             <TouchableOpacity
@@ -117,11 +118,26 @@ NotificationsList.navigationOptions = ({ navigation, screenProps }) => {
                 <Avatar logoUrl={currentUser.logo} />
             </TouchableOpacity>
         ),
+    };
+
+    const androidNavOptions = {
         headerStyle: {
             elevation: 0,
             shadowOpacity: 0,
             borderBottomWidth: 1,
             borderBottomColor: navigationBorderColor,
         },
+        headerTitleStyle: {
+            fontWeight: 'normal',
+            fontSize: 14,
+        },
     };
+    const isAndroid = Platform.OS === 'android';
+
+    return isAndroid
+        ? {
+              ...baseNavOptions,
+              ...androidNavOptions,
+          }
+        : baseNavOptions;
 };
