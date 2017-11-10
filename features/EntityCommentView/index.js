@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Notifications } from 'expo';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import CommentInput from '../../components/CommentInput';
 import EntityPreview from './EntityPreview';
 import styled from 'styled-components/native';
@@ -10,7 +9,9 @@ import { getComments } from '../../services/api';
 import styleVars from '../../assets/styles/vars';
 
 const { navigationBorderColor } = styleVars;
-
+const PostCommentContainer = styled.View`
+    flex-grow: 0;
+`;
 export default class EntityCommentView extends Component {
     constructor(props) {
         super(props);
@@ -58,23 +59,19 @@ export default class EntityCommentView extends Component {
     render() {
         const { navigation } = this.props;
         const { comments } = this.state;
-        const PostCommentContainer = styled.View`
-            flex-grow: 0;
-        `;
+
         const { moduleType, entityId } = navigation.state.params;
         const entityProps = {
             moduleType,
             entityId,
         };
         return (
-            <KeyboardAwareScrollView
-                navigation={navigation}
-                extraHeight={87}
-                contentContainerStyle={{
-                    flex: 1,
-                    flexDirection: 'column',
+            <KeyboardAvoidingView
+                behavior="padding"
+                keyboardVerticalOffset={60}
+                style={{
+                    height: '100%',
                 }}
-                keyboardShouldPersistTaps="always"
             >
                 <ScrollView style={{ flex: 1 }} ref={input => (this.inputRefs.scrollView = input)}>
                     <EntityPreview {...entityProps} />
@@ -92,7 +89,7 @@ export default class EntityCommentView extends Component {
                         doGetComments={this.doGetComments.bind(this)}
                     />
                 </PostCommentContainer>
-            </KeyboardAwareScrollView>
+            </KeyboardAvoidingView>
         );
     }
 }
