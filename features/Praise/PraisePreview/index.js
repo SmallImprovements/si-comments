@@ -94,7 +94,7 @@ export default class PraisePreview extends Component {
                         }}
                     >
                         <Avatar avatarSize={60} logoUrl={firstRecipient.logo} />
-                        <Flex style={{ flexWrap: 'wrap', marginTop: 10 }}>
+                        <PreviewContents>
                             <HeaderOne
                                 style={{ fontWeight: 'bold', flexBasis: '100%', textAlign: 'center', marginBottom: 20 }}
                             >
@@ -111,7 +111,7 @@ export default class PraisePreview extends Component {
                                     isLoading={isLikePending}
                                 />
                             </Flex>
-                        </Flex>
+                        </PreviewContents>
                     </View>
                 </Flex>
             </TouchableOpacity>
