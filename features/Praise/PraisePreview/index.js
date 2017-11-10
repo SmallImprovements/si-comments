@@ -30,6 +30,13 @@ const StyledBadge = styled(Badge)`
     margin-top: -25px;
 `;
 
+const PreviewContents = styled(Flex)`
+    padding: 30px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    border: 1px solid red;
+`;
+
 export default class PraisePreview extends Component {
     constructor(props) {
         super(props);
