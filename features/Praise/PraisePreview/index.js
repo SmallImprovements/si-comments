@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, Alert, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Platform, View, Text, Alert, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Flex from '../../../components/Flex';
 import Avatar from '../../../components/Avatar';
 import Badge from '../../../components/Badge';
 import { HeaderOne, HeaderTwo } from '../../../components/Text';
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import colorVars from '../../../assets/styles/colours';
 import LikeButton from '../../../components/LikeButton';
 import { getPraiseById, likePraise, unlikePraise } from '../../../services/api';
@@ -22,19 +22,21 @@ const showAlert = () =>
         },
     ]);
 /* eslint-enable no-console */
-
+const isIOS = Platform.OS === 'ios';
 const StyledBadge = styled(Badge)`
     width: 50px;
     height: 50px;
-    margin-left: -30px;
-    margin-top: -25px;
+    position: absolute;
+    ${isIOS &&
+        css`
+            margin-left: -30px;
+            margin-top: -25px;
+        `};
 `;
 
 const PreviewContents = styled(Flex)`
-    padding: 30px;
     margin-top: 10px;
     flex-wrap: wrap;
-    border: 1px solid red;
 `;
 
 export default class PraisePreview extends Component {
@@ -90,38 +92,42 @@ export default class PraisePreview extends Component {
         const firstRecipient = recipients[0];
 
         return (
-            <TouchableOpacity onPress={showAlert} activeOpacity={0.9}>
-                <Flex>
-                    <StyledBadge badge={badge} />
-                    <View
-                        style={{
-                            flex: 1,
-                            alignItems: 'center',
-                            marginLeft: -30,
-                        }}
-                    >
-                        <Avatar avatarSize={60} logoUrl={firstRecipient.logo} />
-                        <PreviewContents>
+            <Flex>
+                <StyledBadge badge={badge} />
+                <View
+                    style={{
+                        flex: 1,
+                        alignItems: 'center',
+                    }}
+                >
+                    <Avatar avatarSize={60} logoUrl={firstRecipient.logo} />
+                    <PreviewContents>
+                        <TouchableOpacity onPress={showAlert} activeOpacity={0.9}>
                             <HeaderOne
                                 style={{ fontWeight: 'bold', flexBasis: '100%', textAlign: 'center', marginBottom: 20 }}
                             >
-                                {recipients.map(person => <Text key={person.id}>{person.name}, </Text>)}
+                                {recipients.map(person => (
+                                    <Text key={person.id}>
+                                        {person.name}
+                                        {recipients.length > 1 && ', '}
+                                    </Text>
+                                ))}
                             </HeaderOne>
-                            <HeaderTwo>{title}</HeaderTwo>
-                            <HTMLView value={message ? message : ''} style={{ width: '100%', marginBottom: 20 }} />
-                            <Text style={{ color: SIGray3, flexBasis: '100%' }}>Written by: {author.name}</Text>
-                            <Flex style={{ justifyContent: 'flex-end' }}>
-                                <LikeButton
-                                    praise={praise}
-                                    onLike={this.onVote.bind(this)}
-                                    isLiked={praise.permissions.canVoteDown}
-                                    isLoading={isLikePending}
-                                />
-                            </Flex>
-                        </PreviewContents>
-                    </View>
-                </Flex>
-            </TouchableOpacity>
+                        </TouchableOpacity>
+                        <HeaderTwo>{title}</HeaderTwo>
+                        <HTMLView value={message ? message : ''} style={{ width: '100%', marginBottom: 20 }} />
+                        <Text style={{ color: SIGray3, flexBasis: '100%' }}>Written by: {author.name}</Text>
+                        <Flex style={{ justifyContent: 'flex-end' }}>
+                            <LikeButton
+                                praise={praise}
+                                onLike={this.onVote.bind(this)}
+                                isLiked={praise.permissions.canVoteDown}
+                                isLoading={isLikePending}
+                            />
+                        </Flex>
+                    </PreviewContents>
+                </View>
+            </Flex>
         );
     }
 }
