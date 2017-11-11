@@ -28,6 +28,7 @@ export default class Login extends Component {
         super(props);
         this.state = {
             isLoggingIn: true,
+            loginError: null,
         };
         this.logUserIn = this.logUserIn.bind(this);
         this.showErrorAlert = this.showErrorAlert.bind(this);
@@ -43,13 +44,22 @@ export default class Login extends Component {
 
     componentWillMount() {
         this.setState({ isLoggingIn: true });
-        auth.tryLoginFromCache().then(res => {
-            if (!res) {
-                this.setState({
+        auth
+            .tryLoginFromCache()
+            .then(res => {
+                if (!res) {
+                    this.setState({
+                        isLoggingIn: false,
+                    });
+                }
+            })
+            .catch(err => {
+                const newState = {
                     isLoggingIn: false,
-                });
-            }
-        });
+                    loginError: err.response.data.error_description || 'Unknown error',
+                };
+                this.setState(newState);
+            });
     }
 
     logUserIn() {
@@ -126,7 +136,7 @@ export default class Login extends Component {
     }
 
     render() {
-        const { isLoggingIn } = this.state;
+        const { isLoggingIn, loginError } = this.state;
         return (
             <View style={{ height: '100%', backgroundColor: 'white', flex: 1, justifyContent: 'center' }}>
                 {isLoggingIn ? (
@@ -153,6 +163,7 @@ export default class Login extends Component {
                                 <StyledButton onPress={this.loginWithSIAuth} title="Sign in" />
                             </View>
                             {IS_DEV && <Button onPress={auth.clearAllFromLocalDB} title="Clear DB" />}
+                            {loginError && <Text>{loginError}</Text>}
                         </View>
                         <Image
                             resizeMode="contain"

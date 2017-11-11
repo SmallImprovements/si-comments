@@ -22,7 +22,7 @@ export default function auth(http) {
     };
 
     function tryLoginFromCache() {
-        return getStoredToken().then(loginWithToken, err => err);
+        return getStoredToken().then(loginWithToken);
     }
 
     function getStoredToken() {
@@ -51,7 +51,7 @@ export default function auth(http) {
                 notifyAuthChangeListeners();
                 return { user, status: 'OK' };
             });
-        }, err => err);
+        });
     }
 
     function setAuthorizationHeader(token) {
