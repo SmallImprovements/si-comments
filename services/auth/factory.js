@@ -196,5 +196,6 @@ export default function auth(http) {
         onAuthChange,
         clearAllFromLocalDB,
         registerDeviceId,
+        deleteDeviceId,
     };
 }
