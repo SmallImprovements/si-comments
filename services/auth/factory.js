@@ -3,11 +3,8 @@ import { AsyncStorage } from 'react-native';
 import { Notifications } from 'expo';
 
 const IS_DEV = process.env.NODE_ENV === 'development';
-// export const BASE_URL = IS_DEV ? 'http://192.168.2.104:8080' : 'http://www.small-improvements.com';
 export const DEV_IP = '192.168.2.102';
-export const BASE_URL = IS_DEV
-    ? `http://${DEV_IP}:8080`
-    : 'https://sandbox-team-green-dot-small-improvements-hrd.appspot.com';
+export const BASE_URL = IS_DEV ? `http://${DEV_IP}:8080` : 'https://www.small-improvements.com';
 
 export default function auth(http) {
     const state = {
