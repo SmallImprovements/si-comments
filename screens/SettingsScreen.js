@@ -37,14 +37,11 @@ export default class SettingsScreen extends React.Component {
     }
 
     confirmDeleteDevice = () => {
-        Alert.alert(
-            'Please confirm',
-            "Deleting this device from the server will mean that you no longer recieve push notifications. Please only do this if you don't want to use this app any more :)",
-            [{ text: 'Confirm', onPress: this.deleteDeviceId }],
-            {
-                cancelable: true,
-            }
-        );
+        Alert.alert('Please confirm', "This app won't really work if you stop recieving push notifications", [
+            { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+            ,
+            { text: 'Confirm', onPress: this.deleteDeviceId },
+        ]);
     };
 
     deleteDeviceId = () => {
@@ -75,7 +72,7 @@ export default class SettingsScreen extends React.Component {
                     {deviceId && (
                         <Button
                             color={SIMainRed}
-                            title="Delete my device from the server"
+                            title="Stop recieving push notifications"
                             onPress={this.confirmDeleteDevice}
                         />
                     )}
