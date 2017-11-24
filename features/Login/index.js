@@ -30,8 +30,6 @@ export default class Login extends Component {
             isLoggingIn: true,
             loginError: null,
         };
-        this.logUserIn = this.logUserIn.bind(this);
-        this.showErrorAlert = this.showErrorAlert.bind(this);
     }
 
     componentDidMount() {
@@ -62,7 +60,7 @@ export default class Login extends Component {
             });
     }
 
-    logUserIn() {
+    logUserIn = () => {
         const { code } = this.state;
         this.setState({ isLoggingIn: true });
         console.log('Code recieved was---> ', code);
@@ -77,20 +75,20 @@ export default class Login extends Component {
                 }
             )
             .then(registerForPushNotificationsAsync);
-    }
+    };
 
-    showErrorAlert(message) {
+    showErrorAlert = message => {
         Alert.alert("Can't Log In", `${message}`, [{ text: 'OK', onPress: auth.clearAllFromLocalDB }], {
             cancelable: true,
         });
-    }
+    };
 
-    getRandomState() {
+    getRandomState = () => {
         // var randomNumbers = new Uint32Array(1);
         // window.crypto.getRandomValues(randomNumbers);
         // return encodeURIComponent(randomNumbers.join());
         return encodeURIComponent(12827329817392187398374293847);
-    }
+    };
 
     loginWithSIAuth = async () => {
         const redirectionURL =
@@ -118,17 +116,14 @@ export default class Login extends Component {
         this.logUserIn();
     };
 
-    /**
-   * Converts an object to a query string.
-   */
-    toQueryString(params) {
+    toQueryString = params => {
         return (
             '?' +
             Object.entries(params)
                 .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
                 .join('&')
         );
-    }
+    };
 
     render() {
         const { isLoggingIn, loginError } = this.state;
