@@ -71,23 +71,18 @@ export default class Login extends Component {
             .then(
                 res => res,
                 err => {
-                    const { message } = err;
                     this.setState({ isLoggingIn: false });
-                    this.showErrorAlert(message);
+                    // Most likely this fails because you've got a stored code that the server rejected
+                    this.showErrorAlert(err || 'Unknown error');
                 }
             )
             .then(registerForPushNotificationsAsync);
     }
 
     showErrorAlert(message) {
-        /* eslint-disable no-console */
-        Alert.alert(
-            "Can't Log In",
-            `Either your email address or password is incorrect. ${message}`,
-            [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
-            { cancelable: true }
-        );
-        /* eslint-enable no-console */
+        Alert.alert("Can't Log In", `${message}`, [{ text: 'OK', onPress: auth.clearAllFromLocalDB }], {
+            cancelable: true,
+        });
     }
 
     getRandomState() {
