@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, Button, AsyncStorage } from 'react-native';
+import { View, Text, Button, AsyncStorage, Alert } from 'react-native';
 import auth from '../services/auth';
 import Avatar from '../components/Avatar';
 import { HeaderOne } from '../components/Text';
 import colorVars from '../assets/styles/colours';
 import styleVars from '../assets/styles/vars';
+import registerForPushNotificationsAsync from '../services/push-notifications';
 
 const { SIMainRed, SIGray2 } = colorVars;
 const { navigationBorderColor } = styleVars;
@@ -35,13 +36,30 @@ export default class SettingsScreen extends React.Component {
             .done();
     }
 
+    confirmDeleteDevice = () => {
+        Alert.alert(
+            'Please confirm',
+            "Deleting this device from the server will mean that you no longer recieve push notifications. Please only do this if you don't want to use this app any more :)",
+            [{ text: 'Confirm', onPress: this.deleteDeviceId }],
+            {
+                cancelable: true,
+            }
+        );
+    };
+
+    deleteDeviceId = () => {
+        auth.deleteDeviceId().then(res => {
+            this.setState({ deviceId: null });
+        });
+    };
+
     render() {
         const { currentUser } = this.props.screenProps;
         const { name, logo, email } = currentUser;
         const { deviceId } = this.state;
 
         const logout = () => auth.logout();
-        // const clearAllFromLocalDB = () => auth.clearAllFromLocalDB();
+
         return (
             <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
                 <View style={{ flexGrow: 1, marginTop: 50, alignItems: 'center' }}>
@@ -54,7 +72,13 @@ export default class SettingsScreen extends React.Component {
                 </View>
                 <View style={{ marginBottom: 40 }}>
                     <Button color={SIMainRed} title="Logout" onPress={logout} />
-                    <Button color={SIMainRed} title="Delete my device from the server" onPress={auth.deleteDeviceId} />
+                    {deviceId && (
+                        <Button
+                            color={SIMainRed}
+                            title="Delete my device from the server"
+                            onPress={this.confirmDeleteDevice}
+                        />
+                    )}
                     {IS_DEV && <Button title="Clear all Local Storage" onPress={auth.clearAllFromLocalDB} />}
                 </View>
             </View>
