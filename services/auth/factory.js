@@ -101,8 +101,11 @@ export default function auth(http) {
                 return res.data.access_token;
             },
             err => {
+                /* 
+                    Most likely this fails because you've got a stored code that the server rejected
+                */
                 console.log('Error at requestToken', err);
-                return err;
+                return Promise.reject(err);
             }
         );
     }
