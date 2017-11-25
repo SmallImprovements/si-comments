@@ -20,18 +20,19 @@ export default class EntityCommentView extends Component {
         };
         this.inputRefs = {};
     }
-    doGetComments() {
+
+    doGetComments = () => {
         const { navigation } = this.props;
         const { entityId, moduleType } = navigation.state.params;
         return getComments(entityId, moduleType).then(res => {
             this.setState({ comments: res });
             this.inputRefs.scrollView.scrollToEnd();
         });
-    }
+    };
 
-    focusCommentInputField() {
+    focusCommentInputField = () => {
         this.inputRefs.commentInput.inputField.focus();
-    }
+    };
 
     componentDidMount() {
         const { navigation } = this.props;
@@ -39,7 +40,7 @@ export default class EntityCommentView extends Component {
         this.doGetComments(entityId, moduleType);
     }
 
-    _handleNotification = () => {
+    handleNotification = () => {
         /*
             This is used to fake our live updating. 
             Basically if the user receives ANY push notifications, 
@@ -49,11 +50,11 @@ export default class EntityCommentView extends Component {
     };
 
     componentWillMount() {
-        this._notificationSubscription = Notifications.addListener(this._handleNotification);
+        this.notificationSubscription = Notifications.addListener(this.handleNotification);
     }
 
     componentWillUnmount() {
-        this._notificationSubscription.remove();
+        this.notificationSubscription.remove();
     }
 
     render() {
@@ -78,15 +79,15 @@ export default class EntityCommentView extends Component {
                     <CommentsList
                         {...entityProps}
                         comments={comments}
-                        onPressReply={this.focusCommentInputField.bind(this)}
-                        doGetComments={this.doGetComments.bind(this)}
+                        onPressReply={this.focusCommentInputField}
+                        doGetComments={this.doGetComments}
                     />
                 </ScrollView>
                 <PostCommentContainer>
                     <CommentInput
                         ref={ch => (this.inputRefs.commentInput = ch)}
                         {...entityProps}
-                        doGetComments={this.doGetComments.bind(this)}
+                        doGetComments={this.doGetComments}
                     />
                 </PostCommentContainer>
             </KeyboardAvoidingView>
