@@ -106,10 +106,11 @@ export default class PraisePreview extends Component {
                             <HeaderOne
                                 style={{ fontWeight: 'bold', flexBasis: '100%', textAlign: 'center', marginBottom: 20 }}
                             >
-                                {recipients.map(person => (
+                                {recipients.map((person, index) => (
                                     <Text key={person.id}>
                                         {person.name}
-                                        {recipients.length > 1 && ', '}
+                                        {/* todo: use the pluralize service*/}
+                                        {index < recipients.length - 1 ? ', ' : ''}
                                     </Text>
                                 ))}
                             </HeaderOne>
