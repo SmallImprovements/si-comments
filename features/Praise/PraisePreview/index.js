@@ -102,9 +102,19 @@ export default class PraisePreview extends Component {
                 >
                     <Avatar avatarSize={60} logoUrl={firstRecipient.logo} />
                     <PreviewContents>
-                        <TouchableOpacity onPress={showAlert} activeOpacity={0.9}>
+                        <TouchableOpacity
+                            onPress={showAlert}
+                            activeOpacity={0.9}
+                            style={{
+                                flexBasis: '100%',
+                                width: '100%',
+                                marginBottom: 20,
+                            }}
+                        >
                             <HeaderOne
-                                style={{ fontWeight: 'bold', flexBasis: '100%', textAlign: 'center', marginBottom: 20 }}
+                                style={{
+                                    textAlign: 'center',
+                                }}
                             >
                                 {recipients.map((person, index) => (
                                     <Text key={person.id}>
@@ -115,7 +125,14 @@ export default class PraisePreview extends Component {
                                 ))}
                             </HeaderOne>
                         </TouchableOpacity>
-                        <HeaderTwo>{title}</HeaderTwo>
+                        <HeaderTwo
+                            bold={true}
+                            style={{
+                                marginBottom: 10,
+                            }}
+                        >
+                            {title}
+                        </HeaderTwo>
                         <HTMLView value={message ? message : ''} style={{ width: '100%', marginBottom: 20 }} />
                         <Text style={{ color: SIGray3, flexBasis: '100%' }}>Written by: {author.name}</Text>
                         <Flex style={{ justifyContent: 'flex-end' }}>
