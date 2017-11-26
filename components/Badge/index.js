@@ -25,7 +25,7 @@ const BADGE_BY_NAME = {
 export default function Badge(props) {
     let iconSource;
     if (!props.badge) {
-        iconSource = BADGE_BY_NAME['b_default'];
+        return null;
     } else {
         iconSource = BADGE_BY_NAME[props.badge.icon];
     }
