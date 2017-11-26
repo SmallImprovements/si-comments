@@ -29,7 +29,7 @@ export default function ObjectivePreview({ objective }) {
         <TouchableOpacity onPress={showAlert}>
             <Flex>
                 <ObjectiveIcon source={require('../../../assets/images/objective_icon.png')} />
-                <View>
+                <View style={{ flexShrink: 1 }}>
                     <Text style={{ fontWeight: 'bold' }}>{title}</Text>
 
                     <Text style={{ color: '#777' }}>{cycleName}</Text>
