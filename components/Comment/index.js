@@ -118,10 +118,15 @@ function CommentBody({ logo, body, createdAt, onPressReply, name }) {
     );
 }
 
-function transformPraiseCommentModel(data) {
-    const { message } = data;
+/*
+    We do this because the shape of praise comments is a little different. 
+    We should probably unify this 
+*/
+function transformPraiseCommentModel(commentData) {
+    const { message, date } = commentData;
     return {
         body: message,
-        ...data,
+        createdAt: date,
+        ...commentData,
     };
 }
