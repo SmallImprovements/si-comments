@@ -8,6 +8,6 @@ export const HeaderOne = styled.Text`
     font-weight: bold;
 `;
 export const HeaderTwo = styled.Text`
-	font-size: ${fontSizeL}px;
-	font-weight: ${props => (props.bold ? 'bold' : 'normal')};
+    font-size: ${fontSizeL}px;
+    font-weight: ${props => (props.bold ? 'bold' : 'normal')};
 `;
