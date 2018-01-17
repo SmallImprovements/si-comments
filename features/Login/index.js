@@ -4,7 +4,7 @@ import { View, Text, Button, ActivityIndicator, Alert, Linking, Image, Touchable
 import auth from '../../services/auth';
 import siLogo from '../../assets/icons/app-icon.png';
 import { BASE_URL, DEV_IP } from '../../services/auth/factory';
-import { HeaderOne, HeaderTwo } from '../../components/Text';
+import { HeaderOne, HeaderTwo } from '../../components/Header';
 import styled from 'styled-components/native';
 import colorVars from '../../assets/styles/colours';
 import registerForPushNotificationsAsync from '../../services/push-notifications';

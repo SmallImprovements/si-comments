@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Button, AsyncStorage, Alert } from 'react-native';
 import auth from '../services/auth';
 import Avatar from '../components/Avatar';
-import { HeaderOne } from '../components/Text';
+import { HeaderOne } from '../components/Header';
 import colorVars from '../assets/styles/colours';
 import styleVars from '../assets/styles/vars';
 import registerForPushNotificationsAsync from '../services/push-notifications';

@@ -3,7 +3,7 @@ import { Platform, View, Text, Alert, TouchableOpacity, ActivityIndicator } from
 import Flex from '../../../components/Flex';
 import Avatar from '../../../components/Avatar';
 import Badge from '../../../components/Badge';
-import { HeaderOne, HeaderTwo } from '../../../components/Text';
+import { HeaderOne, HeaderTwo } from '../../../components/Header';
 import styled, { css } from 'styled-components/native';
 import colorVars from '../../../assets/styles/colours';
 import LikeButton from '../../../components/LikeButton';

@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import styleVars from '../assets/styles/vars';
+import styleVars from '../../assets/styles/vars';
 
 const { fontSizeXL, fontSizeL } = styleVars;
 

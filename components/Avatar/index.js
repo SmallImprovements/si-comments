@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import Svg from './Svg';
+import Svg from '../Svg';
 import { endsWith } from 'lodash';
-import { BASE_URL } from '../services/auth/factory';
+import { BASE_URL } from '../../services/auth/factory';
 
 export default function Avatar(props) {
     const { logoUrl, avatarSize } = props;
