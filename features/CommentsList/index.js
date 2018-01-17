@@ -3,8 +3,8 @@ import { View, Button } from 'react-native';
 import Comment from '../../components/Comment';
 import { ActivityIndicator, FlatList } from 'react-native';
 import { reverse } from 'lodash';
-import styled from 'styled-components/native';
-import colorVars from '../../assets/styles/colours';
+
+import NoContent from '../../components/NoContent';
 
 export default function CommentsList({ comments, moduleType, onPressReply, inputRef, doGetComments }) {
     let dataSource = comments;
@@ -35,16 +35,10 @@ export default function CommentsList({ comments, moduleType, onPressReply, input
                 />
             ) : (
                 <View>
-                    <NoComments>No Comments</NoComments>
+                    <NoContent>No Comments</NoContent>
                     <Button onPress={onPressReply} title="Write a comment..." />
                 </View>
             )}
         </View>
     );
 }
-
-const NoComments = styled.Text`
-    text-align: center;
-    margin: 40px 0;
-    color: ${colorVars.SIGray2};
-`;

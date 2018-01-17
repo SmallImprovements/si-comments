@@ -1,19 +1,20 @@
 import Expo from 'expo';
 import React, { Component } from 'react';
-import { View, Text, Button, ActivityIndicator, Alert, Linking, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Button, ActivityIndicator, Alert, Linking, Image } from 'react-native';
 import auth from '../../services/auth';
 import siLogo from '../../assets/icons/app-icon.png';
 import { BASE_URL, DEV_IP } from '../../services/auth/factory';
-import { HeaderOne, HeaderTwo } from '../../components/Header';
-import styled from 'styled-components/native';
-import colorVars from '../../assets/styles/colours';
+import { HeaderOne } from '../../components/Header';
 import registerForPushNotificationsAsync from '../../services/push-notifications';
 import StyledButton from '../../components/Button';
 
-const { SIBlack } = colorVars;
-const LoginHeaderText = styled(HeaderTwo)`
-    color: ${SIBlack};
-`;
+import Logo from './styled/Logo';
+import LoginHeaderText from './styled/LoginHeaderText';
+import LoginSubHeaderText from './styled/LoginSubHeaderText';
+import Container from './styled/Container';
+import LoginText from './styled/LoginText';
+import Illustration from './styled/Illustration';
+
 // Example taken from https://github.com/expo/auth0-example/blob/master/main.js
 const IS_DEV = process.env.NODE_ENV === 'development';
 let redirectUri;
@@ -128,44 +129,44 @@ export default class Login extends Component {
     render() {
         const { isLoggingIn, loginError } = this.state;
         return (
-            <View style={{ height: '100%', backgroundColor: 'white', flex: 1, justifyContent: 'center' }}>
+            <Container>
                 {isLoggingIn ? (
-                    <View>
-                        <ActivityIndicator />
-                        <Text style={{ textAlign: 'center', marginTop: 20 }}>Logging In...</Text>
-                    </View>
+                    <LoggingIn />
                 ) : (
-                    <View
-                        style={{
-                            flex: 1,
-                        }}
-                    >
-                        <View style={{ flexGrow: 1, flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <Image
-                                style={{ width: 60, height: 60, marginLeft: 'auto', marginRight: 'auto' }}
-                                source={siLogo}
-                            />
-                            <HeaderOne style={{ textAlign: 'center', marginTop: 20 }}>Live Comments</HeaderOne>
-                            <LoginHeaderText style={{ textAlign: 'center', marginTop: 20, marginBottom: 20 }}>
-                                To continue, please sign in with Small Improvements
-                            </LoginHeaderText>
-                            <View style={{ width: 'auto' }}>
-                                <StyledButton onPress={this.loginWithSIAuth} title="Sign in" />
-                            </View>
-                            {IS_DEV && <Button onPress={auth.clearAllFromLocalDB} title="Clear DB" />}
-                            {loginError && <Text>{loginError}</Text>}
-                        </View>
-                        <Image
-                            resizeMode="contain"
-                            style={{
-                                width: '100%',
-                                height: 200,
-                            }}
-                            source={require('../../assets/images/login_background.png')}
-                        />
-                    </View>
+                    <LogInView onPressLogin={this.loginWithSIAuth} loginError={loginError} />
                 )}
-            </View>
+            </Container>
         );
     }
+}
+
+function LoggingIn() {
+    return (
+        <View>
+            <ActivityIndicator />
+            <LoginText>Logging In...</LoginText>
+        </View>
+    );
+}
+
+function LogInView({ loginError, onPressLogin }) {
+    return (
+        <View
+            style={{
+                flex: 1,
+            }}
+        >
+            <View style={{ flexGrow: 1, flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Logo source={siLogo} />
+                <LoginHeaderText>Live Comments</LoginHeaderText>
+                <LoginSubHeaderText>To continue, please sign in with Small Improvements</LoginSubHeaderText>
+                <View style={{ width: 'auto' }}>
+                    <StyledButton onPress={onPressLogin} title="Sign in" />
+                </View>
+                {IS_DEV && <Button onPress={auth.clearAllFromLocalDB} title="Clear DB" />}
+                {loginError && <LoginText>{loginError}</LoginText>}
+            </View>
+            <Illustration resizeMode="contain" source={require('../../assets/images/login_background.png')} />
+        </View>
+    );
 }

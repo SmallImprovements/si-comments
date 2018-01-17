@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
 import { Platform } from 'react-native';
 import { Notifications } from 'expo';
-import { View, FlatList, RefreshControl, ActivityIndicator, Text, Button, TouchableOpacity } from 'react-native';
+import { View, FlatList, RefreshControl, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { NotificationItem } from '../../components/NotificationItem';
 import { filterNotifications } from '../../services/notifications';
 import { getNotifications } from '../../services/api';
-import styled from 'styled-components/native';
 import styleVars from '../../assets/styles/vars';
 import Avatar from '../../components/Avatar';
+import NoContent from '../../components/NoContent';
 
-const { subduedTextColor, navigationBorderColor } = styleVars;
-const NoNotificationsText = styled.Text`
-    color: ${subduedTextColor};
-    margin: 20px 0;
-    text-align: center;
-`;
+import Container from './styled/Container';
+import List from './styled/List';
+
+const { navigationBorderColor } = styleVars;
+
 export default class NotificationsList extends Component {
     constructor(props) {
         super(props);
@@ -76,18 +75,17 @@ export default class NotificationsList extends Component {
 
         if (!dataSource) {
             return (
-                <View style={{ flex: 1, justifyContent: 'center' }}>
+                <Container>
                     <ActivityIndicator />
-                </View>
+                </Container>
             );
         }
         return (
-            <View style={{ flex: 1, justifyContent: 'center' }}>
+            <Container>
                 {dataSource.length ? (
-                    <FlatList
+                    <List
                         navigation={navigation}
                         data={dataSource}
-                        style={{ backgroundColor: '#fff', height: '100%' }}
                         renderItem={({ item }) => {
                             return <NotificationItem onSelect={() => this.onSelect(navigation, item)} {...item} />;
                         }}
@@ -97,9 +95,9 @@ export default class NotificationsList extends Component {
                         }
                     />
                 ) : (
-                    <NoNotificationsText>You have no Notifications</NoNotificationsText>
+                    <NoContent>You have no Notifications</NoContent>
                 )}
-            </View>
+            </Container>
         );
     }
 }

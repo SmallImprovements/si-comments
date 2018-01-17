@@ -1,41 +1,14 @@
 import React from 'react';
-import styled from 'styled-components/native';
 import { View, Text, TouchableOpacity, ActionSheetIOS, Alert, Clipboard } from 'react-native';
-import styleVars from '../../assets/styles/vars';
 import Avatar from '../Avatar';
 import HTMLView from 'react-native-htmlview';
-import DateDisplay from '../DateDisplay';
 import { doDeleteComment } from './service';
 
-const { standardPadding, commentBorder, commentBackgroundColour, subduedTextColor } = styleVars;
-
-const CommentContainer = styled.View`
-    border-radius: 3px;
-    margin-right: 10px;
-    flex-direction: row;
-    padding: ${standardPadding * 0.5}px;
-    border: ${commentBorder};
-    margin-top: -1px;
-    background-color: ${commentBackgroundColour};
-    width: 100%;
-`;
-
-const CommentContent = styled.View`
-    flex-shrink: 1;
-    margin-left: ${standardPadding * 0.5}px;
-`;
-
-const LightGrayText = styled.Text`
-    color: ${subduedTextColor};
-    font-weight: bold;
-`;
-
-const CommentText = styled.View`
-    margin-bottom: ${standardPadding * 0.5}px;
-`;
-const CommentDate = styled(DateDisplay)`
-    color: ${subduedTextColor};
-`;
+import Container from './styled/Container';
+import Content from './styled/Content';
+import TextContainer from './styled/TextContainer';
+import CommentDate from './styled/CommentDate';
+import SubduedText from '../SubduedText';
 
 export default function Comment(props) {
     const { moduleType, onPressReply, doGetComments } = props;
@@ -99,28 +72,28 @@ export default function Comment(props) {
 
 function CommentBody({ logo, body, createdAt, onPressReply, name }) {
     return (
-        <CommentContainer>
+        <Container>
             <Avatar logoUrl={logo} />
-            <CommentContent>
-                <CommentText>
+            <Content>
+                <TextContainer>
                     <Text style={{ fontWeight: 'bold' }}>{name}</Text>
                     <HTMLView value={body ? body : 'Empty comment'} />
-                </CommentText>
+                </TextContainer>
                 <View style={{ flex: 1, flexDirection: 'row' }}>
                     <CommentDate date={createdAt} />
                     <Text> · </Text>
                     <TouchableOpacity onPress={onPressReply}>
-                        <LightGrayText>Reply</LightGrayText>
+                        <SubduedText bold={true}>Reply</SubduedText>
                     </TouchableOpacity>
                 </View>
-            </CommentContent>
-        </CommentContainer>
+            </Content>
+        </Container>
     );
 }
 
 /*
-    We do this because the shape of praise comments is a little different. 
-    We should probably unify this 
+    We do this because the shape of praise comments is a little different.
+    We should probably unify this
 */
 function transformPraiseCommentModel(commentData) {
     const { message, date } = commentData;

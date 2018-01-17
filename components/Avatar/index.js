@@ -4,36 +4,29 @@ import Svg from '../Svg';
 import { endsWith } from 'lodash';
 import { BASE_URL } from '../../services/auth/factory';
 
+import Container from './styled/Container.js';
+import { AvatarSvg, AvatarImage } from './styled/Image.js';
+
+Avatar.defaultProps = {
+    avatarSize: 30,
+};
+
 export default function Avatar(props) {
     const { logoUrl, avatarSize } = props;
-    const avatarSource = {
-        uri: `${BASE_URL}${logoUrl}`,
+    const imageProps = {
+        source: {
+            uri: `${BASE_URL}${logoUrl}`,
+        },
+        avatarSize,
     };
-    const AVATAR_SIZE = avatarSize || 30;
-    const AvatarContainer = styled.View`
-        border-radius: ${AVATAR_SIZE / 2}px;
-        width: ${AVATAR_SIZE}px;
-        height: ${AVATAR_SIZE}px;
-        overflow: hidden;
-    `;
-
-    const StyledImage = styled.Image`
-        width: ${AVATAR_SIZE}px;
-        height: ${AVATAR_SIZE}px;
-    `;
-
-    const StyledSVG = styled(Svg)`
-        width: ${AVATAR_SIZE}px;
-        height: ${AVATAR_SIZE}px;
-    `;
 
     return (
-        <AvatarContainer>
+        <Container avatarSize={avatarSize}>
             {endsWith(logoUrl, 'svg') || endsWith(logoUrl, 'svg?v=2') ? (
-                <StyledSVG source={avatarSource} />
+                <AvatarSvg {...imageProps} />
             ) : (
-                <StyledImage source={avatarSource} {...props} />
+                <AvatarImage {...imageProps} />
             )}
-        </AvatarContainer>
+        </Container>
     );
 }

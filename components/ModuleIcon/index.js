@@ -1,7 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { keys } from 'lodash/fp';
-import styled from 'styled-components/native';
+import IconImage from './styled';
 
 const ICON_BY_TYPE = {
     MESSAGE: require('./png/module-messages-icon.png'),
@@ -13,13 +13,7 @@ ModuleIcon.propTypes = {
     type: PropTypes.oneOf(keys(ICON_BY_TYPE)).isRequired,
 };
 
-const StyledImage = styled.Image`
-    width: 15px;
-    height: 15px;
-    opacity: 0.4;
-`;
-
 export default function ModuleIcon({ type }) {
     const icon = ICON_BY_TYPE[type] || '';
-    return <StyledImage source={icon} />;
+    return <IconImage source={icon} />;
 }
