@@ -4,7 +4,7 @@ import ObjectivePreviewWithData from '../../Objective/ObjectivePreview';
 import PraisePreview from '../../Praise/PraisePreview';
 
 export default function EntityPreview({ moduleType, entityId }) {
-    return <Card style={{ minHeight: 80 }}>{chooseTemplate(moduleType, entityId)}</Card>;
+    return <Card style={{ flex: 1 }}>{chooseTemplate(moduleType, entityId)}</Card>;
 }
 
 function chooseTemplate(moduleType, entityId) {
