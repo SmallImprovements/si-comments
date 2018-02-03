@@ -23,18 +23,18 @@
     "babel-preset-stage-1": "^6.5.0",
     "babel-preset-stage-2": "^6.5.0",
     "eslint": "^4.4.1",
-    "expo": "^22.0.0",
+    "expo": "^25.0.0",
     "ladda-react": "0.2.9",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "prettier": "^1.7.4",
     "prop-types": "^15.6.0",
-    "react": "16.0.0-beta.5",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-22.0.1.tar.gz",
+    "react": "16.2.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-25.0.0.tar.gz",
     "react-native-htmlview": "^0.12.0",
     "react-native-keyboard-aware-scroll-view": "^0.4.1",
     "react-native-svg-image": "^2.0.1",
-    "react-navigation": "^1.0.0-beta.12",
+    "react-navigation": "^1.0.0-beta.27",
     "recompose": "^0.24.0",
     "styled-components": "^2.2.0"
   },
@@ -43,7 +43,7 @@
     "eslint-plugin-lodash": "^2.4.4",
     "eslint-plugin-react": "^7.2.0",
     "eslint-watch": "^3.1.2",
-    "jest-expo": "^22.0.0"
+    "jest-expo": "^25.0.0"
   },
   "repository": "git@github.com:SmallImprovements/si-comments.git"
 }
