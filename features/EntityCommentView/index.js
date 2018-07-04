@@ -3,15 +3,15 @@ import { ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Notifications } from 'expo';
 import CommentInput from '../../components/CommentInput';
 import EntityPreview from './EntityPreview';
-import styled from 'styled-components/native';
 import CommentsList from '../CommentsList';
 import { getComments } from '../../services/api';
 import styleVars from '../../assets/styles/vars';
 
+import PostCommentContainer from './styled/PostCommentContainer';
+import Container from './styled/Container';
+
 const { navigationBorderColor } = styleVars;
-const PostCommentContainer = styled.View`
-    flex-grow: 0;
-`;
+
 export default class EntityCommentView extends Component {
     constructor(props) {
         super(props);
@@ -42,9 +42,9 @@ export default class EntityCommentView extends Component {
 
     handleNotification = () => {
         /*
-            This is used to fake our live updating. 
-            Basically if the user receives ANY push notifications, 
-            it forces this screen to re-fetch in case there are new comments. 
+            This is used to fake our live updating.
+            Basically if the user receives ANY push notifications,
+            it forces this screen to re-fetch in case there are new comments.
         */
         this.doGetComments();
     };
@@ -74,7 +74,7 @@ export default class EntityCommentView extends Component {
                     height: '100%',
                 }}
             >
-                <ScrollView style={{ flex: 1 }} ref={input => (this.inputRefs.scrollView = input)}>
+                <Container innerRef={input => (this.inputRefs.scrollView = input)}>
                     <EntityPreview {...entityProps} />
                     <CommentsList
                         {...entityProps}
@@ -82,7 +82,7 @@ export default class EntityCommentView extends Component {
                         onPressReply={this.focusCommentInputField}
                         doGetComments={this.doGetComments}
                     />
-                </ScrollView>
+                </Container>
                 <PostCommentContainer>
                     <CommentInput
                         ref={ch => (this.inputRefs.commentInput = ch)}

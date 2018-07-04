@@ -1,15 +1,11 @@
 import React from 'react';
-import styled from 'styled-components/native';
-import { View, Text, Alert, TouchableOpacity } from 'react-native';
+import { Alert, TouchableOpacity } from 'react-native';
 import Flex from '../../../components/Flex';
 import { noop } from 'lodash';
-
-const ObjectiveIcon = styled.Image`
-    width: 40px;
-    height: 40px;
-    border-radius: 3px;
-    margin-right: 10px;
-`;
+import ObjectiveIcon from '../../../components/ObjectiveIcon';
+import SubduedText from '../../../components/SubduedText';
+import Container from './styled/Container';
+import Title from './styled/Title';
 
 const showAlert = () =>
     /* eslint-disable no-console */
@@ -29,11 +25,10 @@ export default function ObjectivePreview({ objective }) {
         <TouchableOpacity onPress={showAlert}>
             <Flex>
                 <ObjectiveIcon source={require('../../../assets/images/objective_icon.png')} />
-                <View style={{ flexShrink: 1 }}>
-                    <Text style={{ fontWeight: 'bold' }}>{title}</Text>
-
-                    <Text style={{ color: '#777' }}>{cycleName}</Text>
-                </View>
+                <Container>
+                    <Title>{title}</Title>
+                    <SubduedText>{cycleName}</SubduedText>
+                </Container>
             </Flex>
         </TouchableOpacity>
     );

@@ -1,27 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
-import { TouchableOpacity, View, Text, ActivityIndicator } from 'react-native';
-import styled from 'styled-components/native';
+import { TouchableOpacity, ActivityIndicator } from 'react-native';
 import colorVars from '../../assets/styles/colours';
+
+import HeartIcon from './styled/HeartIcon';
+import Container from './styled/Container';
+import LikeText from './styled/LikeText';
 
 const propTypes = {
     onLike: PropTypes.func.isRequired,
     isLiked: PropTypes.bool.isRequired,
 };
-
-const StyledLikeButton = styled.View`
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    height: 15px;
-`;
-
-const HeartIcon = styled.Image`
-    width: 15px;
-    height: 15px;
-    margin-right: 5px;
-`;
 
 class LikeButton extends Component {
     constructor(props) {
@@ -45,12 +35,12 @@ class LikeButton extends Component {
 
 function ButtonContents({ isLoading, isLiked }) {
     return (
-        <StyledLikeButton>
+        <Container>
             {!isLoading && isLiked && <HeartIcon resizeMode="contain" source={require('./png/heart.png')} />}
             {!isLoading && !isLiked && <HeartIcon resizeMode="contain" source={require('./png/heart-o.png')} />}
             {isLoading && <ActivityIndicator color={colorVars.SIBlue} style={{ marginRight: 10 }} />}
-            <Text style={{ color: colorVars.SIBlue }}>{isLiked ? 'Liked' : 'Like'}</Text>
-        </StyledLikeButton>
+            <LikeText>{isLiked ? 'Liked' : 'Like'}</LikeText>
+        </Container>
     );
 }
 

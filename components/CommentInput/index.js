@@ -1,29 +1,9 @@
 import React, { Component } from 'react';
-import styled from 'styled-components/native';
 import { Button } from 'react-native';
-import styleVars from '../../assets/styles/vars';
 import { postComment } from '../../services/api';
 
-const { standardPadding } = styleVars;
-
-const CommentInputContainer = styled.View`
-  background: white;
-  borderWidth: 1px
-  borderColor: lightgray;
-  borderLeftWidth: 0;
-  borderRightWidth: 0;
-  borderBottomWidth: 0;
-  flex-direction: row;
-  align-items: center;
-  
-`;
-const CommentInputField = styled.TextInput`
-    flex-grow: 1;
-    font-size: 15px;
-    margin-left: ${standardPadding}px;
-    margin-bottom: ${standardPadding}px;
-    margin-top: ${standardPadding}px;
-`;
+import Container from './styled/Container';
+import InputField from './styled/InputField';
 
 export default class CommentInput extends Component {
     constructor(props) {
@@ -80,10 +60,10 @@ export default class CommentInput extends Component {
             underlineColorAndroid: 'transparent',
         };
         return (
-            <CommentInputContainer>
-                <CommentInputField {...inputFieldProps} />
+            <Container>
+                <InputField {...inputFieldProps} />
                 <Button title="Post" onPress={this.onSubmit} disabled={isSubmitting || !comment} />
-            </CommentInputContainer>
+            </Container>
         );
     }
 }

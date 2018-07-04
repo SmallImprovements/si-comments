@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import { Platform, View, Text, Alert, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Platform, Text, Alert, ActivityIndicator } from 'react-native';
 import Flex from '../../../components/Flex';
 import Avatar from '../../../components/Avatar';
 import Badge from '../../../components/Badge';
-import { HeaderOne, HeaderTwo } from '../../../components/Text';
+import { HeaderOne, HeaderTwo } from '../../../components/Header';
 import styled, { css } from 'styled-components/native';
-import colorVars from '../../../assets/styles/colours';
 import LikeButton from '../../../components/LikeButton';
 import { getPraiseById, likePraise, unlikePraise } from '../../../services/api';
-import HTMLView from 'react-native-htmlview';
 
-const { SIGray3 } = colorVars;
+import Container from './styled/Container';
+import LaunchPraiseButton from './styled/LaunchPraiseButton';
+import Body from './styled/Body';
+import Author from './styled/Author';
+
 const showAlert = () =>
     /* eslint-disable no-console */
     Alert.alert('Open in Small Improvements?', "You'll be redirected to the Small Improvements app your browser", [
@@ -94,28 +96,11 @@ export default class PraisePreview extends Component {
         return (
             <Flex>
                 <StyledBadge badge={badge} />
-                <View
-                    style={{
-                        flex: 1,
-                        alignItems: 'center',
-                    }}
-                >
+                <Container>
                     <Avatar avatarSize={60} logoUrl={firstRecipient.logo} />
                     <PreviewContents>
-                        <TouchableOpacity
-                            onPress={showAlert}
-                            activeOpacity={0.9}
-                            style={{
-                                flexBasis: '100%',
-                                width: '100%',
-                                marginBottom: 20,
-                            }}
-                        >
-                            <HeaderOne
-                                style={{
-                                    textAlign: 'center',
-                                }}
-                            >
+                        <LaunchPraiseButton onPress={showAlert} activeOpacity={0.9}>
+                            <HeaderOne textAlign="center">
                                 {recipients.map((person, index) => (
                                     <Text key={person.id}>
                                         {person.name}
@@ -124,7 +109,7 @@ export default class PraisePreview extends Component {
                                     </Text>
                                 ))}
                             </HeaderOne>
-                        </TouchableOpacity>
+                        </LaunchPraiseButton>
                         <HeaderTwo
                             bold={true}
                             style={{
@@ -133,8 +118,8 @@ export default class PraisePreview extends Component {
                         >
                             {title}
                         </HeaderTwo>
-                        <HTMLView value={message ? message : ''} style={{ width: '100%', marginBottom: 20 }} />
-                        <Text style={{ color: SIGray3, flexBasis: '100%' }}>Written by: {author.name}</Text>
+                        <Body value={message ? message : ''} />
+                        <Author>Written by: {author.name}</Author>
                         <Flex style={{ justifyContent: 'flex-end' }}>
                             <LikeButton
                                 praise={praise}
@@ -144,7 +129,7 @@ export default class PraisePreview extends Component {
                             />
                         </Flex>
                     </PreviewContents>
-                </View>
+                </Container>
             </Flex>
         );
     }
